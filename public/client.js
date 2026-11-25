@@ -16,6 +16,7 @@ const state = {
   cloningIndices: new Set(),
   accountLoaded: false,
   selectTabFn: null,
+  customDocLinks: [], // [{ nome, url }]
 };
 
 const $ = (id) => document.getElementById(id);
@@ -534,6 +535,12 @@ function renderDocument() {
     });
   }
 
+  state.customDocLinks.forEach((item) => {
+    rows.push({ nome: item.nome, url: item.url });
+  });
+
+  renderCustomLinksLists();
+
   const tbody = rows.length
     ? rows
         .map(
@@ -569,6 +576,46 @@ function renderDocument() {
       </table>
     </div>
   `;
+}
+
+function renderCustomLinksLists() {
+  const html = state.customDocLinks.length
+    ? state.customDocLinks
+        .map(
+          (item, i) => `
+          <span class="badge badge-info" style="margin:3px 6px 3px 0; gap:6px;">
+            ${escapeHtml(item.nome)}
+            <button type="button" data-remove-extra="${i}" aria-label="Remover ${escapeHtml(item.nome)}" style="background:none;border:none;color:inherit;cursor:pointer;font-weight:700;padding:0 2px;">×</button>
+          </span>`
+        )
+        .join('')
+    : '';
+  if ($('docExtraList')) $('docExtraList').innerHTML = html;
+  if ($('wizExtraList')) $('wizExtraList').innerHTML = html;
+}
+
+function addCustomDocLink(nameInputId, urlInputId) {
+  const rawUrl = $(urlInputId).value.trim();
+  if (!rawUrl) {
+    showBanner('Cole o link (URL) antes de adicionar ao documento.', 'warn');
+    $(urlInputId).focus();
+    return;
+  }
+  const url = /^https?:\/\//i.test(rawUrl) ? rawUrl : `https://${rawUrl}`;
+  let nome = $(nameInputId).value.trim();
+  if (!nome) {
+    try {
+      const u = new URL(url);
+      nome = u.pathname.split('/').filter(Boolean).pop() || u.hostname;
+    } catch {
+      nome = 'Link Extra';
+    }
+  }
+  state.customDocLinks.push({ nome, url });
+  $(nameInputId).value = '';
+  $(urlInputId).value = '';
+  renderDocument();
+  showBanner(`Link "${nome}" adicionado ao documento!`, 'ok');
 }
 
 async function copyDocumentToClipboard() {
@@ -956,6 +1003,18 @@ function bindEvents() {
   });
   $('btnWizCopyDoc').addEventListener('click', copyDocumentToClipboard);
   $('btnWizDownloadWord').addEventListener('click', downloadWordDocument);
+  $('btnWizAddExtra').addEventListener('click', () => addCustomDocLink('wizExtraName', 'wizExtraUrl'));
+  $('btnDocAddExtra').addEventListener('click', () => addCustomDocLink('docExtraName', 'docExtraUrl'));
+
+  ['docExtraList', 'wizExtraList'].forEach((listId) => {
+    $(listId).addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-remove-extra]');
+      if (!btn) return;
+      const idx = Number(btn.dataset.removeExtra);
+      state.customDocLinks.splice(idx, 1);
+      renderDocument();
+    });
+  });
 
   // Painel Completo: Delegação na lista
   $('snackListContainer').addEventListener('click', (e) => {
