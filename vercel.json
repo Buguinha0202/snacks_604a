@@ -1,16 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "outputDirectory": "public",
-  "functions": {
-    "api/index.mjs": {
-      "maxDuration": 60,
-      "includeFiles": "data/catalogo-604a.json"
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/api/index.mjs"
-    }
-  ]
+  "outputDirectory": "public"
 }

@@ -1,0 +1,1130 @@
+export default {
+  "turma": "604A",
+  "total": 41,
+  "withCode": 41,
+  "snacks": [
+    {
+      "id": "legacy-1",
+      "name": "Hello World",
+      "nome": "Hello World",
+      "apelidos": [
+        "helloworld",
+        "olamundo"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/hello-world",
+      "origemUrl": "https://snack.expo.dev/@buu_2/hello-world",
+      "urlCriar": "https://snack.expo.dev/@buu_2/hello-world",
+      "pronto": false,
+      "code": "import {View, Text, Image, ScrollView, TextInput} from 'react-native'\n\nconst App = () => {\n  return (\n    <ScrollView>\n      <Text>Some text</Text>\n      <View>\n        <Text>Some more text</Text>\n        <Image\n          source = {{\n            uri: 'https://reactnative.dev/docs/assets/p_cat2.png',\n          }}\n          style={{width: 200, height: 200}}\n        />\n      </View>\n      <TextInput\n        style={{\n          height: 40,\n          borderColor: 'gray',\n          borderWidth: 1,\n        }}\n        defaultValue=\"You can type in me\"\n      />\n    </ScrollView>    \n  );\n};\nexport default App; ",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import {View, Text, Image, ScrollView, TextInput} from 'react-native'\n\nconst App = () => {\n  return (\n    <ScrollView>\n      <Text>Some text</Text>\n      <View>\n        <Text>Some more text</Text>\n        <Image\n          source = {{\n            uri: 'https://reactnative.dev/docs/assets/p_cat2.png',\n          }}\n          style={{width: 200, height: 200}}\n        />\n      </View>\n      <TextInput\n        style={{\n          height: 40,\n          borderColor: 'gray',\n          borderWidth: 1,\n        }}\n        defaultValue=\"You can type in me\"\n      />\n    </ScrollView>    \n  );\n};\nexport default App; "
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-2",
+      "name": "Hello world 2",
+      "nome": "Hello world 2",
+      "apelidos": [
+        "helloworld2",
+        "olamundo2"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/hello-world-2",
+      "origemUrl": "https://snack.expo.dev/@buu_2/hello-world-2",
+      "urlCriar": "https://snack.expo.dev/?name=Hello%20world%202&code=import%20React%20from%20'react'%0Aimport%20%7BStyleSheet%2C%20Text%2C%20View%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.title%7D%3EHello%20World%3C%2FText%3E%0A%20%20%20%20%20%20%20%3CText%3Ewith%20Expo.io%3C%2FText%3E%0A%20%20%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20flex%3A%201%2C%0A%20%20%20%20backgroundColor%3A'%235c5c5c'%2C%0A%20%20%20%20alignItems%3A%20'center'%2C%0A%20%20%20%20justifyContent%3A%20'center'%2C%0A%20%20%7D%2C%0A%20%20title%3A%7B%0A%20%20%20%20fontSize%3A27%0A%20%20%7D%0A%7D)%3B%0A",
+      "pronto": true,
+      "code": "import React from 'react'\nimport {StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.title}>Hello World</Text>\n       <Text>with Expo.io</Text>\n      </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    backgroundColor:'#5c5c5c',\n    alignItems: 'center',\n    justifyContent: 'center',\n  },\n  title:{\n    fontSize:27\n  }\n});\n",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react'\nimport {StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.title}>Hello World</Text>\n       <Text>with Expo.io</Text>\n      </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    backgroundColor:'#5c5c5c',\n    alignItems: 'center',\n    justifyContent: 'center',\n  },\n  title:{\n    fontSize:27\n  }\n});\n"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-3",
+      "name": "cores",
+      "nome": "cores",
+      "apelidos": [
+        "cor",
+        "colors"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/cores",
+      "origemUrl": "https://snack.expo.dev/@buu_2/cores",
+      "urlCriar": "https://snack.expo.dev/?name=cores&code=import%20React%20from%20'react'%3B%0Aimport%20%7BView%2C%20Text%7D%20from%20'react-native'%0A%0Aconst%20ViewBoxesWithColorAndText%20%3D%20()%20%3D%3E%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%0A%20%20%20%20%20%20style%3D%7B%7B%0A%20%20%20%20%20%20%20%20flexDirection%3A%20'row'%2C%0A%20%20%20%20%20%20%20%20height%3A%20100%2C%0A%20%20%20%20%20%20%20%20paddng%3A%2020%2C%0A%20%20%20%20%20%20%7D%7D%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7B%7BbackgroundColor%3A%20'blue'%2C%20flex%3A%200.3%7D%7D%20%2F%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7B%7BbackgroundColor%3A%20'red'%2C%20flex%3A%200.5%7D%7D%20%2F%3E%0A%20%20%20%20%20%20%3CText%3EHello%20World%3C%2FText%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%3B%0A%0Aexport%20default%20ViewBoxesWithColorAndText%3B",
+      "pronto": true,
+      "code": "import React from 'react';\nimport {View, Text} from 'react-native'\n\nconst ViewBoxesWithColorAndText = () => {\n  return (\n    <View\n      style={{\n        flexDirection: 'row',\n        height: 100,\n        paddng: 20,\n      }}>\n      <View style={{backgroundColor: 'blue', flex: 0.3}} />\n      <View style={{backgroundColor: 'red', flex: 0.5}} />\n      <Text>Hello World</Text>\n    </View>\n  );\n};\n\nexport default ViewBoxesWithColorAndText;",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport {View, Text} from 'react-native'\n\nconst ViewBoxesWithColorAndText = () => {\n  return (\n    <View\n      style={{\n        flexDirection: 'row',\n        height: 100,\n        paddng: 20,\n      }}>\n      <View style={{backgroundColor: 'blue', flex: 0.3}} />\n      <View style={{backgroundColor: 'red', flex: 0.5}} />\n      <Text>Hello World</Text>\n    </View>\n  );\n};\n\nexport default ViewBoxesWithColorAndText;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-4",
+      "name": "APP604a",
+      "nome": "APP604a",
+      "apelidos": [
+        "app604"
+      ],
+      "url": "https://snack.expo.dev/@rodrigorubim/app604a",
+      "origemUrl": "https://snack.expo.dev/@rodrigorubim/app604a",
+      "urlCriar": "https://snack.expo.dev/?name=APP604a&code=import%20React%20from%20'react'%0Aimport%20%7BView%2C%20Text%7D%20from%20'react-native'%0A%0Aconst%20App%20%3D()%20%3D%3E%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%3E%0A%0A%20%20%20%20%3CText%3EDia%20Mudou%3C%2FText%3E%0A%20%20%20%20%3CText%3E%20Luciano%20Guimaraes%20da%20Rocha%20%3C%2FText%3E%0A%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%0A%7D%0A%0Aexport%20default%20App%3B%20",
+      "pronto": true,
+      "code": "import React from 'react'\nimport {View, Text} from 'react-native'\n\nconst App =() => {\n  return (\n    <View>\n\n    <Text>Dia Mudou</Text>\n    <Text> Luciano Guimaraes da Rocha </Text>\n\n    </View>\n  )\n}\n\nexport default App; ",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react'\nimport {View, Text} from 'react-native'\n\nconst App =() => {\n  return (\n    <View>\n\n    <Text>Dia Mudou</Text>\n    <Text> Luciano Guimaraes da Rocha </Text>\n\n    </View>\n  )\n}\n\nexport default App; "
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-5",
+      "name": "604A",
+      "nome": "604A",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/604a",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604a",
+      "urlCriar": "https://snack.expo.dev/?name=604A&code=import%20React%2C%20%7B%20useState%20%7D%20from%20'react'%3B%0Aimport%20%7B%20View%2C%20Text%2C%20Button%2C%20%0AStyleSheet%20%7D%20from%20'react-native'%3B%0A%0Afunction%20App()%20%7B%0A%20%20const%20%5Bcontador%2C%20setContador%5D%20%3D%20useState(0)%3B%0A%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.text%7D%3EContador%3A%20%7Bcontador%7D%3C%2FText%3E%0A%20%20%20%20%20%20%3CButton%20title%3D%22Incrementar%22%20onPress%3D%7B()%20%3D%3E%20setContador((prevContador)%20%3D%3E%20prevContador%20%2B%201)%7D%2F%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20padding%3A%2020%2C%0A%20%20%7D%2C%0A%20%20text%3A%20%7B%0A%20%20%20%20fontSize%3A%2010%2C%0A%20%20%20%20marginBottom%3A%2010%2C%0A%20%20%7D%2C%0A%7D)%3B%0A%0Aexport%20default%20App%3B",
+      "pronto": true,
+      "code": "import React, { useState } from 'react';\nimport { View, Text, Button, \nStyleSheet } from 'react-native';\n\nfunction App() {\n  const [contador, setContador] = useState(0);\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.text}>Contador: {contador}</Text>\n      <Button title=\"Incrementar\" onPress={() => setContador((prevContador) => prevContador + 1)}/>\n    </View>\n  );\n}\n\nconst styles = StyleSheet({\n  container: {\n    padding: 20,\n  },\n  text: {\n    fontSize: 10,\n    marginBottom: 10,\n  },\n});\n\nexport default App;",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React, { useState } from 'react';\nimport { View, Text, Button, \nStyleSheet } from 'react-native';\n\nfunction App() {\n  const [contador, setContador] = useState(0);\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.text}>Contador: {contador}</Text>\n      <Button title=\"Incrementar\" onPress={() => setContador((prevContador) => prevContador + 1)}/>\n    </View>\n  );\n}\n\nconst styles = StyleSheet({\n  container: {\n    padding: 20,\n  },\n  text: {\n    fontSize: 10,\n    marginBottom: 10,\n  },\n});\n\nexport default App;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-6",
+      "name": "604A1",
+      "nome": "604A1",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/604a1",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604a1",
+      "urlCriar": "https://snack.expo.dev/?name=604A1&code=import%20React%20from%20'react'%0Aimport%20%7BView%2C%20Text%7D%20from%20'react-native'%0A%0Aconst%20App%20%3D()%20%3D%3E%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%3E%0A%0A%20%20%20%20%3CText%3EDia%20Mudou%3C%2FText%3E%0A%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%0A%7D%0A%0Aexport%20default%20App%3B",
+      "pronto": true,
+      "code": "import React from 'react'\nimport {View, Text} from 'react-native'\n\nconst App =() => {\n  return (\n    <View>\n\n    <Text>Dia Mudou</Text>\n\n    </View>\n  )\n}\n\nexport default App;",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react'\nimport {View, Text} from 'react-native'\n\nconst App =() => {\n  return (\n    <View>\n\n    <Text>Dia Mudou</Text>\n\n    </View>\n  )\n}\n\nexport default App;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-7",
+      "name": "604A2",
+      "nome": "604A2",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/604a2",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604a2",
+      "urlCriar": "https://snack.expo.dev/?name=604A2&code=import%20React%20from%20'react'%0Aimport%20%7BStyleSheet%2C%20Text%2C%20View%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.title%7D%3EHello%20World%3C%2FText%3E%0A%20%20%20%20%20%20%3CText%20style%20%3D%7Bstyles.titulo%7D%3ELuciano%20Rocha%3C%2FText%3E%0A%20%20%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20flex%3A%201%2C%0A%20%20%20%20backgroundColor%3A'%235c5c5c'%2C%0A%20%20%20%20alignItems%3A%20'center'%2C%0A%20%20%20%20justifyContent%3A%20'center'%2C%0A%20%20%7D%2C%0A%20%20title%3A%7B%0A%20%20%20%20fontSize%3A45%0A%20%20%7D%2C%0A%20%20titulo%3A%7BfontSize%3A25%7D%0A%7D)%3B",
+      "pronto": true,
+      "code": "import React from 'react'\nimport {StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.title}>Hello World</Text>\n      <Text style ={styles.titulo}>Luciano Rocha</Text>\n      </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    backgroundColor:'#5c5c5c',\n    alignItems: 'center',\n    justifyContent: 'center',\n  },\n  title:{\n    fontSize:45\n  },\n  titulo:{fontSize:25}\n});",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react'\nimport {StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.title}>Hello World</Text>\n      <Text style ={styles.titulo}>Luciano Rocha</Text>\n      </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    backgroundColor:'#5c5c5c',\n    alignItems: 'center',\n    justifyContent: 'center',\n  },\n  title:{\n    fontSize:45\n  },\n  titulo:{fontSize:25}\n});"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-8",
+      "name": "604A3",
+      "nome": "604A3",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/604a3",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604a3",
+      "urlCriar": "https://snack.expo.dev/@buu_2/604a3",
+      "pronto": false,
+      "code": "import {View, Text, Image, ScrollView, TextInput} from 'react-native'\n\nconst App = () => {\n  return (\n    <ScrollView>\n      <Text>Some text</Text>\n      <View>\n        <Text>Some more text</Text>\n        <Image\n          source = {{\n            uri: 'https://reactnative.dev/docs/assets/p_cat2.png',\n          }}\n          style={{width: 200, height: 200}}\n        />\n      </View>\n      <TextInput\n        style={{\n          height: 40,\n          borderColor: 'gray',\n          borderWidth: 1,\n        }}\n        defaultValue=\"You can type in me\"\n      />\n    </ScrollView>    \n  );\n};\nexport default App;",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import {View, Text, Image, ScrollView, TextInput} from 'react-native'\n\nconst App = () => {\n  return (\n    <ScrollView>\n      <Text>Some text</Text>\n      <View>\n        <Text>Some more text</Text>\n        <Image\n          source = {{\n            uri: 'https://reactnative.dev/docs/assets/p_cat2.png',\n          }}\n          style={{width: 200, height: 200}}\n        />\n      </View>\n      <TextInput\n        style={{\n          height: 40,\n          borderColor: 'gray',\n          borderWidth: 1,\n        }}\n        defaultValue=\"You can type in me\"\n      />\n    </ScrollView>    \n  );\n};\nexport default App;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-9",
+      "name": "604A4",
+      "nome": "604A4",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/604a4",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604a4",
+      "urlCriar": "https://snack.expo.dev/?name=604A4&code=import%20React%20from%20'react'%3B%0Aimport%20%7BView%2C%20Text%7D%20from%20'react-native'%0A%0Aconst%20ViewBoxesWithColorAndText%20%3D%20()%20%3D%3E%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%0A%20%20%20%20%20%20style%3D%7B%7B%0A%20%20%20%20%20%20%20%20flexDirection%3A%20'row'%2C%0A%20%20%20%20%20%20%20%20height%3A%20100%2C%0A%20%20%20%20%20%20%20%20paddng%3A%2020%2C%0A%20%20%20%20%20%20%7D%7D%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7B%7BbackgroundColor%3A%20'blue'%2C%20flex%3A%200.3%7D%7D%20%2F%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7B%7BbackgroundColor%3A%20'red'%2C%20flex%3A%200.5%7D%7D%20%2F%3E%0A%20%20%20%20%20%20%3CText%3EHello%20World%3C%2FText%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%3B%0A%0Aexport%20default%20ViewBoxesWithColorAndText%3B",
+      "pronto": true,
+      "code": "import React from 'react';\nimport {View, Text} from 'react-native'\n\nconst ViewBoxesWithColorAndText = () => {\n  return (\n    <View\n      style={{\n        flexDirection: 'row',\n        height: 100,\n        paddng: 20,\n      }}>\n      <View style={{backgroundColor: 'blue', flex: 0.3}} />\n      <View style={{backgroundColor: 'red', flex: 0.5}} />\n      <Text>Hello World</Text>\n    </View>\n  );\n};\n\nexport default ViewBoxesWithColorAndText;",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport {View, Text} from 'react-native'\n\nconst ViewBoxesWithColorAndText = () => {\n  return (\n    <View\n      style={{\n        flexDirection: 'row',\n        height: 100,\n        paddng: 20,\n      }}>\n      <View style={{backgroundColor: 'blue', flex: 0.3}} />\n      <View style={{backgroundColor: 'red', flex: 0.5}} />\n      <Text>Hello World</Text>\n    </View>\n  );\n};\n\nexport default ViewBoxesWithColorAndText;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-10",
+      "name": "604A6",
+      "nome": "604A6",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/604a6",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604a6",
+      "urlCriar": "https://snack.expo.dev/?name=604A6&code=import%20%7B%20StyleSheet%2C%20Button%2C%20Alert%20%7D%20from%20'react-native'%3B%0Aimport%20%7B%20SafeAreaView%2C%20SafeAreaProvider%20%7D%20from%20'react-native-safe-area-context'%3B%0A%0Aconst%20App%20%3D%20()%20%3D%3E%20%7B%0A%20%20const%20createTwoButtonAlert%20%3D%20()%20%3D%3E%0A%20%20%20%20Alert.alert('Alert%20Title'%2C%20'My%20Alert%20Msg'%2C%20%5B%0A%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20text%3A%20'Cancel'%2C%0A%20%20%20%20%20%20%20%20onPress%3A%20()%20%3D%3E%20console.log('Cancel%20pressed')%2C%0A%20%20%20%20%20%20%20%20style%3A%20'cancel'%2C%0A%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%7B%20text%3A%20'OK'%2C%20onPress%3A%20()%20%3D%3E%20console.log('OK%20Pressed')%20%7D%2C%0A%20%20%20%20%5D)%3B%0A%0A%20%20const%20createThreeButtonAlert%20%3D%20()%20%3D%3E%0A%20%20%20%20Alert.alert('Alert%20Title'%2C%20'My%20Alert%20Msg'%2C%20%5B%0A%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20text%3A%20'Ask%20me%20later'%2C%0A%20%20%20%20%20%20%20%20onPress%3A%20()%20%3D%3E%20console.log('Ask%20me%20later%20pressed')%2C%0A%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20text%3A%20'Cancel'%2C%0A%20%20%20%20%20%20%20%20onPress%3A%20()%20%3D%3E%20console.log('Cancel%20Pressed')%2C%0A%20%20%20%20%20%20%20%20style%3A%20'cancel'%2C%0A%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%7B%20text%3A%20'OK'%2C%20onPress%3A%20()%20%3D%3E%20console.log('OK%20Pressed')%20%7D%2C%0A%20%20%20%20%5D)%3B%0A%0A%20%20return%20(%0A%20%20%20%20%3CSafeAreaProvider%3E%0A%20%20%20%20%20%20%3CSafeAreaView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%20%20%3CButton%20title%3D%7B'2-Button%20Alert'%7D%20onPress%3D%7BcreateTwoButtonAlert%7D%20%2F%3E%0A%20%20%20%20%20%20%20%20%3CButton%20title%3D%7B'3-Button%20Alert'%7D%20onPress%3D%7BcreateThreeButtonAlert%7D%20%2F%3E%0A%20%20%20%20%20%20%3C%2FSafeAreaView%3E%0A%20%20%20%20%3C%2FSafeAreaProvider%3E%0A%20%20)%3B%0A%7D%3B%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20flex%3A%201%2C%0A%20%20%20%20justifyContent%3A%20'space-around'%2C%0A%20%20%20%20alignItems%3A%20'center'%2C%0A%20%20%7D%2C%0A%7D)%3B%0A%0Aexport%20default%20App%3B",
+      "pronto": true,
+      "code": "import { StyleSheet, Button, Alert } from 'react-native';\nimport { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';\n\nconst App = () => {\n  const createTwoButtonAlert = () =>\n    Alert.alert('Alert Title', 'My Alert Msg', [\n      {\n        text: 'Cancel',\n        onPress: () => console.log('Cancel pressed'),\n        style: 'cancel',\n      },\n      { text: 'OK', onPress: () => console.log('OK Pressed') },\n    ]);\n\n  const createThreeButtonAlert = () =>\n    Alert.alert('Alert Title', 'My Alert Msg', [\n      {\n        text: 'Ask me later',\n        onPress: () => console.log('Ask me later pressed'),\n      },\n      {\n        text: 'Cancel',\n        onPress: () => console.log('Cancel Pressed'),\n        style: 'cancel',\n      },\n      { text: 'OK', onPress: () => console.log('OK Pressed') },\n    ]);\n\n  return (\n    <SafeAreaProvider>\n      <SafeAreaView style={styles.container}>\n        <Button title={'2-Button Alert'} onPress={createTwoButtonAlert} />\n        <Button title={'3-Button Alert'} onPress={createThreeButtonAlert} />\n      </SafeAreaView>\n    </SafeAreaProvider>\n  );\n};\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    justifyContent: 'space-around',\n    alignItems: 'center',\n  },\n});\n\nexport default App;",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import { StyleSheet, Button, Alert } from 'react-native';\nimport { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';\n\nconst App = () => {\n  const createTwoButtonAlert = () =>\n    Alert.alert('Alert Title', 'My Alert Msg', [\n      {\n        text: 'Cancel',\n        onPress: () => console.log('Cancel pressed'),\n        style: 'cancel',\n      },\n      { text: 'OK', onPress: () => console.log('OK Pressed') },\n    ]);\n\n  const createThreeButtonAlert = () =>\n    Alert.alert('Alert Title', 'My Alert Msg', [\n      {\n        text: 'Ask me later',\n        onPress: () => console.log('Ask me later pressed'),\n      },\n      {\n        text: 'Cancel',\n        onPress: () => console.log('Cancel Pressed'),\n        style: 'cancel',\n      },\n      { text: 'OK', onPress: () => console.log('OK Pressed') },\n    ]);\n\n  return (\n    <SafeAreaProvider>\n      <SafeAreaView style={styles.container}>\n        <Button title={'2-Button Alert'} onPress={createTwoButtonAlert} />\n        <Button title={'3-Button Alert'} onPress={createThreeButtonAlert} />\n      </SafeAreaView>\n    </SafeAreaProvider>\n  );\n};\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    justifyContent: 'space-around',\n    alignItems: 'center',\n  },\n});\n\nexport default App;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-11",
+      "name": "604A7",
+      "nome": "604A7",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/604a7",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604a7",
+      "urlCriar": "https://snack.expo.dev/?name=604A7&code=import%20React%20from%20'react'%3B%0Aimport%20%7B%20View%2C%20StyleSheet%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box1%7D%20%2F%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box2%7D%20%2F%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box3%7D%20%2F%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20flex%3A%201%2C%0A%20%20%20%20flexDirection%3A%20'row'%2C%0A%20%20%20%20%2F%2FflexDirection%3A%20'column'%2C%0A%20%20%20%20%2F%2FflexDirection%3A%20'row-reverse'%2C%0A%20%20%20%20%2F%2FflexDirection%3A%20'column-reverse'%2C%0A%20%20%20%20%2F%2FjustifyContent%3A%20'space-around'%2C%0A%20%20%20%20%2F%2FjustifyContent%3A%20'center'%2C%0A%20%20%20%20%2F%2FjustifyContent%3A%20'flex-end'%2C%0A%20%20%20%20%2F%2FjustifyContent%3A%20'space-between'%2C%0A%20%20%20%20justifyContent%3A%20'space-evenly'%2C%0A%20%20%20%20%2F%2FalignItems%3A%20'center'%2C%0A%20%20%20%20%2F%2FalignItems%3A%20'flex-end'%2C%0A%20%20%20%20alignItems%3A%20'stretch'%2C%0A%20%20%20%20padding%3A%2020%2C%0A%20%20%20%20backgroundColor%3A%20'yellow'%2C%0A%20%20%7D%2C%0A%20%20box1%3A%20%7B%0A%20%20%20%20width%3A%2050%2C%0A%20%20%20%20height%3A%2050%2C%0A%20%20%20%20backgroundColor%3A%20'red'%2C%0A%20%20%7D%2C%0A%20%20box2%3A%20%7B%0A%20%20%20%20width%3A%2050%2C%0A%20%20%20%20height%3A%2050%2C%0A%20%20%20%20backgroundColor%3A%20'green'%2C%0A%20%20%7D%2C%0A%20%20box3%3A%20%7B%0A%20%20%20%20width%3A%2050%2C%0A%20%20%20%20height%3A%2050%2C%0A%20%20%20%20backgroundColor%3A%20'blue'%2C%0A%20%20%7D%2C%0A%7D)%3B",
+      "pronto": true,
+      "code": "import React from 'react';\nimport { View, StyleSheet } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <View style={styles.box1} />\n      <View style={styles.box2} />\n      <View style={styles.box3} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    flexDirection: 'row',\n    //flexDirection: 'column',\n    //flexDirection: 'row-reverse',\n    //flexDirection: 'column-reverse',\n    //justifyContent: 'space-around',\n    //justifyContent: 'center',\n    //justifyContent: 'flex-end',\n    //justifyContent: 'space-between',\n    justifyContent: 'space-evenly',\n    //alignItems: 'center',\n    //alignItems: 'flex-end',\n    alignItems: 'stretch',\n    padding: 20,\n    backgroundColor: 'yellow',\n  },\n  box1: {\n    width: 50,\n    height: 50,\n    backgroundColor: 'red',\n  },\n  box2: {\n    width: 50,\n    height: 50,\n    backgroundColor: 'green',\n  },\n  box3: {\n    width: 50,\n    height: 50,\n    backgroundColor: 'blue',\n  },\n});",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport { View, StyleSheet } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <View style={styles.box1} />\n      <View style={styles.box2} />\n      <View style={styles.box3} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    flexDirection: 'row',\n    //flexDirection: 'column',\n    //flexDirection: 'row-reverse',\n    //flexDirection: 'column-reverse',\n    //justifyContent: 'space-around',\n    //justifyContent: 'center',\n    //justifyContent: 'flex-end',\n    //justifyContent: 'space-between',\n    justifyContent: 'space-evenly',\n    //alignItems: 'center',\n    //alignItems: 'flex-end',\n    alignItems: 'stretch',\n    padding: 20,\n    backgroundColor: 'yellow',\n  },\n  box1: {\n    width: 50,\n    height: 50,\n    backgroundColor: 'red',\n  },\n  box2: {\n    width: 50,\n    height: 50,\n    backgroundColor: 'green',\n  },\n  box3: {\n    width: 50,\n    height: 50,\n    backgroundColor: 'blue',\n  },\n});"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-12",
+      "name": "604A8",
+      "nome": "604A8",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/604a8",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604a8",
+      "urlCriar": "https://snack.expo.dev/?name=604A8&code=import%20React%20from%20'react'%3B%0Aimport%20%7B%20View%2C%20StyleSheet%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20%20return%20(%0A%20%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20%20%20%20%20container%3A%20%7B%0A%20%20%20%20%20%20%20%20flex%3A%201%2C%0A%20%20%20%20%20%20%20%20flexDirection%3A%20'row'%2C%0A%20%20%20%20%20%20%20%20flexWrap%3A%20'wrap'%2C%0A%20%20%20%20%20%20%20%20justifyContent%3A%20'flex-start'%2C%0A%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20box%3A%20%7B%0A%20%20%20%20%20%20%20%20width%3A%2080%2C%0A%20%20%20%20%20%20%20%20height%3A%2080%2C%0A%20%20%20%20%20%20%20%20backgroundColor%3A%20'skyblue'%2C%0A%20%20%20%20%20%20%20%20margin%3A%205%2C%0A%20%20%20%20%20%20%7D%0A%7D)%3B",
+      "pronto": true,
+      "code": "import React from 'react';\nimport { View, StyleSheet} from 'react-native';\n\nexport default function App() {\n   return (\n     <View style={styles.container}>\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n     </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n      container: {\n        flex: 1,\n        flexDirection: 'row',\n        flexWrap: 'wrap',\n        justifyContent: 'flex-start',\n      },\n      box: {\n        width: 80,\n        height: 80,\n        backgroundColor: 'skyblue',\n        margin: 5,\n      }\n});",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport { View, StyleSheet} from 'react-native';\n\nexport default function App() {\n   return (\n     <View style={styles.container}>\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n     </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n      container: {\n        flex: 1,\n        flexDirection: 'row',\n        flexWrap: 'wrap',\n        justifyContent: 'flex-start',\n      },\n      box: {\n        width: 80,\n        height: 80,\n        backgroundColor: 'skyblue',\n        margin: 5,\n      }\n});"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-13",
+      "name": "604A9",
+      "nome": "604A9",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/604a9",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604a9",
+      "urlCriar": "https://snack.expo.dev/?name=604A9&code=import%20%7B%20StyleSheet%2C%20Text%2C%20View%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%3E%0A%20%20%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.text%7D%3EBox%201%3C%2FText%3E%0A%20%20%20%20%20%20%3C%2FView%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7B%5Bstyles.box%2C%20styles.alignSelfCenter%5D%7D%3E%0A%20%20%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.text%7D%3EBox%202%20(alignSelf%3A%20'center')%3C%2FText%3E%0A%20%20%20%20%20%20%3C%2FView%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%3E%0A%20%20%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.text%7D%3EBox%203%3C%2FText%3E%0A%20%20%20%20%20%20%3C%2FView%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7B%5Bstyles.box%2C%20styles.alignSelfflexEnd%5D%7D%3E%0A%20%20%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.text%7D%3EBox%204%20(alignSelf%3A%20'flex-end')%3C%2FText%3E%0A%20%20%20%20%20%20%3C%2FView%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20flex%3A%201%2C%0A%20%20%20%20justifyContent%3A%20'space-around'%2C%0A%20%20%20%20alignItems%3A%20'flex-start'%2C%20%0A%20%20%20%20padding%3A%208%2C%0A%20%20%7D%2C%0A%20%20box%3A%20%7B%0A%20%20%20%20width%3A%20100%2C%0A%20%20%20%20height%3A%2050%2C%0A%20%20%20%20backgroundColor%3A%20'lightblue'%2C%20%0A%20%20%20%20marginBottom%3A%2010%2C%20%0A%20%20%20%20justifyContent%3A%20'center'%2C%0A%20%20%7D%2C%0A%20%20text%3A%20%7B%0A%20%20%20%20textAlign%3A%20'center'%2C%0A%20%20%7D%2C%0A%20%20alignSelfCenter%3A%20%7B%0A%20%20%20%20alignSelf%3A%20'center'%2C%0A%20%20%7D%2C%0A%20%20alignSelfflexEnd%3A%20%7B%0A%20%20%20%20alignSelf%3A%20'flex-end'%2C%0A%20%20%7D%2C%0A%7D)%3B",
+      "pronto": true,
+      "code": "import { StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <View style={styles.box}>\n        <Text style={styles.text}>Box 1</Text>\n      </View>\n      <View style={[styles.box, styles.alignSelfCenter]}>\n        <Text style={styles.text}>Box 2 (alignSelf: 'center')</Text>\n      </View>\n      \n      <View style={styles.box}>\n        <Text style={styles.text}>Box 3</Text>\n      </View>\n      <View style={[styles.box, styles.alignSelfflexEnd]}>\n        <Text style={styles.text}>Box 4 (alignSelf: 'flex-end')</Text>\n      </View>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    justifyContent: 'space-around',\n    alignItems: 'flex-start', \n    padding: 8,\n  },\n  box: {\n    width: 100,\n    height: 50,\n    backgroundColor: 'lightblue', \n    marginBottom: 10, \n    justifyContent: 'center',\n  },\n  text: {\n    textAlign: 'center',\n  },\n  alignSelfCenter: {\n    alignSelf: 'center',\n  },\n  alignSelfflexEnd: {\n    alignSelf: 'flex-end',\n  },\n});",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import { StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <View style={styles.box}>\n        <Text style={styles.text}>Box 1</Text>\n      </View>\n      <View style={[styles.box, styles.alignSelfCenter]}>\n        <Text style={styles.text}>Box 2 (alignSelf: 'center')</Text>\n      </View>\n      \n      <View style={styles.box}>\n        <Text style={styles.text}>Box 3</Text>\n      </View>\n      <View style={[styles.box, styles.alignSelfflexEnd]}>\n        <Text style={styles.text}>Box 4 (alignSelf: 'flex-end')</Text>\n      </View>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    justifyContent: 'space-around',\n    alignItems: 'flex-start', \n    padding: 8,\n  },\n  box: {\n    width: 100,\n    height: 50,\n    backgroundColor: 'lightblue', \n    marginBottom: 10, \n    justifyContent: 'center',\n  },\n  text: {\n    textAlign: 'center',\n  },\n  alignSelfCenter: {\n    alignSelf: 'center',\n  },\n  alignSelfflexEnd: {\n    alignSelf: 'flex-end',\n  },\n});"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-14",
+      "name": "604Aview",
+      "nome": "604Aview",
+      "apelidos": [
+        "view1",
+        "604view"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604aview",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604aview",
+      "urlCriar": "https://snack.expo.dev/@buu_2/604aview",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import { StyleSheet, Text, View } from 'react-native';\n\nexport default function App(){\n  return(\n    <View style={styles.container}>\n    <Text> Olá, React Native</Text>\n    </View>\n  );\n}\n\nconst styles=StyleSheet.create({\n  container: {\n    flex: 1,\n    backgroundColor:'#9932cc',\n    alignItems:'center',\n    justifyContent: 'center',\n  },\n});  "
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        }
+      },
+      "dependencies": {
+        "@expo/vector-icons": {
+          "version": "^15.0.3"
+        },
+        "react-native-paper": {
+          "version": "4.9.2"
+        }
+      },
+      "sdkVersion": "54.0.0",
+      "description": "No description",
+      "fileCount": 4
+    },
+    {
+      "id": "legacy-15",
+      "name": "604Aview2",
+      "nome": "604Aview2",
+      "apelidos": [
+        "view2",
+        "604view2"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604aview2",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604aview2",
+      "urlCriar": "https://snack.expo.dev/@buu_2/604aview2",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import { StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text>Olá, React Native</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    alignItems: 'center',\n    justifyContent: 'center',\n    backgroundColor: '#9932cc',\n    },\n})  "
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        }
+      },
+      "dependencies": {
+        "@expo/vector-icons": {
+          "version": "^15.0.3"
+        },
+        "react-native-paper": {
+          "version": "4.9.2"
+        }
+      },
+      "sdkVersion": "54.0.0",
+      "description": "No description",
+      "fileCount": 4
+    },
+    {
+      "id": "legacy-16",
+      "name": "604Atext1",
+      "nome": "604Atext1",
+      "apelidos": [
+        "text1",
+        "texto1",
+        "604text1"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604atext1",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604atext1",
+      "urlCriar": "https://snack.expo.dev/?name=604Atext1&code=import%20React%20from%20'react'%0Aimport%20%7BStyleSheet%2C%20Text%2C%20View%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CText%3EOla%2C%20React%20Native!%3C%2FText%3E%0A%20%20%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20%20%20container%3A%20%7B%0A%20%20%20%20%20%20flex%3A%201%2C%0A%20%20%20%20%20%20alignItems%3A%20'center'%2C%0A%20%20%20%20%20%20justifyContent%3A%20'center'%2C%0A%20%20%20%20%20%20backgroundColor%3A'%239932cc'%2C%0A%20%20%20%20%20%20%7D%2C%0A%7D)%3B%0A%20",
+      "pronto": true,
+      "code": "import React from 'react'\nimport {StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text>Ola, React Native!</Text>\n      </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n    container: {\n      flex: 1,\n      alignItems: 'center',\n      justifyContent: 'center',\n      backgroundColor:'#9932cc',\n      },\n});\n ",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react'\nimport {StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text>Ola, React Native!</Text>\n      </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n    container: {\n      flex: 1,\n      alignItems: 'center',\n      justifyContent: 'center',\n      backgroundColor:'#9932cc',\n      },\n});\n "
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-17",
+      "name": "604Atext2",
+      "nome": "604Atext2",
+      "apelidos": [
+        "text2",
+        "texto2",
+        "604text2"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604text2",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604text2",
+      "urlCriar": "https://snack.expo.dev/@buu_2/604text2",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import { Text } from 'react-native';\n\nexport default function App() {\n  return (\n    <Text style = {{fontSize: 20, color: 'blue'}}>\n      Este é um exemplo de componente de texto.\n    </Text>\n  )\n}"
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        }
+      },
+      "dependencies": {
+        "@expo/vector-icons": {
+          "version": "^15.0.3"
+        },
+        "react-native-paper": {
+          "version": "4.9.2"
+        }
+      },
+      "sdkVersion": "54.0.0",
+      "description": "No description",
+      "fileCount": 4
+    },
+    {
+      "id": "legacy-18",
+      "name": "604Aimage2",
+      "nome": "604Aimage2",
+      "apelidos": [
+        "image2",
+        "image",
+        "imagem2",
+        "604image2"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604aimage2",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604aimage2",
+      "urlCriar": "https://snack.expo.dev/?name=604Aimage2&code=import%20%7B%20Image%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CImage%20source%3D%7B%7Buri%3A'https%3A%2F%2Freactnative.dev%2Fimg%2Ftiny_logo.png'%7D%7D%0A%20%20%20%20style%3D%7B%7Bwidth%3A%20100%2C%20height%3A%20100%7D%7D%2F%3E%0A%20%20)%3B%0A%7D",
+      "pronto": true,
+      "code": "import { Image } from 'react-native';\n\nexport default function App() {\n  return (\n    <Image source={{uri:'https://reactnative.dev/img/tiny_logo.png'}}\n    style={{width: 100, height: 100}}/>\n  );\n}",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import { Image } from 'react-native';\n\nexport default function App() {\n  return (\n    <Image source={{uri:'https://reactnative.dev/img/tiny_logo.png'}}\n    style={{width: 100, height: 100}}/>\n  );\n}"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-19",
+      "name": "604Ascrollview2",
+      "nome": "604Ascrollview2",
+      "apelidos": [
+        "scrollview",
+        "scrollview2",
+        "scroll"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604ascrollview",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604ascrollview",
+      "urlCriar": "https://snack.expo.dev/?name=604Ascrollview2&code=import%20%7B%20ScrollView%2C%20Text%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CScrollView%20style%3D%7B%7B%20marginTop%3A%2050%7D%7D%3E%0A%0A%20%20%20%20%20%20%3CText%3EItem%201%3C%2FText%3E%0A%20%20%20%20%20%20%3CText%3EItem%202%3C%2FText%3E%0A%20%20%20%20%20%20%3CText%3EItem%203%3C%2FText%3E%0A%0A%20%20%20%20%3C%2FScrollView%3E%0A%20%20)%3B%0A%7D",
+      "pronto": true,
+      "code": "import { ScrollView, Text } from 'react-native';\n\nexport default function App() {\n  return (\n    <ScrollView style={{ marginTop: 50}}>\n\n      <Text>Item 1</Text>\n      <Text>Item 2</Text>\n      <Text>Item 3</Text>\n\n    </ScrollView>\n  );\n}",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import { ScrollView, Text } from 'react-native';\n\nexport default function App() {\n  return (\n    <ScrollView style={{ marginTop: 50}}>\n\n      <Text>Item 1</Text>\n      <Text>Item 2</Text>\n      <Text>Item 3</Text>\n\n    </ScrollView>\n  );\n}"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-20",
+      "name": "604AtextInput2",
+      "nome": "604AtextInput2",
+      "apelidos": [
+        "textinput2",
+        "texinput2",
+        "input2"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604atextinput2",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604atextinput2",
+      "urlCriar": "https://snack.expo.dev/?name=604AtextInput2&code=import%20%7B%20View%2C%20TextInput%2C%20StyleSheet%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CTextInput%20style%3D%7Bstyles.input%7D%20placeholder%3D%22Digite%20aqui...%22%2F%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%0A%20%20container%3A%20%7B%0A%20%20%20%20flex%3A%201%2C%0A%20%20%20%20justifyContent%3A%20'center'%2C%0A%20%20%20%20padding%3A%2020%2C%0A%20%20%7D%2C%0A%0A%20%20input%3A%20%7B%0A%20%20%20%20borderWidth%3A%201%2C%0A%20%20%20%20borderColor%3A%20'gray'%2C%0A%20%20%20%20padding%3A%2010%2C%0A%20%20%20%20borderRadius%3A%205%2C%0A%20%20%7D%2C%0A%7D)%3B",
+      "pronto": true,
+      "code": "import { View, TextInput, StyleSheet } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <TextInput style={styles.input} placeholder=\"Digite aqui...\"/>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n\n  container: {\n    flex: 1,\n    justifyContent: 'center',\n    padding: 20,\n  },\n\n  input: {\n    borderWidth: 1,\n    borderColor: 'gray',\n    padding: 10,\n    borderRadius: 5,\n  },\n});",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import { View, TextInput, StyleSheet } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <TextInput style={styles.input} placeholder=\"Digite aqui...\"/>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n\n  container: {\n    flex: 1,\n    justifyContent: 'center',\n    padding: 20,\n  },\n\n  input: {\n    borderWidth: 1,\n    borderColor: 'gray',\n    padding: 10,\n    borderRadius: 5,\n  },\n});"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-21",
+      "name": "604AtextInput3",
+      "nome": "604AtextInput3",
+      "apelidos": [
+        "textinput3",
+        "texinput3",
+        "input3"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604atextinput3",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604atextinput3",
+      "urlCriar": "https://snack.expo.dev/@buu_2/604atextinput3",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport { Text, TextInput, View } from 'react-native';\n\nconst Nome = () => {\n  return (\n    <View>\n      <Text>Qual é o seu nome?</Text>\n      <TextInput\n        style={{\n          height: 40,\n          borderColor: 'gray',\n          borderWidth: 1,\n        }}\n        defaultValue=\"Informe o seu nome.\"\n      />\n    </View>\n  );\n};\n\nexport default Nome;"
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        }
+      },
+      "dependencies": {
+        "@expo/vector-icons": {
+          "version": "^15.0.3"
+        },
+        "react-native-paper": {
+          "version": "4.9.2"
+        }
+      },
+      "sdkVersion": "54.0.0",
+      "description": "No description",
+      "fileCount": 4
+    },
+    {
+      "id": "legacy-22",
+      "name": "604Aestilo1",
+      "nome": "604Aestilo1",
+      "apelidos": [
+        "estilo1",
+        "estilo",
+        "style1"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604aestilo1",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604aestilo1",
+      "urlCriar": "https://snack.expo.dev/@buu_2/604aestilo1",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport { View, Text, StyleSheet } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.text}>Olá, React Native!</Text>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    justifyContent: 'center',\n    alignItems: 'center',\n    backgroundColor: '#f0f0f0',\n  },\n  text: {\n    fontSize: 20,\n    color: 'blue',\n  },\n});"
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        }
+      },
+      "dependencies": {
+        "@expo/vector-icons": {
+          "version": "^15.0.3"
+        },
+        "react-native-paper": {
+          "version": "4.9.2"
+        }
+      },
+      "sdkVersion": "54.0.0",
+      "description": "No description",
+      "fileCount": 4
+    },
+    {
+      "id": "legacy-23",
+      "name": "604Abutton",
+      "nome": "604Abutton",
+      "apelidos": [
+        "button",
+        "botao"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604abutton",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604abutton",
+      "urlCriar": "https://snack.expo.dev/@buu_2/604abutton",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport { Button, View, Alert } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={{ marginTop: 50 }}>\n      <Button\n        title=\"Pressiona-me\"\n        onPress={() => Alert.alert('Botão pressionado')}\n      />\n    </View>\n  );\n}"
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        }
+      },
+      "dependencies": {
+        "@expo/vector-icons": {
+          "version": "^15.0.3"
+        },
+        "react-native-paper": {
+          "version": "4.9.2"
+        }
+      },
+      "sdkVersion": "54.0.0",
+      "description": "No description",
+      "fileCount": 4
+    },
+    {
+      "id": "legacy-24",
+      "name": "604Aitems",
+      "nome": "604Aitems",
+      "apelidos": [
+        "items",
+        "itens"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604aitems",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604aitems",
+      "urlCriar": "https://snack.expo.dev/?name=604Aitems&code=import%20%7B%20ScrollView%2C%20Text%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20%20%20%20return%20(%0A%20%20%20%20%20%20%20%3CScrollView%20style%3D%7B%7B%20marginTop%3A%2050%20%7D%7D%3E%0A%20%20%20%20%20%20%20%20%20%3CText%3E%20Item%201%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%3CText%3E%20Item%202%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%3CText%3E%20Item%203%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%3C%2FScrollView%3E%0A%20%20%20%20%20)%0A%7D",
+      "pronto": true,
+      "code": "import { ScrollView, Text } from 'react-native';\n\nexport default function App() {\n     return (\n       <ScrollView style={{ marginTop: 50 }}>\n         <Text> Item 1</Text>\n         <Text> Item 2</Text>\n         <Text> Item 3</Text>\n         </ScrollView>\n     )\n}",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import { ScrollView, Text } from 'react-native';\n\nexport default function App() {\n     return (\n       <ScrollView style={{ marginTop: 50 }}>\n         <Text> Item 1</Text>\n         <Text> Item 2</Text>\n         <Text> Item 3</Text>\n         </ScrollView>\n     )\n}"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-25",
+      "name": "604AonChangeText",
+      "nome": "604AonChangeText",
+      "apelidos": [
+        "onchangetext",
+        "changetext"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604aonchangetext",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604aonchangetext",
+      "urlCriar": "https://snack.expo.dev/@buu_2/604aonchangetext",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React, {useState} from 'react';\nimport {View, TextInput, Text} from 'react-native';\n\nconst App = () => {\n  const [inputValue, setInputValue] = useState('');\n\n  return (\n    <View>\n      <TextInput placeholder='Digite algo' onChangeText = {(text) => setInputValue(text)}\n      style ={{borderColor: 'gray', borderrWidth: 1, padding: 10,}} />\n      <Text> Você digitou: {inputValue}</Text>\n    </View>\n  );\n};\n\nexport default App;"
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        }
+      },
+      "dependencies": {
+        "@expo/vector-icons": {
+          "version": "*"
+        },
+        "react-native-paper": {
+          "version": "4.9.2"
+        }
+      },
+      "sdkVersion": "56.0.0",
+      "description": "No description",
+      "fileCount": 4
+    },
+    {
+      "id": "legacy-26",
+      "name": "604Aonpress",
+      "nome": "604Aonpress",
+      "apelidos": [
+        "onpress",
+        "press"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604aonpress",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604aonpress",
+      "urlCriar": "https://snack.expo.dev/@buu_2/604aonpress",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport { Text, View, Button, Alert } from 'react-native';\n\nconst App = () => {\n  const handlePress = () => {\n    Alert.alert('Botão pressionado!');\n    console.log('Botão pressionado!');\n  };\n  return (\n    <View>\n      <Text>AAAAAAAAAAAAAAAAAAAAA</Text>\n      <Text>AAAAAAAAAAAAAAAAAAAAA</Text>\n      <Text>AAAAAAAAAAAAAAAAAAAAA</Text>\n      <Text>AAAAAAAAAAAAAAAAAAAAA</Text>\n      <Button title='Pressiona-me' onPress={handlePress} />\n    </View>\n  );\n};\n\nexport default App;"
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        }
+      },
+      "dependencies": {
+        "@expo/vector-icons": {
+          "version": "^15.0.2"
+        },
+        "react-native-paper": {
+          "version": "4.9.2"
+        }
+      },
+      "sdkVersion": "56.0.0",
+      "description": "No description",
+      "fileCount": 4
+    },
+    {
+      "id": "legacy-27",
+      "name": "604AperfilUsuario",
+      "nome": "604AperfilUsuario",
+      "apelidos": [
+        "604perfilusuario",
+        "perfilusuario1"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604aperfilusuario",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604aperfilusuario",
+      "urlCriar": "https://snack.expo.dev/@buu_2/604aperfilusuario",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React, { useState } from 'react';\nimport { View, Text, Button, StyleSheet } from 'react-native';\n\nfunction App() {\n  const [usuario, setUsuario] = useState({\n    nome: 'João',\n    idade: 25,\n    cidade: 'São Paulo',\n  });\n\n  const atualizarCidade = () => {\n    setUsuario((prevUsuario) => ({\n      ...prevUsuario,\n      idade: 30,\n      cidade: 'Rio de Janeiro',\n    }));\n  };\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.text}>Nome: {usuario.nome}</Text>\n      <Text style={styles.text}>Idade: {usuario.idade}</Text>\n      <Text style={styles.text}>Cidade: {usuario.cidade}</Text>\n      <Button title='Mudar cidade' onPress={atualizarCidade} color='#841584'/>\n    </View>\n  );\n}\n\nconst styles = StyleSheet({\n  container: {\n    padding: 20,\n    alignItems: 'flex-start',\n  },\n  text: {\n    fontSize: 16,\n    marginBottom: 5,\n  },\n})\n\nexport default App;"
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        }
+      },
+      "dependencies": {
+        "@expo/vector-icons": {
+          "version": "^15.0.2"
+        },
+        "react-native-paper": {
+          "version": "4.9.2"
+        }
+      },
+      "sdkVersion": "56.0.0",
+      "description": "No description",
+      "fileCount": 4
+    },
+    {
+      "id": "legacy-28",
+      "name": "605AperfilUsuario",
+      "nome": "605AperfilUsuario",
+      "apelidos": [
+        "605perfilusuario",
+        "605perfil"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/605aperfilusuario",
+      "origemUrl": "https://snack.expo.dev/@buu_2/605aperfilusuario",
+      "urlCriar": "https://snack.expo.dev/@buu_2/605aperfilusuario",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React, { useState } from 'react';\nimport { View, Text, Button, StyleSheet } from 'react-native';\n\nfunction App() {\n  const [usuario, setUsuario] = useState({\n    nome: 'João',\n    idade: 25,\n    cidade: 'São Paulo',\n  });\n\n  const atualizarCidade = () => {\n    setUsuario((prevUsuario) => ({\n      ...prevUsuario,\n      idade: 30,\n      cidade: 'Rio de Janeiro',\n    }));\n  };\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.text}>Nome: {usuario.nome}</Text>\n      <Text style={styles.text}>Idade: {usuario.idade}</Text>\n      <Text style={styles.text}>Cidade: {usuario.cidade}</Text>\n      <Button title='Mudar cidade' onPress={atualizarCidade} color='#841584'/>\n    </View>\n  );\n}\n\nconst styles = StyleSheet({\n  container: {\n    padding: 20,\n    alignItems: 'flex-start',\n  },\n  text: {\n    fontSize: 16,\n    marginBottom: 5,\n  },\n})\n\nexport default App; "
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        }
+      },
+      "dependencies": {
+        "@expo/vector-icons": {
+          "version": "^15.0.3"
+        },
+        "react-native-paper": {
+          "version": "4.9.2"
+        }
+      },
+      "sdkVersion": "54.0.0",
+      "description": "No description",
+      "fileCount": 4
+    },
+    {
+      "id": "legacy-29",
+      "name": "604AestadoValorAnterior",
+      "nome": "604AestadoValorAnterior",
+      "apelidos": [
+        "estadovaloranterior",
+        "valoranterior"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604aestadovaloranterior",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604aestadovaloranterior",
+      "urlCriar": "https://snack.expo.dev/?name=604AestadoValorAnterior&code=import%20React%2C%20%7B%20useState%20%7D%20from%20'react'%3B%0Aimport%20%7B%20View%2C%20Text%2C%20Button%2C%20%0AStyleSheet%20%7D%20from%20'react-native'%3B%0A%0Afunction%20App()%20%7B%0A%20%20const%20%5Bcontador%2C%20setContador%5D%20%3D%20useState(0)%3B%0A%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.text%7D%3EContador%3A%20%7Bcontador%7D%3C%2FText%3E%0A%20%20%20%20%20%20%3CButton%20title%3D%22Incrementar%22%20onPress%3D%7B()%20%3D%3E%20setContador((prevContador)%20%3D%3E%20prevContador%20%2B%201)%7D%2F%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20padding%3A%2020%2C%0A%20%20%7D%2C%0A%20%20text%3A%20%7B%0A%20%20%20%20fontSize%3A%2010%2C%0A%20%20%20%20marginBottom%3A%2010%2C%0A%20%20%7D%2C%0A%7D)%3B%0A%0Aexport%20default%20App%3B",
+      "pronto": true,
+      "code": "import React, { useState } from 'react';\nimport { View, Text, Button, \nStyleSheet } from 'react-native';\n\nfunction App() {\n  const [contador, setContador] = useState(0);\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.text}>Contador: {contador}</Text>\n      <Button title=\"Incrementar\" onPress={() => setContador((prevContador) => prevContador + 1)}/>\n    </View>\n  );\n}\n\nconst styles = StyleSheet({\n  container: {\n    padding: 20,\n  },\n  text: {\n    fontSize: 10,\n    marginBottom: 10,\n  },\n});\n\nexport default App;",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React, { useState } from 'react';\nimport { View, Text, Button, \nStyleSheet } from 'react-native';\n\nfunction App() {\n  const [contador, setContador] = useState(0);\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.text}>Contador: {contador}</Text>\n      <Button title=\"Incrementar\" onPress={() => setContador((prevContador) => prevContador + 1)}/>\n    </View>\n  );\n}\n\nconst styles = StyleSheet({\n  container: {\n    padding: 20,\n  },\n  text: {\n    fontSize: 10,\n    marginBottom: 10,\n  },\n});\n\nexport default App;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-30",
+      "name": "604Acfhooks",
+      "nome": "604Acfhooks",
+      "apelidos": [
+        "cfhooks",
+        "hooks"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604acfhooks",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604acfhooks",
+      "urlCriar": "https://snack.expo.dev/?name=604Acfhooks&code=import%20React%2C%20%7B%20useState%20%7D%20from%20'react'%3B%0Aimport%20%7B%20View%2C%20Text%2C%20Button%2C%20StyleSheet%20%7D%20from%20'react-native'%3B%0A%0Afunction%20Contador()%20%7B%0A%20%20const%20%5Bcontador%2C%20setContador%5D%20%3D%20useState(0)%3B%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.text%7D%3E%0A%20%20%20%20%20%20%20%20Contador%3A%20%7Bcontador%7D%0A%20%20%20%20%20%20%3C%2FText%3E%0A%20%20%20%20%20%20%3CButton%20title%3D%22Incrementar%22%20onPress%3D%7B()%20%3D%3E%20setContador(contador%20%2B%201)%7D%20%2F%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20padding%3A%2020%2C%0A%20%20%7D%2C%0A%20%20text%3A%20%7B%0A%20%20%20%20fontSize%3A%2040%2C%0A%20%20%20%20marginBottom%3A%2010%2C%0A%20%20%7D%2C%0A%7D)%3B%0A%0Aexport%20default%20Contador%3B",
+      "pronto": true,
+      "code": "import React, { useState } from 'react';\nimport { View, Text, Button, StyleSheet } from 'react-native';\n\nfunction Contador() {\n  const [contador, setContador] = useState(0);\n  return (\n    <View style={styles.container}>\n      <Text style={styles.text}>\n        Contador: {contador}\n      </Text>\n      <Button title=\"Incrementar\" onPress={() => setContador(contador + 1)} />\n    </View>\n  );\n}\nconst styles = StyleSheet.create({\n  container: {\n    padding: 20,\n  },\n  text: {\n    fontSize: 40,\n    marginBottom: 10,\n  },\n});\n\nexport default Contador;",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React, { useState } from 'react';\nimport { View, Text, Button, StyleSheet } from 'react-native';\n\nfunction Contador() {\n  const [contador, setContador] = useState(0);\n  return (\n    <View style={styles.container}>\n      <Text style={styles.text}>\n        Contador: {contador}\n      </Text>\n      <Button title=\"Incrementar\" onPress={() => setContador(contador + 1)} />\n    </View>\n  );\n}\nconst styles = StyleSheet.create({\n  container: {\n    padding: 20,\n  },\n  text: {\n    fontSize: 40,\n    marginBottom: 10,\n  },\n});\n\nexport default Contador;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-31",
+      "name": "604A17titulo",
+      "nome": "604A17titulo",
+      "apelidos": [
+        "17titulo",
+        "titulo17",
+        "aula17"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604a17titulo",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604a17titulo",
+      "urlCriar": "https://snack.expo.dev/@buu_2/604a17titulo",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport { Text, StyleSheet, View } from 'react-native';\n\nfunction Titulo(props) {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.text}>Informação, {props.info}</Text>\n    </View>\n  );\n}\n\nfunction App() {\n  return (\n    <View>\n      <Titulo info=\"Os alunos Teresina central da turma 604A compareceram no ENEM 2026\" />\n      <Titulo info=\"Todos gostaram do tema da redação\" />\n      <Titulo info=\"Agora eles estão aguardando o segundo dia de prova com empolgação\" />\n    </View>\n  );\n}\nconst styles = StyleSheet.create({\n  container: {\n    padding: 20,\n    alignItems: 'center',\n  },\n  text: {\n    fontSize: 24,\n  },\n});\n\nexport default App;\n  "
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        }
+      },
+      "dependencies": {
+        "@expo/vector-icons": {
+          "version": "^15.0.3"
+        },
+        "react-native-paper": {
+          "version": "4.9.2"
+        }
+      },
+      "sdkVersion": "54.0.0",
+      "description": "No description",
+      "fileCount": 4
+    },
+    {
+      "id": "legacy-32",
+      "name": "cadastro",
+      "nome": "cadastro",
+      "apelidos": [
+        "formcadastro"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/cadastro",
+      "origemUrl": "https://snack.expo.dev/@buu_2/cadastro",
+      "urlCriar": "https://snack.expo.dev/@buu_2/cadastro",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport {\n  View,\n  Text,\n  TextInput,\n  StyleSheet,\n  ScrollView,\n  StatusBar,\n  Button,\n  Alert,\n} from 'react-native';\n\nexport default function App() {\n  return (\n    <ScrollView contentContainerStyle={styles.container}>\n      <StatusBar backgroundColor=\"#eeeeee\" barStyle=\"dark-content\" />\n      <View style={styles.formulario}>\n        <Text style={styles.titulo}>COLETANDO DADOS DE USUÁRIO</Text>\n\n        <Text style={styles.label}>Nome Completo</Text>\n        <TextInput style={styles.input} placeholder=\"Seu nome\" />\n\n        <Text style={styles.label}>Email</Text>\n        <TextInput\n          style={styles.input}\n          placeholder=\"Seu email\"\n          keyboardType=\"email-address\"\n        />\n\n        <Text style={styles.label}>Celular</Text>\n        <TextInput\n          style={styles.input}\n          placeholder=\"Seu celular\"\n          keyboardType=\"phone-pad\"\n        />\n\n        <Text style={styles.label}>Cidade</Text>\n        <TextInput style={styles.input} placeholder=\"Sua cidade\" />\n\n        <Text style={styles.label}>Senha</Text>\n        <TextInput\n          style={styles.input}\n          placeholder=\"Sua senha\"\n          secureTextEntry={true}\n        />\n\n        <Text style={styles.label}>Confirmar senha</Text>\n        <TextInput\n          style={styles.input}\n          placeholder=\"Confirme sua senha aqui\"\n          secureTextEntry={true}\n        />\n\n        <Button\n          title=\"salvar\"\n          onPress={() => Alert.alert('Botão pressionado!')}\n        />\n      </View>\n    </ScrollView>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flexGrow: 1,\n    backgroundColor: '#eeeeee',\n    justifyContent: 'center',\n    alignItems: 'center',\n    padding: 20,\n  },\n\n  formulario: {\n    width: '100%',\n    backgroundColor: '#ffffff',\n    padding: 20,\n    borderRadius: 5,\n    elevation: 3,\n  },\n\n  titulo: {\n    fontSize: 19,\n    fontWeight: 'bold',\n    textAlign: 'center',\n    marginBottom: 30,\n    color: '#333333',\n  },\n\n  label: {\n    fontSize: 16,\n    fontWeight: 'bold',\n    marginBottom: 10,\n    marginTop: 5,\n    color: '#333333',\n  },\n\n  input: {\n    width: '100%',\n    height: 52,\n    borderWidth: 1.5,\n    borderColor: '#777777',\n    paddingHorizontal: 15,\n    marginBottom: 12,\n    fontSize: 16,\n    background: '#ffffff',\n  },\n});  \n"
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        }
+      },
+      "dependencies": {
+        "@expo/vector-icons": {
+          "version": "^15.0.3"
+        },
+        "react-native-paper": {
+          "version": "4.9.2"
+        }
+      },
+      "sdkVersion": "54.0.0",
+      "description": "No description",
+      "fileCount": 4
+    },
+    {
+      "id": "legacy-33",
+      "name": "604Awelcome",
+      "nome": "604Awelcome",
+      "apelidos": [
+        "welcome",
+        "boasvindas"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/604awelcome",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604awelcome",
+      "urlCriar": "https://snack.expo.dev/@buu_2/604awelcome",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react'\nimport {Text,View} from 'react-native'\n\nfunction Welcome(props) {\n    return<Text>Olá{props.name}</Text>\n}\n\nfunction App() {\n    return(\n        <View>\n            <Welcome name=\"Bom Dia\"/>\n            <Welcome name=\"Bom Tarde\"/>\n            <Welcome name=\"Bom Noite\"/>\n        </View>\n    );\n}\n\n\nexport default App;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "56.0.0",
+      "description": "No description",
+      "fileCount": 1
+    },
+    {
+      "id": "legacy-34",
+      "name": "app1",
+      "nome": "app1",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/app1",
+      "origemUrl": "https://snack.expo.dev/@buu_2/app1",
+      "urlCriar": "https://snack.expo.dev/@buu_2/app1",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "const MeuComponente {\n    return (\n        <View>\n        <Text> Olá</Text>\n        <Text>O</Text>\n        </View>\n    );\n}    \n\nfunction App() {\n    return (\n        <View>\n            <MeuComponente/>\n        </View>\n    );\n}"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "56.0.0",
+      "description": "No description",
+      "fileCount": 1
+    },
+    {
+      "id": "legacy-35",
+      "name": "app3",
+      "nome": "app3",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/app3",
+      "origemUrl": "https://snack.expo.dev/@buu_2/app3",
+      "urlCriar": "https://snack.expo.dev/@buu_2/app3",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react'\nimport {Text,View,StyleSheet} from 'react-native';\n\nfunction Saudacao(props) {\n    return{\n        <View style={styles.container}>\n            <Text style{styles.text}>Olá,{props.name}</Text>\n        </View>\n    };\n}\n\nfunction App() {\n    return(\n        <View>\n            <Saudacao name=\"Bom Dia\"/>\n            <Saudacao name=\"Bom Tarde\"/>\n            <Saudacao name=\"Bom Noite\"/>\n        </View>\n    );\n}\n\nconst styles = StyleSheet.create({\n    container: {\n        padding:20,\n        alignItems:'center',\n    },\n    text: {\n        fontSize: 24,\n    },\n});\nexport default App;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "56.0.0",
+      "description": "No description",
+      "fileCount": 1
+    },
+    {
+      "id": "legacy-36",
+      "name": "app4",
+      "nome": "app4",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/app4",
+      "origemUrl": "https://snack.expo.dev/@buu_2/app4",
+      "urlCriar": "https://snack.expo.dev/?name=app4&code=import%20React%20from%20'react'%3B%0Aimport%20%7BText%7D%20from%20'react-native'%3B%0Aconst%20Cat%20%3D%20()%20%3D%3E%20%7B%0A%20%20%20%20const%20name%20%3D%20%22Maru%22%3B%0A%20%20%20%20return%20%3CText%3E%20Hello%2C%20I%20am%20%7Bname%7D!%3C%2FText%3E%0A%7D%0Aexport%20default%20Cat%3B",
+      "pronto": true,
+      "code": "import React from 'react';\nimport {Text} from 'react-native';\nconst Cat = () => {\n    const name = \"Maru\";\n    return <Text> Hello, I am {name}!</Text>\n}\nexport default Cat;",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport {Text} from 'react-native';\nconst Cat = () => {\n    const name = \"Maru\";\n    return <Text> Hello, I am {name}!</Text>\n}\nexport default Cat;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-37",
+      "name": "app5",
+      "nome": "app5",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/app5",
+      "origemUrl": "https://snack.expo.dev/@buu_2/app5",
+      "urlCriar": "https://snack.expo.dev/?name=app5&code=import%20%7BView%2C%20Image%2C%20StyleSheet%2C%20Txet%2C%20ScrollView%7D%20from%20'react-native'%3B%0Aimport%20%7BSafeAreaView%2C%20SafeAreaProvider%7D%20from%20'react-native-safe-area-context'%3B%0A%0Aconst%20asset%20%3D%20require('%40expo%2Fsnack-static%2Freact-native-logo.png')%3B%0A%0Aconst%20DisplayAnImageWithStyle%20%3D%20()%20%3D%3E%20(%0A%20%20%20%20%3CSafeAreaProvider%3E%0A%20%20%20%20%20%20%20%20%3CSafeAreaview%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3CScrollView%20style%3D%7Bstyles.scrollView%7D%3E%0A%0A%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CView%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CImage%20style%3D%7B%5Bstyles.image%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%20borderTopRightRadius%3A%2020%7D%5D%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20source%3D%7Basset%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CText%3EborderTopRightRadius%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FView%3E%0A%0A%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CView%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CImage%20style%3D%7B%5Bstyles.image%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%20borderBottomRightRadius%3A%2020%7D%5D%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20source%3D%7Basset%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CText%3EborderBottomRightRadius%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FView%3E%0A%0A%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CView%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CImage%20style%3D%7B%5Bstyles.image%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%20borderBottomLeftRadius%3A%2020%7D%5D%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20source%3D%7Basset%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CText%3EborderBottomLeftRadius%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FView%3E%0A%0A%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CView%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CImage%20style%3D%7B%5Bstyles.image%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%20borderTopLeftRadius%3A%2020%7D%5D%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20source%3D%7Basset%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CText%3EborderTopLeftRadius%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FView%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FScrollView%3E%0A%20%20%20%20%20%20%20%20%3C%2FSafeAreaview%3E%0A%20%20%20%20%3C%2FSafeAreaProvider%3E%0A)%0A%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20%20%20container%3A%20%7B%0A%20%20%20%20%20%20%20%20flex%3A%201%2C%0A%20%20%20%20%7D%2C%0A%20%20%20%20scrollView%3A%7B%0A%20%20%20%20%20%20%20%20flex%3A%201%2C%0A%20%20%20%20%20%20%20%20justifyContent%3A%20'center'%2C%0A%20%20%20%20%20%20%20%20alignItems%3A%20'center'%2C%0A%20%20%20%20%7D%2C%0A%20%20%20%20image%3A%7B%0A%20%20%20%20%20%20%20%20borderWidth%3A%201%2C%0A%20%20%20%20%20%20%20%20borderColor%3A%20'red'%2C%0A%20%20%20%20%20%20%20%20height%3A%20100%2C%0A%20%20%20%20%20%20%20%20width%3A%20200%2C%0A%20%20%20%20%7D%2C%0A%7D)%3B%0A%0Aexport%20default%20DisplayAnImageWithStyle%3B",
+      "pronto": true,
+      "code": "import {View, Image, StyleSheet, Txet, ScrollView} from 'react-native';\nimport {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';\n\nconst asset = require('@expo/snack-static/react-native-logo.png');\n\nconst DisplayAnImageWithStyle = () => (\n    <SafeAreaProvider>\n        <SafeAreaview style={styles.container}>\n            <ScrollView style={styles.scrollView}>\n\n\n\n                <View>\n                    <Image style={[styles.image,\n                       { borderTopRightRadius: 20}]}\n                            source={asset}\n                    />\n                    <Text>borderTopRightRadius</Text>\n                </View>\n\n\n\n                <View>\n                    <Image style={[styles.image,\n                       { borderBottomRightRadius: 20}]}\n                            source={asset}\n                    />\n                    <Text>borderBottomRightRadius</Text>\n                </View>\n\n\n\n                <View>\n                    <Image style={[styles.image,\n                       { borderBottomLeftRadius: 20}]}\n                            source={asset}\n                    />\n                    <Text>borderBottomLeftRadius</Text>\n                </View>\n\n\n\n                <View>\n                    <Image style={[styles.image,\n                       { borderTopLeftRadius: 20}]}\n                            source={asset}\n                    />\n                    <Text>borderTopLeftRadius</Text>\n                </View>\n                \n\n\n            </ScrollView>\n        </SafeAreaview>\n    </SafeAreaProvider>\n)\n\n\nconst styles = StyleSheet.create({\n    container: {\n        flex: 1,\n    },\n    scrollView:{\n        flex: 1,\n        justifyContent: 'center',\n        alignItems: 'center',\n    },\n    image:{\n        borderWidth: 1,\n        borderColor: 'red',\n        height: 100,\n        width: 200,\n    },\n});\n\nexport default DisplayAnImageWithStyle;",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import {View, Image, StyleSheet, Txet, ScrollView} from 'react-native';\nimport {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';\n\nconst asset = require('@expo/snack-static/react-native-logo.png');\n\nconst DisplayAnImageWithStyle = () => (\n    <SafeAreaProvider>\n        <SafeAreaview style={styles.container}>\n            <ScrollView style={styles.scrollView}>\n\n\n\n                <View>\n                    <Image style={[styles.image,\n                       { borderTopRightRadius: 20}]}\n                            source={asset}\n                    />\n                    <Text>borderTopRightRadius</Text>\n                </View>\n\n\n\n                <View>\n                    <Image style={[styles.image,\n                       { borderBottomRightRadius: 20}]}\n                            source={asset}\n                    />\n                    <Text>borderBottomRightRadius</Text>\n                </View>\n\n\n\n                <View>\n                    <Image style={[styles.image,\n                       { borderBottomLeftRadius: 20}]}\n                            source={asset}\n                    />\n                    <Text>borderBottomLeftRadius</Text>\n                </View>\n\n\n\n                <View>\n                    <Image style={[styles.image,\n                       { borderTopLeftRadius: 20}]}\n                            source={asset}\n                    />\n                    <Text>borderTopLeftRadius</Text>\n                </View>\n                \n\n\n            </ScrollView>\n        </SafeAreaview>\n    </SafeAreaProvider>\n)\n\n\nconst styles = StyleSheet.create({\n    container: {\n        flex: 1,\n    },\n    scrollView:{\n        flex: 1,\n        justifyContent: 'center',\n        alignItems: 'center',\n    },\n    image:{\n        borderWidth: 1,\n        borderColor: 'red',\n        height: 100,\n        width: 200,\n    },\n});\n\nexport default DisplayAnImageWithStyle;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-38",
+      "name": "app10",
+      "nome": "app10",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/app10",
+      "origemUrl": "https://snack.expo.dev/@buu_2/app10",
+      "urlCriar": "https://snack.expo.dev/?name=app10&code=import%20React%20from%20'react'%3B%0Aimport%20%7BView%2C%20TouchableOpacity%2C%20Text%7D%20from%20'react-native'%3B%0A%0Aconst%20App%20%3D%20()%20%3D%3E%20%7B%0A%20%20%20%20const%20handleLongPress%20%3D%20()%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20console.log('Pressionado%20por%20um%20tempo%20longo')%3B%0A%20%20%20%20%7D%3B%0A%20%20%20%20const%20handlePress%20%3D%20()%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20console.log('Pressionado%20rapidamente')%3B%0A%20%20%20%20%7D%3B%0A%20%20%20%20return%20(%0A%20%20%20%20%20%20%20%20%3CView%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3CTouchableOpacity%20onPress%3D%7BhandlePress%7D%20onLongPress%3D%7BhandleLongPress%7D%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CText%20style%20%3D%7B%7B%20padding%3A%2020%2C%20backgroundColor%3A%20'%23ddd'%7D%7D%3EPressiona-me%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FTouchableOpacity%3E%0A%20%20%20%20%20%20%20%20%3C%2FView%3E%0A%20%20%20%20)%3B%0A%7D%3B%0A%0Aexport%20default%20App%3B",
+      "pronto": true,
+      "code": "import React from 'react';\nimport {View, TouchableOpacity, Text} from 'react-native';\n\nconst App = () => {\n    const handleLongPress = () => {\n        console.log('Pressionado por um tempo longo');\n    };\n    const handlePress = () => {\n        console.log('Pressionado rapidamente');\n    };\n    return (\n        <View>\n            <TouchableOpacity onPress={handlePress} onLongPress={handleLongPress}>\n                <Text style ={{ padding: 20, backgroundColor: '#ddd'}}>Pressiona-me</Text>\n            </TouchableOpacity>\n        </View>\n    );\n};\n\nexport default App;",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport {View, TouchableOpacity, Text} from 'react-native';\n\nconst App = () => {\n    const handleLongPress = () => {\n        console.log('Pressionado por um tempo longo');\n    };\n    const handlePress = () => {\n        console.log('Pressionado rapidamente');\n    };\n    return (\n        <View>\n            <TouchableOpacity onPress={handlePress} onLongPress={handleLongPress}>\n                <Text style ={{ padding: 20, backgroundColor: '#ddd'}}>Pressiona-me</Text>\n            </TouchableOpacity>\n        </View>\n    );\n};\n\nexport default App;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-39",
+      "name": "app11",
+      "nome": "app11",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/app11",
+      "origemUrl": "https://snack.expo.dev/@buu_2/app11",
+      "urlCriar": "https://snack.expo.dev/@buu_2/app11",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React, {useState} from \"react\";\nimport {View,TextInput,Button} from 'react-native';\n\nconst App = () => {\n    const [name,setName] = useState('');\n    const handleSubmit = () => {\n        if(name.trim() !== '') {\n            console.log('Formulário Enviado',\"Nome: $(name)\");\n        } else {\n            console.log('Erro', 'O campo de nome não pode estar vazio');\n        }\n    };\n    return (\n        <View>\n            <TextInput\n                placeholder=\"Digite seu nome\"\n                value={name}\n                onChangeText={setName}\n                style= {{borderColor: 'gray', borderWidth:1, padding: 10, marginBottom: 10 }}\n            />\n            <Button title=\"Enviar\" onPress={handleSubmit}/>\n        </View>\n    );\n};\n\nexport default App;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "56.0.0",
+      "description": "No description",
+      "fileCount": 1
+    },
+    {
+      "id": "legacy-40",
+      "name": "app12",
+      "nome": "app12",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/app12",
+      "origemUrl": "https://snack.expo.dev/@buu_2/app12",
+      "urlCriar": "https://snack.expo.dev/?name=app12&code=import%20React%2C%20%7BComponent%2C%20component%7D%20from%20'react'%3B%0Aimport%20%7BView%2CText%2CButton%7D%20from%20'react-native'%3B%0A%0Aclass%20App%20extends%20Component%20%7B%0A%20%20%20%20state%20%3D%20%7B%0A%20%20%20%20%20%20%20%20contador%3A%200%2C%0A%20%20%20%20%7D%3B%0A%20%20%20%20%20%0A%20%20%20%20incrementarContador%20%3D%20()%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20this.setState(%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20contador%3A%20this.state.contador%20%2B%201%2C%0A%20%20%20%20%20%20%20%20%7D)%3B%0A%20%20%20%20%7D%3B%0A%20%20%20%20render()%20%7B%0A%20%20%20%20%20%20%20%20return(%0A%20%20%20%20%20%20%20%20%20%20%20%20%3CView%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CText%3EContador%3A%20%7Bthis.state.contador%7D%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CButton%20title%3D%22Incrementar%22%20onPress%3D%7Bthis.incrementarContador%7D%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FView%3E%0A%20%20%20%20%20%20%20%20)%3B%0A%20%20%20%20%7D%20%20%20%20%0A%7D%0A%0Aexport%20default%20App%3B",
+      "pronto": true,
+      "code": "import React, {Component, component} from 'react';\nimport {View,Text,Button} from 'react-native';\n\nclass App extends Component {\n    state = {\n        contador: 0,\n    };\n     \n    incrementarContador = () => {\n        this.setState({\n            contador: this.state.contador + 1,\n        });\n    };\n    render() {\n        return(\n            <View>\n                <Text>Contador: {this.state.contador}</Text>\n                <Button title=\"Incrementar\" onPress={this.incrementarContador} />\n            </View>\n        );\n    }    \n}\n\nexport default App;",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React, {Component, component} from 'react';\nimport {View,Text,Button} from 'react-native';\n\nclass App extends Component {\n    state = {\n        contador: 0,\n    };\n     \n    incrementarContador = () => {\n        this.setState({\n            contador: this.state.contador + 1,\n        });\n    };\n    render() {\n        return(\n            <View>\n                <Text>Contador: {this.state.contador}</Text>\n                <Button title=\"Incrementar\" onPress={this.incrementarContador} />\n            </View>\n        );\n    }    \n}\n\nexport default App;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-41",
+      "name": "socorro",
+      "nome": "socorro",
+      "apelidos": [
+        "redacao",
+        "enem"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/socorro",
+      "origemUrl": "https://snack.expo.dev/@buu_2/socorro",
+      "urlCriar": "https://snack.expo.dev/@buu_2/socorro",
+      "pronto": false,
+      "code": "",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import React from 'react'\nimport {Text, StyleSheet,View} from 'react-native';\n\nfunction Titulo(props) {\n    return(\n        <View style={styles.container}>\n            <Text style={styles.text}>Informação, {props.info}</Text>\n        </View>\n    );\n}\n\nfunction App() {\n    return(\n        <View>\n            <Titulo info = \"Os alunos Teresina central da turma 604A odiaram o tema da redação do ENEM 2026\"/>\n            <Titulo info = \"Todos odiaram o tema da redação\"/>\n            <Titulo info = \"Boa Noite\"/>\n        </View>\n    );\n}\nconst styles = StyleSheet.create({\n    container: {\n        padding:20,\n        alignItems:'center',\n    },\n    text: {\n        fontSize: 24,\n    },\n});\nexport default App;"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "56.0.0",
+      "description": "No description",
+      "fileCount": 1
+    }
+  ]
+};
