@@ -850,3 +850,92 @@ details.helper-box summary {
 .toast.ok { border-color: var(--ok-border); background: #0f241f; }
 .toast.warn { border-color: var(--warn-border); background: #261d0f; }
 .toast.err { border-color: var(--err-border); background: #291317; }
+
+/* Wizard Passo a Passo (4 etapas) */
+.wizard-shell {
+  max-width: 780px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.wizard-stepper {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .wizard-stepper {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.wizard-step-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.wizard-step-pill.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+.wizard-step-pill.done {
+  border-color: var(--ok-border);
+  color: #6ee7b7;
+}
+
+.wizard-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+}
+
+.wizard-card h2 {
+  margin: 0 0 6px;
+  font-size: 1.25rem;
+}
+
+.wizard-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.btn-lg {
+  padding: 11px 20px;
+  font-size: 0.94rem;
+}
+
+.btn-warn {
+  background: #b45309;
+  color: #fff;
+}
+
+.btn-warn:hover:not(:disabled) {
+  background: #92400e;
+}
+
+.mode-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}

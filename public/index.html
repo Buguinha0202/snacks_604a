@@ -10,23 +10,183 @@
   <div class="app-shell">
     <header class="app-header">
       <div>
-        <h1 class="brand-title">Painel Turma 604A — Snacks Faltantes &amp; Documento</h1>
+        <h1 class="brand-title">Painel Turma 604A — Snacks Expo</h1>
         <p class="brand-subtitle">
-          Veja na hora quais dos 41 Snacks da turma já existem na sua conta (por nome ou por código), copie os faltantes direto para a sua conta sem duplicar e gere o documento da turma.
+          Descubra quais dos 41 Snacks faltam na sua conta, copie sem duplicar, atualize códigos e gere o documento da turma.
         </p>
       </div>
-      <div class="status-pill" id="catalogStatus">
-        <span class="status-dot" aria-hidden="true"></span>
-        <span>Carregando lista dos 41 Snacks...</span>
+      <div class="mode-bar">
+        <div class="status-pill" id="catalogStatus">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span>Carregando 41 Snacks...</span>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnSwitchMode">
+          Abrir Painel Completo
+        </button>
       </div>
     </header>
 
     <div id="liveBanner" class="live-banner" role="status" aria-live="polite" hidden></div>
 
-    <div class="tabs-container">
+    <!-- =====================================================
+         MODO 1: ASSISTENTE PASSO A PASSO (4 ETAPAS LIMPAS)
+    ====================================================== -->
+    <main id="wizardView" class="wizard-shell">
+      <div class="wizard-stepper" aria-label="Etapas do assistente">
+        <div class="wizard-step-pill active" id="stepPill1"><span class="step-num">1</span> Conectar Expo</div>
+        <div class="wizard-step-pill" id="stepPill2"><span class="step-num">2</span> Ver o que Falta</div>
+        <div class="wizard-step-pill" id="stepPill3"><span class="step-num">3</span> Copiar Faltantes</div>
+        <div class="wizard-step-pill" id="stepPill4"><span class="step-num">4</span> Documento Final</div>
+      </div>
+
+      <!-- ETAPA 1: CONECTAR CONTA -->
+      <section class="wizard-card" id="wizardStep1">
+        <h2>Passo 1: Conecte sua conta Expo</h2>
+        <p class="card-desc">
+          Em 3 cliques a ferramenta lê os Snacks que você já tem e mostra exatamente o que falta.
+        </p>
+
+        <ol class="steps-guide">
+          <li>
+            <span class="step-num">1</span>
+            <span>Abra a página de tokens: <a href="https://expo.dev/settings/access-tokens" target="_blank" rel="noopener"><b>Abrir Expo ↗</b></a></span>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <span>Clique em <b>Create token</b>, dê qualquer nome (ex.: <i>604A</i>) e copie o código.</span>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <span>Clique em <b>Colar</b> abaixo — o site conecta sozinho!</span>
+          </li>
+        </ol>
+
+        <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end; margin-top:16px;">
+          <label class="field" style="flex:1; min-width:240px;">
+            Código do Token Expo:
+            <div class="token-input-wrap">
+              <input type="text" id="wizToken" class="masked-token" autocomplete="off" spellcheck="false" data-lpignore="true" placeholder="Cole aqui o código copiado do Expo...">
+              <button type="button" class="btn btn-secondary btn-sm" id="btnWizPaste">Colar</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="btnWizToggle">Mostrar</button>
+            </div>
+          </label>
+          <button type="button" class="btn btn-primary btn-lg" id="btnWizConnect">Conectar e Continuar →</button>
+        </div>
+
+        <p class="snack-meta" style="margin-top:10px; color:var(--text-muted);">
+          🔒 Seu token fica só na memória do navegador e nunca é salvo. Ao terminar, você pode apagá-lo na mesma página do Expo.
+        </p>
+
+        <div class="wizard-actions">
+          <span class="snack-meta">Prefere importar manualmente (F12 / .html) ou ver a lista completa?</span>
+          <button type="button" class="btn btn-secondary btn-sm" id="btnWizSkipToFull">Ir para o Painel Completo</button>
+        </div>
+      </section>
+
+      <!-- ETAPA 2: DIAGNÓSTICO -->
+      <section class="wizard-card" id="wizardStep2" hidden>
+        <h2 id="wizDiagTitle">Passo 2: Resultado da sua conta</h2>
+        <p class="card-desc" id="wizDiagSubtitle">
+          Conferimos todos os 41 Snacks da Turma 604A (por nome e por código, mesmo com nomes diferentes).
+        </p>
+
+        <div class="kpi-strip" style="margin:14px 0;">
+          <div class="kpi-card">
+            <div class="kpi-label">Total da Turma</div>
+            <div class="kpi-value" id="wizKpiTotal">41</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Você Já Tem</div>
+            <div class="kpi-value ok" id="wizKpiExisting">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Código Diferente</div>
+            <div class="kpi-value warn" id="wizKpiAttention">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Faltam Copiar</div>
+            <div class="kpi-value info" id="wizKpiMissing">0</div>
+          </div>
+        </div>
+
+        <div id="wizMissingPreview" class="snack-meta" style="margin-bottom:8px;"></div>
+
+        <div class="wizard-actions">
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn btn-secondary" id="btnWizBack1">← Voltar</button>
+            <button type="button" class="btn btn-secondary" id="btnWizReviewInFull">Revisar no Painel Completo</button>
+          </div>
+          <button type="button" class="btn btn-success btn-lg" id="btnWizStartClone">Copiar Faltantes Agora →</button>
+        </div>
+      </section>
+
+      <!-- ETAPA 3: COPIANDO AO VIVO -->
+      <section class="wizard-card" id="wizardStep3" hidden>
+        <h2 id="wizCloneTitle">Passo 3: Copiando seus Snacks faltantes...</h2>
+        <p class="card-desc">Acompanhe em tempo real. Os Snacks que você já tem são pulados automaticamente.</p>
+
+        <div class="progress-box" style="margin-top:8px;">
+          <div style="display:flex; justify-content:space-between; font-size:0.9rem;">
+            <strong id="wizProgressText">Iniciando...</strong>
+            <span id="wizProgressCount">0 / 0</span>
+          </div>
+          <div class="progress-bar-track" style="height:12px;">
+            <div class="progress-bar-fill" id="wizProgressFill"></div>
+          </div>
+          <div id="wizCloneLog" style="font-size:0.82rem; color:var(--text-secondary); max-height:220px; overflow:auto; margin-top:8px;"></div>
+        </div>
+
+        <div class="wizard-actions">
+          <button type="button" class="btn btn-secondary" id="btnWizOpenFullFrom3">Abrir Painel Completo</button>
+          <button type="button" class="btn btn-primary btn-lg" id="btnWizToStep4" disabled>Continuar para o Documento →</button>
+        </div>
+      </section>
+
+      <!-- ETAPA 4: DOCUMENTO FINAL + VOLTA AO PAINEL COMPLETO -->
+      <section class="wizard-card" id="wizardStep4" hidden>
+        <h2>Passo 4: Tudo pronto! Gere o Documento da Turma</h2>
+        <p class="card-desc">
+          Preencha seu nome e copie a tabela pronta para o Google Docs ou baixe o arquivo Word (.doc).
+        </p>
+
+        <div class="form-grid-4" style="margin-bottom:14px;">
+          <label class="field">
+            Nome do Aluno
+            <input type="text" id="wizDocAluno" placeholder="Ex.: Anna Julia">
+          </label>
+          <label class="field">
+            Usuário Expo
+            <input type="text" id="wizDocUsuario" placeholder="Ex.: @annaju08">
+          </label>
+          <label class="field">
+            Turma
+            <input type="text" id="wizDocTurma" value="604A">
+          </label>
+          <label class="field">
+            Data
+            <input type="text" id="wizDocData">
+          </label>
+        </div>
+
+        <div class="btn-row" style="margin-bottom:16px;">
+          <button type="button" class="btn btn-primary btn-lg" id="btnWizCopyDoc">Copiar Tabela para Google Docs</button>
+          <button type="button" class="btn btn-success btn-lg" id="btnWizDownloadWord">Baixar Arquivo (.doc)</button>
+        </div>
+
+        <div class="wizard-actions">
+          <span class="snack-meta">Quer conferir códigos lado a lado ou atualizar algum Snack pelo código oficial do site?</span>
+          <button type="button" class="btn btn-secondary" id="btnWizDoneToFull">Ir para o Painel Completo →</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- =====================================================
+         MODO 2: PAINEL COMPLETO (41 SNACKS + ATUALIZAR CÓDIGO + DOC)
+    ====================================================== -->
+    <div id="fullView" class="tabs-container" hidden>
       <div class="tablist" focusgroup="tablist nomemory" role="tablist" aria-label="Abas do Painel Turma 604A">
         <button type="button" role="tab" id="tab-clonar" aria-selected="true" focusgroupstart>
-          1. Conferir &amp; Copiar Snacks Faltantes
+          1. Conferir, Copiar &amp; Atualizar Snacks (41)
         </button>
         <button type="button" role="tab" id="tab-doc" aria-selected="false">
           2. Gerar Documento com Meus Links
@@ -34,28 +194,12 @@
       </div>
 
       <div class="panels-stack">
-        <!-- ABA 1: CONFERIR E COPIAR FALTANTES -->
+        <!-- ABA 1: CONFERIR, COPIAR E ATUALIZAR -->
         <section role="tabpanel" id="panel-clonar" aria-labelledby="tab-clonar" tabindex="0">
           <div class="panel-body">
-            <!-- CONECTAR CONTA (GUIA 3 PASSOS) -->
             <div class="card">
-              <h2 class="card-title">Conectar sua Conta Expo (3 passos rápidos)</h2>
-              <ol class="steps-guide">
-                <li>
-                  <span class="step-num">1</span>
-                  <span>Abra a página de tokens do Expo: <a href="https://expo.dev/settings/access-tokens" target="_blank" rel="noopener"><b>Abrir página do Expo ↗</b></a></span>
-                </li>
-                <li>
-                  <span class="step-num">2</span>
-                  <span>Clique em <b>Create token</b>, digite qualquer nome (ex.: <i>604A</i>) e copie o código gerado.</span>
-                </li>
-                <li>
-                  <span class="step-num">3</span>
-                  <span>Cole o código abaixo e clique em <b>Ver o que Falta</b> (nada é salvo no servidor).</span>
-                </li>
-              </ol>
-
-              <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end; margin-top:12px;">
+              <h2 class="card-title">Sua Conta Expo</h2>
+              <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end;">
                 <label class="field" style="flex:1; min-width:240px;">
                   Código do Token Expo:
                   <div class="token-input-wrap">
@@ -65,13 +209,11 @@
                   </div>
                 </label>
                 <button type="button" class="btn btn-primary" id="btnLoadTargetAccount">Ver o que Falta</button>
+                <a class="btn btn-secondary" href="https://expo.dev/settings/access-tokens" target="_blank" rel="noopener">Gerar Token ↗</a>
               </div>
 
               <div class="snack-meta" id="targetCountLabel" style="margin-top:8px;">
                 Nenhum Snack da sua conta carregado ainda.
-              </div>
-              <div class="snack-meta" style="margin-top:4px; color:var(--text-muted);">
-                🔒 Privacidade: seu token fica só na memória do navegador e não é salvo em lugar nenhum. Assim que terminar de copiar, você pode apagá-lo na mesma página do Expo.
               </div>
 
               <details class="helper-box">
@@ -90,7 +232,6 @@
               </details>
             </div>
 
-            <!-- KPIs -->
             <div class="kpi-strip" aria-label="Resumo dos 41 Snacks">
               <div class="kpi-card">
                 <div class="kpi-label">Total da Lista</div>
@@ -110,10 +251,8 @@
               </div>
             </div>
 
-            <!-- Fluxo Guiado (CTA principal quando conectado) -->
             <div id="guidedBanner" class="guided-banner" hidden></div>
 
-            <!-- Barra de filtros e cópia em lote -->
             <div class="card">
               <div class="action-bar">
                 <div class="filter-group">
@@ -146,7 +285,6 @@
               </div>
             </div>
 
-            <!-- Lista dos 41 Snacks -->
             <div id="snackListContainer" class="snack-list">
               <div class="empty-state">Carregando lista dos 41 Snacks da Turma 604A...</div>
             </div>

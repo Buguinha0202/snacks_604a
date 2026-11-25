@@ -1,9 +1,10 @@
 /**
- * Painel Turma 604A — Conferir & Copiar Snacks Faltantes (Frontend).
- * Carrega automaticamente os 41 Snacks do HTML da pasta ao abrir.
+ * Painel Turma 604A — Assistente Passo a Passo (4 etapas) + Painel Completo com Atualização de Código.
  */
 
 const state = {
+  mode: 'wizard', // 'wizard' | 'full'
+  wizardStep: 1,  // 1 | 2 | 3 | 4
   sourceSnacks: [],
   targetSnacks: [],
   comparison: [],
@@ -12,7 +13,6 @@ const state = {
   selectedForClone: new Set(),
   openCompare: new Set(),
   previewTargetIdx: {},
-  selectedFileByRow: {},
   cloningIndices: new Set(),
   accountLoaded: false,
   selectTabFn: null,
@@ -35,9 +35,7 @@ function showToast(message, type = 'ok', durationMs = 4500) {
   el.className = `toast ${type}`;
   el.textContent = message;
   stack.appendChild(el);
-  setTimeout(() => {
-    el.remove();
-  }, durationMs);
+  setTimeout(() => el.remove(), durationMs);
 }
 
 function showBanner(message, type = 'ok') {
@@ -61,8 +59,72 @@ async function apiPost(url, payload) {
   return data;
 }
 
+function getToken() {
+  return ($('wizToken').value || $('targetToken').value || '').trim();
+}
+
+function setToken(val) {
+  $('wizToken').value = val;
+  $('targetToken').value = val;
+}
+
 /* ===========================
-   TABS ACESSÍVEIS (Modern Web Guidance)
+   NAVEGAÇÃO: WIZARD ↔ PAINEL COMPLETO
+=========================== */
+function setViewMode(mode) {
+  state.mode = mode;
+  $('wizardView').hidden = mode !== 'wizard';
+  $('fullView').hidden = mode !== 'full';
+  $('btnSwitchMode').textContent = mode === 'wizard' ? 'Abrir Painel Completo' : '← Voltar ao Passo a Passo';
+  if (mode === 'full') renderAll();
+  else renderWizard();
+}
+
+function goToWizardStep(step) {
+  state.wizardStep = step;
+  for (let i = 1; i <= 4; i++) {
+    const sec = $(`wizardStep${i}`);
+    const pill = $(`stepPill${i}`);
+    sec.hidden = i !== step;
+    pill.classList.toggle('active', i === step);
+    pill.classList.toggle('done', i < step);
+  }
+  renderWizard();
+}
+
+function renderWizard() {
+  const existing = state.summary.duplicatasExatas + state.summary.duplicatasCodigo;
+  const attention = state.summary.duplicatasNome;
+  const missing = state.summary.faltantes;
+
+  $('wizKpiTotal').textContent = String(state.summary.totalSource);
+  $('wizKpiExisting').textContent = String(existing);
+  $('wizKpiAttention').textContent = String(attention);
+  $('wizKpiMissing').textContent = String(missing);
+
+  if (missing === 0 && state.accountLoaded) {
+    $('wizDiagTitle').textContent = 'Passo 2: Você já tem todos os 41 Snacks!';
+    $('wizMissingPreview').textContent = attention > 0
+      ? `Observação: ${attention} Snack(s) têm o mesmo nome mas código diferente. Você pode revisá-los ou atualizá-los no Painel Completo depois.`
+      : 'Nenhum Snack faltando — pode ir direto gerar o documento da turma.';
+    $('btnWizStartClone').textContent = 'Ir para o Documento Final →';
+  } else {
+    $('wizDiagTitle').textContent = `Passo 2: Faltam ${missing} Snack${missing > 1 ? 's' : ''} na sua conta`;
+    const missingNames = state.comparison
+      .filter((c) => !c.shouldSkipClone)
+      .slice(0, 8)
+      .map((c) => state.sourceSnacks[c.sourceIndex]?.name || '')
+      .filter(Boolean);
+    const extra = missing > 8 ? ` e mais ${missing - 8}...` : '';
+    $('wizMissingPreview').textContent = missingNames.length
+      ? `Faltantes: ${missingNames.join(', ')}${extra}`
+      : '';
+    $('btnWizStartClone').textContent = `Copiar os ${missing} Faltantes Agora →`;
+  }
+}
+
+/* ===========================
+   TABS DO PAINEL COMPLETO
 =========================== */
 function initTabs() {
   const tabs = [...document.querySelectorAll('[role="tab"]')];
@@ -92,19 +154,10 @@ function initTabs() {
   tabs.forEach((tab, idx) => {
     tab.addEventListener('click', () => selectTab(idx));
     tab.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        selectTab((idx + 1) % tabs.length, true);
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        selectTab((idx - 1 + tabs.length) % tabs.length, true);
-      } else if (e.key === 'Home') {
-        e.preventDefault();
-        selectTab(0, true);
-      } else if (e.key === 'End') {
-        e.preventDefault();
-        selectTab(tabs.length - 1, true);
-      }
+      if (e.key === 'ArrowRight') { e.preventDefault(); selectTab((idx + 1) % tabs.length, true); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); selectTab((idx - 1 + tabs.length) % tabs.length, true); }
+      else if (e.key === 'Home') { e.preventDefault(); selectTab(0, true); }
+      else if (e.key === 'End') { e.preventDefault(); selectTab(tabs.length - 1, true); }
     });
   });
 
@@ -122,6 +175,7 @@ async function recomputeComparison() {
     state.summary = { totalSource: 0, totalTarget: state.targetSnacks.length, duplicatasExatas: 0, duplicatasCodigo: 0, duplicatasNome: 0, faltantes: 0 };
     state.selectedForClone.clear();
     renderAll();
+    renderWizard();
     return;
   }
 
@@ -153,19 +207,16 @@ async function recomputeComparison() {
     faltantes: state.comparison.filter((r) => r.status === 'faltante').length,
   };
 
-  // Marca automaticamente apenas os faltantes
   state.selectedForClone = new Set(
     state.comparison.filter((r) => !r.shouldSkipClone).map((r) => r.sourceIndex)
   );
 
   renderAll();
+  renderWizard();
 }
 
-function getPrimaryCodeText(snack, preferredFile = null) {
+function getPrimaryCodeText(snack) {
   if (!snack) return '';
-  if (preferredFile && snack.files?.[preferredFile]?.contents) {
-    return snack.files[preferredFile].contents;
-  }
   if (snack.files && typeof snack.files === 'object') {
     for (const k of ['App.js', 'App.tsx', 'App.jsx', 'App.ts']) {
       if (snack.files[k]?.contents) return snack.files[k].contents;
@@ -177,28 +228,23 @@ function getPrimaryCodeText(snack, preferredFile = null) {
   return typeof snack.code === 'string' ? snack.code : '';
 }
 
-function getFileList(snack) {
-  if (!snack?.files || typeof snack.files !== 'object') return [];
-  return Object.keys(snack.files).filter((k) => snack.files[k]?.type === 'CODE' || typeof snack.files[k]?.contents === 'string');
-}
-
 function buildQuickOpenUrl(snack) {
   if (snack.urlCriar) return snack.urlCriar;
   const code = getPrimaryCodeText(snack);
   const name = snack.name || snack.nome || 'Snack';
-  if (code && code.length < 3500 && getFileList(snack).length <= 1) {
+  if (code && code.length < 3500) {
     return `https://snack.expo.dev/?name=${encodeURIComponent(name)}&code=${encodeURIComponent(code)}`;
   }
   return snack.origemUrl || snack.url || 'https://snack.expo.dev/';
 }
 
 /* ===========================
-   RENDERIZAÇÃO
+   RENDERIZAÇÃO DO PAINEL COMPLETO
 =========================== */
 function renderAll() {
   $('targetCountLabel').textContent = state.targetSnacks.length
     ? `${state.targetSnacks.length} Snacks encontrados na sua conta.`
-    : 'Nenhum Snack da sua conta carregado ainda — conecte seu token ou importe sua lista para ver o que falta.';
+    : 'Nenhum Snack da sua conta carregado ainda — conecte seu token ou importe sua lista.';
 
   $('btnResolveTarget').disabled = state.targetSnacks.length === 0;
 
@@ -233,7 +279,7 @@ function renderGuidedBanner() {
     el.innerHTML = `
       <div>
         <strong>Tudo completo! Todos os ${state.summary.totalSource} Snacks estão na sua conta.</strong>
-        <p>Agora é só ir para a Aba 2 para copiar a tabela no Google Docs ou baixar o arquivo Word (.doc).</p>
+        <p>Você pode gerar o documento na Aba 2 ou usar "Atualizar Código" em qualquer card abaixo.</p>
       </div>
       <button type="button" class="btn btn-success" id="btnGoToDoc">Gerar Documento da Turma →</button>
     `;
@@ -272,7 +318,7 @@ function statusBadgeHtml(cmp) {
 function renderSnackList() {
   const container = $('snackListContainer');
   if (state.sourceSnacks.length === 0) {
-    container.innerHTML = `<div class="empty-state">Nenhum Snack encontrado na lista base da pasta.</div>`;
+    container.innerHTML = `<div class="empty-state">Nenhum Snack encontrado na lista base.</div>`;
     return;
   }
 
@@ -304,26 +350,23 @@ function renderSnackList() {
     const linkedTarget = cmp.targetIndex !== null ? state.targetSnacks[cmp.targetIndex] : null;
     const pIdx = state.previewTargetIdx[idx] !== undefined ? state.previewTargetIdx[idx] : cmp.targetIndex;
     const previewTarget = pIdx !== null && pIdx !== undefined ? state.targetSnacks[pIdx] : null;
-
-    const files = getFileList(src);
-    const activeFile = state.selectedFileByRow[idx] || files[0] || null;
-    const srcCode = getPrimaryCodeText(src, activeFile);
-    const tgtCode = previewTarget ? getPrimaryCodeText(previewTarget, activeFile) : '';
+    const srcCode = getPrimaryCodeText(src);
+    const tgtCode = previewTarget ? getPrimaryCodeText(previewTarget) : '';
+    const isBusy = state.cloningIndices.has(idx);
 
     const compareHtml = isOpen
       ? `
         <div class="compare-panel">
           <div class="code-pane">
             <div class="code-pane-head">
-              <span>Código Original (${escapeHtml(name)})</span>
+              <span>Código Oficial (${escapeHtml(name)})</span>
               ${src.origemUrl ? `<a href="${escapeHtml(src.origemUrl)}" target="_blank" rel="noopener">Abrir original ↗</a>` : ''}
             </div>
-            <pre class="code-block">${srcCode ? escapeHtml(srcCode) : 'Projeto com múltiplos arquivos/assets — ao clicar em "Copiar para Minha Conta", todos os arquivos são baixados automaticamente da API do Expo.'}</pre>
+            <pre class="code-block">${srcCode ? escapeHtml(srcCode) : 'Projeto com múltiplos arquivos/assets.'}</pre>
           </div>
-
           <div class="code-pane">
             <div class="code-pane-head">
-              <span>Comparar com Snack da sua conta</span>
+              <span>Seu Snack na Conta</span>
               ${previewTarget?.url ? `<a href="${escapeHtml(previewTarget.url)}" target="_blank" rel="noopener">Abrir meu Snack ↗</a>` : ''}
             </div>
             ${
@@ -336,10 +379,10 @@ function renderSnackList() {
                   </div>
                   <pre class="code-block">${
                     previewTarget
-                      ? (tgtCode ? escapeHtml(tgtCode) : 'Código não carregado na importação rápida. Clique em "Baixar Códigos dos Meus Snacks" ou conecte com Token.')
-                      : 'Selecione um Snack da sua conta acima para comparar lado a lado.'
+                      ? (tgtCode ? escapeHtml(tgtCode) : 'Código não carregado. Conecte com Token ou clique em "Baixar Códigos dos Meus Snacks".')
+                      : 'Selecione um Snack da sua conta acima para comparar.'
                   }</pre>`
-                : `<pre class="code-block">Conecte sua conta ou importe sua lista acima para comparar seus projetos aqui.</pre>`
+                : `<pre class="code-block">Conecte sua conta para comparar lado a lado.</pre>`
             }
           </div>
         </div>
@@ -347,12 +390,13 @@ function renderSnackList() {
       : '';
 
     const isMissing = cmp.status === 'faltante';
+    const canUpdateCode = !isMissing && linkedTarget !== null;
 
     rows.push(`
       <article class="snack-item status-${cmp.status}">
         <div class="snack-item-head">
           <div class="snack-title-wrap">
-            <input type="checkbox" data-action="toggle-select" data-idx="${idx}" ${checked} aria-label="Selecionar ${escapeHtml(name)} para copiar">
+            <input type="checkbox" data-action="toggle-select" data-idx="${idx}" ${checked} aria-label="Selecionar ${escapeHtml(name)}">
             <div>
               <div class="snack-name">${idx + 1}. ${escapeHtml(name)} ${statusBadgeHtml(cmp)}</div>
               <div class="snack-meta">
@@ -373,7 +417,12 @@ function renderSnackList() {
             }
             ${
               isMissing
-                ? `<button type="button" class="btn btn-success btn-sm" data-action="clone-one" data-idx="${idx}" ${state.cloningIndices.has(idx) ? 'disabled' : ''}>${state.cloningIndices.has(idx) ? 'Copiando...' : 'Copiar p/ Minha Conta'}</button>`
+                ? `<button type="button" class="btn btn-success btn-sm" data-action="clone-one" data-idx="${idx}" ${isBusy ? 'disabled' : ''}>${isBusy ? 'Copiando...' : 'Copiar p/ Minha Conta'}</button>`
+                : ''
+            }
+            ${
+              canUpdateCode
+                ? `<button type="button" class="btn ${cmp.status === 'duplicata_nome' ? 'btn-warn' : 'btn-secondary'} btn-sm" data-action="update-one" data-idx="${idx}" ${isBusy ? 'disabled' : ''} title="Substituir o código do seu Snack pelo código oficial do site">${isBusy ? 'Atualizando...' : 'Atualizar Código'}</button>`
                 : ''
             }
             <a class="btn btn-secondary btn-sm" href="${escapeHtml(buildQuickOpenUrl(src))}" target="_blank" rel="noopener">Abrir no Expo ↗</a>
@@ -392,6 +441,21 @@ function renderSnackList() {
 /* ===========================
    DOCUMENTO (GOOGLE DOCS / WORD)
 =========================== */
+function syncDocFields(fromWizard = false) {
+  if (fromWizard) {
+    $('docAluno').value = $('wizDocAluno').value;
+    $('docUsuario').value = $('wizDocUsuario').value;
+    $('docTurma').value = $('wizDocTurma').value;
+    $('docData').value = $('wizDocData').value;
+  } else {
+    $('wizDocAluno').value = $('docAluno').value;
+    $('wizDocUsuario').value = $('docUsuario').value;
+    $('wizDocTurma').value = $('docTurma').value;
+    $('wizDocData').value = $('docData').value;
+  }
+  renderDocument();
+}
+
 function renderDocument() {
   const aluno = $('docAluno').value.trim() || 'Nome do Aluno';
   let user = $('docUsuario').value.trim() || '@usuario';
@@ -431,7 +495,7 @@ function renderDocument() {
           </tr>`
         )
         .join('')
-    : `<tr><td colspan="3" style="text-align:center;color:#6b7280;">Conecte ou importe seus Snacks na Aba 1 para montar o documento.</td></tr>`;
+    : `<tr><td colspan="3" style="text-align:center;color:#6b7280;">Conecte sua conta para montar o documento.</td></tr>`;
 
   $('docPreview').innerHTML = `
     <h2>Links dos Snacks — Expo (Turma ${escapeHtml(turma)})</h2>
@@ -457,16 +521,102 @@ function renderDocument() {
   `;
 }
 
+async function copyDocumentToClipboard() {
+  renderDocument();
+  const el = $('docPreview');
+  try {
+    await navigator.clipboard.write([
+      new ClipboardItem({
+        'text/html': new Blob([el.innerHTML], { type: 'text/html' }),
+        'text/plain': new Blob([el.innerText], { type: 'text/plain' }),
+      }),
+    ]);
+  } catch {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    document.execCommand('copy');
+    sel.removeAllRanges();
+  }
+  showBanner('Tabela copiada! Abra docs.new e aperte Ctrl + V.', 'ok');
+}
+
+function downloadWordDocument() {
+  renderDocument();
+  const user = ($('docUsuario').value.trim() || 'aluno').replace('@', '');
+  const turma = $('docTurma').value.trim() || '604A';
+  const html = `
+    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word">
+    <head><meta charset="utf-8"><style>
+      body { font-family: Arial, sans-serif; }
+      table { border-collapse: collapse; width: 100%; }
+      th, td { border: 1px solid #888; padding: 6px 8px; text-align: left; }
+      th { background: #f2f2f2; }
+    </style></head>
+    <body>${$('docPreview').innerHTML}</body></html>`;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['\ufeff', html], { type: 'application/msword;charset=utf-8' }));
+  a.download = `Links_Snacks_${turma}_${user}.doc`;
+  a.click();
+  showBanner('Arquivo .doc baixado com sucesso!', 'ok');
+}
+
 /* ===========================
-   CÓPIA EM LOTE OU INDIVIDUAL (PROGRESSO AO VIVO ITEM POR ITEM)
+   CÓPIA E ATUALIZAÇÃO DE CÓDIGO
 =========================== */
-async function runClone(indices, dryRun = false, { forceSingle = false } = {}) {
+async function updateSingleSnackCode(idx) {
+  const token = getToken();
+  if (!token) {
+    showBanner('Cole seu código de Token do Expo para atualizar o código do Snack na sua conta.', 'warn');
+    return;
+  }
+
+  const src = state.sourceSnacks[idx];
+  const cmp = state.comparison.find((c) => c.sourceIndex === idx);
+  const linked = cmp && cmp.targetIndex !== null ? state.targetSnacks[cmp.targetIndex] : null;
+  const targetName = linked?.name || linked?.nome || src.name || src.nome;
+
+  state.cloningIndices.add(idx);
+  renderSnackList();
+
+  try {
+    const res = await apiPost('/api/clone', {
+      auth: token,
+      snacks: [{ ...src, overrideName: targetName }],
+      existingTargetSnacks: [],
+      skipDuplicates: false,
+      dryRun: false,
+    });
+
+    const item = res.report?.[0];
+    if (item && (item.status === 'updated' || item.status === 'cloned')) {
+      if (linked) {
+        linked.files = src.files || {};
+        linked.code = src.code || '';
+        linked.dependencies = src.dependencies || {};
+        linked.url = item.url || linked.url;
+      }
+      await recomputeComparison();
+      showBanner(`Código de "${targetName}" atualizado com a versão oficial do site!`, 'ok');
+    } else {
+      showBanner(`Erro ao atualizar "${targetName}": ${item?.error || 'Falha desconhecida'}`, 'err');
+    }
+  } catch (err) {
+    showBanner(`Erro ao atualizar "${targetName}": ${err.message}`, 'err');
+  } finally {
+    state.cloningIndices.delete(idx);
+    renderSnackList();
+  }
+}
+
+async function runClone(indices, dryRun = false, { forceSingle = false, inWizard = false } = {}) {
   if (!indices || indices.length === 0) return;
 
-  const token = $('targetToken').value.trim();
+  const token = getToken();
   if (!dryRun && !token) {
-    showBanner('Cole seu código de Token do Expo no topo para copiar direto para a sua conta.', 'warn');
-    $('targetToken').focus();
+    showBanner('Cole seu código de Token do Expo para copiar direto para a sua conta.', 'warn');
     return;
   }
 
@@ -479,27 +629,27 @@ async function runClone(indices, dryRun = false, { forceSingle = false } = {}) {
   });
   const unboundTargetSnacks = state.targetSnacks.filter((_, tIdx) => !boundToOtherIndices.has(tIdx));
 
-  const box = $('cloneProgressBox');
-  const log = $('cloneLog');
-  box.hidden = false;
+  const progressText = inWizard ? $('wizProgressText') : $('cloneProgressText');
+  const progressCount = inWizard ? $('wizProgressCount') : $('cloneProgressCount');
+  const progressFill = inWizard ? $('wizProgressFill') : $('cloneProgressFill');
+  const log = inWizard ? $('wizCloneLog') : $('cloneLog');
+
+  if (!inWizard) $('cloneProgressBox').hidden = false;
+  if (inWizard) $('btnWizToStep4').disabled = true;
   log.innerHTML = '';
 
   const total = indices.length;
   let clonedCount = 0;
-  let wouldCloneCount = 0;
   let skippedCount = 0;
   let errorCount = 0;
 
-  $('cloneProgressText').textContent = dryRun
-    ? 'Simulando cópia...'
-    : `Preparando cópia de ${total} Snack(s)...`;
-  $('cloneProgressCount').textContent = `0 / ${total}`;
-  $('cloneProgressFill').style.width = '4%';
+  progressText.textContent = dryRun ? 'Simulando cópia...' : `Preparando cópia de ${total} Snack(s)...`;
+  progressCount.textContent = `0 / ${total}`;
+  progressFill.style.width = '4%';
 
   $('btnCloneSelected').disabled = true;
   $('btnDryRun').disabled = true;
 
-  // Modo Dry-Run vai em 1 chamada rápida; cópia real vai 1 por 1 para progresso ao vivo e zero timeout na Vercel
   if (dryRun) {
     try {
       const selectedSnacks = indices.map((i) => state.sourceSnacks[i]);
@@ -511,8 +661,8 @@ async function runClone(indices, dryRun = false, { forceSingle = false } = {}) {
         dryRun: true,
       });
 
-      $('cloneProgressFill').style.width = '100%';
-      $('cloneProgressCount').textContent = `${res.summary.total} / ${res.summary.total}`;
+      progressFill.style.width = '100%';
+      progressCount.textContent = `${res.summary.total} / ${res.summary.total}`;
       log.innerHTML = res.report
         .map((item) =>
           item.status === 'would_clone'
@@ -520,10 +670,10 @@ async function runClone(indices, dryRun = false, { forceSingle = false } = {}) {
             : `<div>↷ <b>${escapeHtml(item.name)}</b> pulado (${escapeHtml(item.reason)}).</div>`
         )
         .join('');
-      $('cloneProgressText').textContent = `Simulação: ${res.summary.wouldClone} prontos para copiar, ${res.summary.skipped} repetidos pulados.`;
+      progressText.textContent = `Simulação: ${res.summary.wouldClone} prontos para copiar, ${res.summary.skipped} repetidos pulados.`;
       showBanner(`Simulação OK: ${res.summary.wouldClone} seriam copiados e ${res.summary.skipped} repetidos foram pulados.`, 'ok');
     } catch (err) {
-      $('cloneProgressText').textContent = 'Erro na simulação.';
+      progressText.textContent = 'Erro na simulação.';
       showBanner(`Erro: ${err.message}`, 'err');
     } finally {
       $('btnCloneSelected').disabled = state.selectedForClone.size === 0;
@@ -539,11 +689,11 @@ async function runClone(indices, dryRun = false, { forceSingle = false } = {}) {
       const name = snack.name || snack.nome || `Snack ${idx + 1}`;
 
       state.cloningIndices.add(idx);
-      renderSnackList();
+      if (state.mode === 'full') renderSnackList();
 
-      $('cloneProgressText').textContent = `Copiando ${step + 1} de ${total}: ${name}...`;
-      $('cloneProgressCount').textContent = `${step} / ${total}`;
-      $('cloneProgressFill').style.width = `${Math.max(5, Math.round((step / total) * 100))}%`;
+      progressText.textContent = `Copiando ${step + 1} de ${total}: ${name}...`;
+      progressCount.textContent = `${step} / ${total}`;
+      progressFill.style.width = `${Math.max(5, Math.round((step / total) * 100))}%`;
 
       try {
         const res = await apiPost('/api/clone', {
@@ -597,12 +747,16 @@ async function runClone(indices, dryRun = false, { forceSingle = false } = {}) {
         log.scrollTop = log.scrollHeight;
       }
 
-      $('cloneProgressCount').textContent = `${step + 1} / ${total}`;
-      $('cloneProgressFill').style.width = `${Math.round(((step + 1) / total) * 100)}%`;
+      progressCount.textContent = `${step + 1} / ${total}`;
+      progressFill.style.width = `${Math.round(((step + 1) / total) * 100)}%`;
       await recomputeComparison();
     }
 
-    $('cloneProgressText').textContent = `Concluído! ${clonedCount} copiados, ${skippedCount} repetidos pulados, ${errorCount} erros.`;
+    progressText.textContent = `Concluído! ${clonedCount} copiados, ${skippedCount} repetidos pulados, ${errorCount} erros.`;
+    if (inWizard) {
+      $('wizCloneTitle').textContent = 'Passo 3: Cópia concluída!';
+      $('btnWizToStep4').disabled = false;
+    }
     showBanner(
       `Cópia concluída: ${clonedCount} criados na sua conta, ${skippedCount} repetidos pulados${errorCount ? `, ${errorCount} erros` : ''}.`,
       errorCount ? 'warn' : 'ok'
@@ -611,7 +765,46 @@ async function runClone(indices, dryRun = false, { forceSingle = false } = {}) {
     indices.forEach((i) => state.cloningIndices.delete(i));
     $('btnCloneSelected').disabled = state.selectedForClone.size === 0;
     $('btnDryRun').disabled = state.selectedForClone.size === 0;
-    renderSnackList();
+    if (state.mode === 'full') renderSnackList();
+  }
+}
+
+/* ===========================
+   CONEXÃO COM A CONTA EXPO
+=========================== */
+async function connectAccount({ advanceWizard = false } = {}) {
+  const token = getToken();
+  if (!token) {
+    showBanner('Cole seu código de Token do Expo primeiro.', 'warn');
+    return;
+  }
+
+  setToken(token);
+  showBanner('Lendo todos os Snacks da sua conta Expo e conferindo o que falta...', 'ok');
+  $('btnLoadTargetAccount').disabled = true;
+  $('btnWizConnect').disabled = true;
+
+  try {
+    const data = await apiPost('/api/account/snacks', { auth: token, includeCode: true });
+    state.targetSnacks = data.snacks || [];
+    state.accountLoaded = true;
+    if (data.username) {
+      if (!$('docUsuario').value.trim()) $('docUsuario').value = data.username;
+      if (!$('wizDocUsuario').value.trim()) $('wizDocUsuario').value = data.username;
+    }
+    await recomputeComparison();
+    if (advanceWizard && state.mode === 'wizard') {
+      goToWizardStep(2);
+    } else if (state.summary.faltantes > 0) {
+      $('filterStatus').value = 'faltante';
+      renderSnackList();
+    }
+    showBanner(`Conta ${data.username} conectada! Você já tem ${state.summary.duplicatasExatas + state.summary.duplicatasCodigo} e faltam ${state.summary.faltantes}.`, 'ok');
+  } catch (err) {
+    showBanner(`Falha ao conectar conta: ${err.message}`, 'err');
+  } finally {
+    $('btnLoadTargetAccount').disabled = false;
+    $('btnWizConnect').disabled = false;
   }
 }
 
@@ -619,6 +812,69 @@ async function runClone(indices, dryRun = false, { forceSingle = false } = {}) {
    EVENTOS & BOOTSTRAP
 =========================== */
 function bindEvents() {
+  // Alternância Wizard ↔ Painel Completo
+  $('btnSwitchMode').addEventListener('click', () => {
+    setViewMode(state.mode === 'wizard' ? 'full' : 'wizard');
+  });
+
+  // Sincronização dos campos de token
+  $('wizToken').addEventListener('input', (e) => { $('targetToken').value = e.target.value; });
+  $('targetToken').addEventListener('input', (e) => { $('wizToken').value = e.target.value; });
+
+  // Wizard Etapa 1
+  $('btnWizToggle').addEventListener('click', () => {
+    const masked = $('wizToken').classList.toggle('masked-token');
+    $('targetToken').classList.toggle('masked-token', masked);
+    $('btnWizToggle').textContent = masked ? 'Mostrar' : 'Ocultar';
+    $('btnToggleToken').textContent = masked ? 'Mostrar' : 'Ocultar';
+  });
+
+  $('btnWizPaste').addEventListener('click', async () => {
+    try {
+      const clip = (await navigator.clipboard.readText()).trim();
+      if (!clip) { showBanner('Sua área de transferência está vazia.', 'warn'); return; }
+      setToken(clip);
+      connectAccount({ advanceWizard: true });
+    } catch {
+      $('wizToken').focus();
+      showBanner('Toque no campo e aperte Ctrl+V (ou segure para colar).', 'warn');
+    }
+  });
+
+  $('wizToken').addEventListener('paste', () => {
+    setTimeout(() => {
+      if ($('wizToken').value.trim().length >= 16) connectAccount({ advanceWizard: true });
+    }, 60);
+  });
+
+  $('btnWizConnect').addEventListener('click', () => connectAccount({ advanceWizard: true }));
+  $('btnWizSkipToFull').addEventListener('click', () => setViewMode('full'));
+
+  // Wizard Etapa 2
+  $('btnWizBack1').addEventListener('click', () => goToWizardStep(1));
+  $('btnWizReviewInFull').addEventListener('click', () => setViewMode('full'));
+  $('btnWizStartClone').addEventListener('click', () => {
+    const missingIndices = state.comparison.filter((r) => !r.shouldSkipClone).map((r) => r.sourceIndex);
+    if (missingIndices.length === 0) {
+      goToWizardStep(4);
+      return;
+    }
+    goToWizardStep(3);
+    runClone(missingIndices, false, { inWizard: true });
+  });
+
+  // Wizard Etapa 3 & 4
+  $('btnWizOpenFullFrom3').addEventListener('click', () => setViewMode('full'));
+  $('btnWizToStep4').addEventListener('click', () => goToWizardStep(4));
+  $('btnWizDoneToFull').addEventListener('click', () => setViewMode('full'));
+
+  ['wizDocAluno', 'wizDocUsuario', 'wizDocTurma', 'wizDocData'].forEach((id) => {
+    $(id).addEventListener('input', () => syncDocFields(true));
+  });
+  $('btnWizCopyDoc').addEventListener('click', copyDocumentToClipboard);
+  $('btnWizDownloadWord').addEventListener('click', downloadWordDocument);
+
+  // Painel Completo: Delegação na lista
   $('snackListContainer').addEventListener('click', (e) => {
     const btn = e.target.closest('[data-action]');
     if (!btn) return;
@@ -636,6 +892,8 @@ function bindEvents() {
       }
     } else if (action === 'clone-one') {
       runClone([idx], false, { forceSingle: true });
+    } else if (action === 'update-one') {
+      updateSingleSnackCode(idx);
     }
   });
 
@@ -664,64 +922,31 @@ function bindEvents() {
   });
 
   $('btnToggleToken').addEventListener('click', () => {
-    const input = $('targetToken');
-    const masked = input.classList.toggle('masked-token');
+    const masked = $('targetToken').classList.toggle('masked-token');
+    $('wizToken').classList.toggle('masked-token', masked);
     $('btnToggleToken').textContent = masked ? 'Mostrar' : 'Ocultar';
+    $('btnWizToggle').textContent = masked ? 'Mostrar' : 'Ocultar';
   });
 
-  async function connectAccount() {
-    const token = $('targetToken').value.trim();
-    if (!token) {
-      showBanner('Cole seu código de Token do Expo primeiro (veja os 3 passos acima).', 'warn');
-      return;
-    }
-    showBanner('Lendo todos os Snacks da sua conta Expo e conferindo o que falta...', 'ok');
-    $('btnLoadTargetAccount').disabled = true;
-    try {
-      const data = await apiPost('/api/account/snacks', { auth: token, includeCode: true });
-      state.targetSnacks = data.snacks || [];
-      state.accountLoaded = true;
-      if (data.username && !$('docUsuario').value.trim()) {
-        $('docUsuario').value = data.username;
-      }
-      await recomputeComparison();
-      if (state.summary.faltantes > 0) {
-        $('filterStatus').value = 'faltante';
-        renderSnackList();
-      }
-      showBanner(`Conta ${data.username} carregada! Você já tem ${state.summary.duplicatasExatas + state.summary.duplicatasCodigo} e faltam ${state.summary.faltantes}.`, 'ok');
-    } catch (err) {
-      showBanner(`Falha ao conectar conta: ${err.message}`, 'err');
-    } finally {
-      $('btnLoadTargetAccount').disabled = false;
-    }
-  }
-
-  $('btnLoadTargetAccount').addEventListener('click', connectAccount);
-
-  // Botão Colar (prático no celular) + conexão automática ao colar o token
   $('btnPasteToken').addEventListener('click', async () => {
     try {
       const clip = (await navigator.clipboard.readText()).trim();
-      if (!clip) {
-        showBanner('Sua área de transferência está vazia.', 'warn');
-        return;
-      }
-      $('targetToken').value = clip;
-      connectAccount();
+      if (!clip) { showBanner('Sua área de transferência está vazia.', 'warn'); return; }
+      setToken(clip);
+      connectAccount({ advanceWizard: false });
     } catch {
       $('targetToken').focus();
-      showBanner('Toque no campo e aperte Ctrl+V (ou segure para colar).', 'warn');
+      showBanner('Toque no campo e aperte Ctrl+V.', 'warn');
     }
   });
 
   $('targetToken').addEventListener('paste', () => {
     setTimeout(() => {
-      if ($('targetToken').value.trim().length >= 16) {
-        connectAccount();
-      }
+      if ($('targetToken').value.trim().length >= 16) connectAccount({ advanceWizard: false });
     }, 60);
   });
+
+  $('btnLoadTargetAccount').addEventListener('click', () => connectAccount({ advanceWizard: false }));
 
   $('btnUploadTarget').addEventListener('click', () => $('fileTarget').click());
   $('fileTarget').addEventListener('change', async (e) => {
@@ -732,7 +957,10 @@ function bindEvents() {
     state.targetSnacks = parsed.snacks || [];
     state.accountLoaded = true;
     const firstUser = state.targetSnacks[0]?.url?.match(/snack\.expo\.dev\/(@[^/]+)/)?.[1];
-    if (firstUser && !$('docUsuario').value.trim()) $('docUsuario').value = firstUser;
+    if (firstUser && !$('docUsuario').value.trim()) {
+      $('docUsuario').value = firstUser;
+      $('wizDocUsuario').value = firstUser;
+    }
     await recomputeComparison();
     showBanner(`Lista importada (${state.targetSnacks.length} Snacks). Faltam ${state.summary.faltantes}.`, 'ok');
   });
@@ -743,7 +971,10 @@ function bindEvents() {
     state.targetSnacks = parsed.snacks || [];
     state.accountLoaded = true;
     const firstUser = state.targetSnacks[0]?.url?.match(/snack\.expo\.dev\/(@[^/]+)/)?.[1];
-    if (firstUser && !$('docUsuario').value.trim()) $('docUsuario').value = firstUser;
+    if (firstUser && !$('docUsuario').value.trim()) {
+      $('docUsuario').value = firstUser;
+      $('wizDocUsuario').value = firstUser;
+    }
     await recomputeComparison();
     showBanner(`Lista importada (${state.targetSnacks.length} Snacks). Faltam ${state.summary.faltantes}.`, 'ok');
   });
@@ -755,7 +986,7 @@ function bindEvents() {
       const res = await apiPost('/api/snacks/resolve', { snacks: state.targetSnacks });
       state.targetSnacks = res.snacks;
       await recomputeComparison();
-      showBanner(`Códigos baixados (${res.resolvedOk}/${res.total}). Faltam ${state.summary.faltantes} Snacks.`, 'ok');
+      showBanner(`Códigos baixados (${res.resolvedOk}/${res.total}). Faltam ${state.summary.faltantes}.`, 'ok');
     } catch (err) {
       showBanner(`Erro ao baixar códigos: ${err.message}`, 'err');
     } finally {
@@ -783,67 +1014,30 @@ function bindEvents() {
 
   // Aba 2: Documento
   ['docAluno', 'docUsuario', 'docTurma', 'docData'].forEach((id) => {
-    $(id).addEventListener('input', renderDocument);
+    $(id).addEventListener('input', () => syncDocFields(false));
   });
   $('docIncludeExtras').addEventListener('change', renderDocument);
-
-  $('btnCopyDoc').addEventListener('click', async () => {
-    const el = $('docPreview');
-    try {
-      await navigator.clipboard.write([
-        new ClipboardItem({
-          'text/html': new Blob([el.innerHTML], { type: 'text/html' }),
-          'text/plain': new Blob([el.innerText], { type: 'text/plain' }),
-        }),
-      ]);
-    } catch {
-      const range = document.createRange();
-      range.selectNodeContents(el);
-      const sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-      document.execCommand('copy');
-      sel.removeAllRanges();
-    }
-    showBanner('Tabela copiada! Abra docs.new e aperte Ctrl + V.', 'ok');
-  });
-
-  $('btnDownloadWord').addEventListener('click', () => {
-    const user = ($('docUsuario').value.trim() || 'aluno').replace('@', '');
-    const turma = $('docTurma').value.trim() || '604A';
-    const html = `
-      <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word">
-      <head><meta charset="utf-8"><style>
-        body { font-family: Arial, sans-serif; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #888; padding: 6px 8px; text-align: left; }
-        th { background: #f2f2f2; }
-      </style></head>
-      <body>${$('docPreview').innerHTML}</body></html>`;
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob(['\ufeff', html], { type: 'application/msword;charset=utf-8' }));
-    a.download = `Links_Snacks_${turma}_${user}.doc`;
-    a.click();
-    showBanner('Arquivo .doc baixado com sucesso!', 'ok');
-  });
+  $('btnCopyDoc').addEventListener('click', copyDocumentToClipboard);
+  $('btnDownloadWord').addEventListener('click', downloadWordDocument);
 }
 
 async function bootstrap() {
   initTabs();
   bindEvents();
-  $('docData').value = new Date().toLocaleDateString('pt-BR');
+  const today = new Date().toLocaleDateString('pt-BR');
+  $('docData').value = today;
+  $('wizDocData').value = today;
 
-  // Carrega automaticamente os 41 Snacks do HTML da pasta assim que abre
   try {
     const res = await fetch('/api/legacy-catalog');
     const data = await res.json();
     if (data.found && data.snacks.length > 0) {
       state.sourceSnacks = data.snacks;
       const comCodigo = data.withCode ?? data.snacks.length;
-      $('catalogStatus').innerHTML = `<span class="status-dot" aria-hidden="true"></span><span>${data.snacks.length} Snacks carregados (${comCodigo} com código)</span>`;
+      $('catalogStatus').innerHTML = `<span class="status-dot" aria-hidden="true"></span><span>${data.snacks.length} Snacks (${comCodigo} com código)</span>`;
       await recomputeComparison();
     } else {
-      $('catalogStatus').innerHTML = `<span>Catálogo não encontrado na pasta</span>`;
+      $('catalogStatus').innerHTML = `<span>Catálogo não encontrado</span>`;
       renderAll();
     }
   } catch (err) {
