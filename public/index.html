@@ -165,9 +165,12 @@
           </label>
         </div>
 
+        <div id="wizDraftAlert" class="live-banner warn" style="margin-bottom:12px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;" hidden></div>
+
         <div class="btn-row" style="margin-bottom:16px;">
           <button type="button" class="btn btn-primary btn-lg" id="btnWizCopyDoc">Copiar Tabela para Google Docs</button>
-          <button type="button" class="btn btn-success btn-lg" id="btnWizDownloadWord">Baixar Arquivo (.doc)</button>
+          <button type="button" class="btn btn-success btn-lg" id="btnWizSavePdf">Salvar em PDF</button>
+          <button type="button" class="btn btn-secondary btn-lg" id="btnWizDownloadWord">Baixar Word (.doc)</button>
         </div>
 
         <details class="helper-box" style="margin-bottom:12px;">
@@ -325,9 +328,12 @@
                 </label>
               </div>
 
+              <div id="docDraftAlert" class="live-banner warn" style="margin-top:12px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;" hidden></div>
+
               <div class="btn-row">
                 <button type="button" class="btn btn-primary" id="btnCopyDoc">Copiar Tabela para Google Docs</button>
-                <button type="button" class="btn btn-success" id="btnDownloadWord">Baixar Arquivo (.doc)</button>
+                <button type="button" class="btn btn-success" id="btnSavePdf">Salvar em PDF</button>
+                <button type="button" class="btn btn-secondary" id="btnDownloadWord">Baixar Word (.doc)</button>
                 <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.84rem; color:var(--text-secondary); cursor:pointer;">
                   <input type="checkbox" id="docIncludeExtras" checked>
                   Incluir também meus outros Snacks fora da lista de 42

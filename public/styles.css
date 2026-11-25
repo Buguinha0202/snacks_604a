@@ -939,3 +939,32 @@ details.helper-box summary {
   align-items: center;
   gap: 10px;
 }
+
+@media print {
+  body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+  .app-header,
+  .live-banner,
+  .tablist,
+  .wizard-shell,
+  .toast-stack,
+  #panel-clonar,
+  #panel-doc .card {
+    display: none !important;
+  }
+  #fullView,
+  #panel-doc {
+    display: block !important;
+  }
+  .doc-preview-card {
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+  .table-wrapper {
+    max-block-size: none !important;
+    overflow: visible !important;
+    border: none !important;
+  }
+}

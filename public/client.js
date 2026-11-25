@@ -444,6 +444,7 @@ function renderSnackList() {
               <div class="snack-name">
                 ${idx + 1}. ${escapeHtml(name)} ${statusBadgeHtml(cmp)}
                 ${cmp.hasCodeError ? '<span class="badge badge-err">⚠ Erro no código</span>' : ''}
+                ${cmp.isDraft ? '<span class="badge badge-warn">⚠ Rascunho (Draft)</span>' : ''}
               </div>
               <div class="snack-meta">
                 ${escapeHtml(cmp.reason)}
@@ -452,6 +453,11 @@ function renderSnackList() {
               ${
                 cmp.hasCodeError
                   ? `<div class="snack-meta" style="color:#fca5a5; margin-top:2px;">⚠ ${escapeHtml(cmp.targetErrors.join(' · '))} — sugerimos clicar em <b>Corrigir Código</b>.</div>`
+                  : ''
+              }
+              ${
+                cmp.isDraft
+                  ? `<div class="snack-meta" style="color:#fcd34d; margin-top:2px;">⚠ Salvo como Rascunho (Draft) — pode não abrir para o professor. Clique em <b>Publicar Agora</b>.</div>`
                   : ''
               }
             </div>
@@ -473,7 +479,7 @@ function renderSnackList() {
             }
             ${
               canUpdateCode
-                ? `<button type="button" class="btn ${cmp.hasCodeError || cmp.status === 'duplicata_nome' ? 'btn-warn' : 'btn-secondary'} btn-sm" data-action="update-one" data-idx="${idx}" ${isBusy ? 'disabled' : ''} title="Substituir o código do seu Snack pelo código oficial corrigido do site">${isBusy ? 'Atualizando...' : (cmp.hasCodeError ? 'Corrigir Código' : 'Atualizar Código')}</button>`
+                ? `<button type="button" class="btn ${cmp.hasCodeError || cmp.isDraft || cmp.status === 'duplicata_nome' ? 'btn-warn' : 'btn-secondary'} btn-sm" data-action="update-one" data-idx="${idx}" ${isBusy ? 'disabled' : ''} title="Publicar / atualizar o código do seu Snack pelo oficial">${isBusy ? 'Atualizando...' : (cmp.hasCodeError ? 'Corrigir Código' : (cmp.isDraft ? 'Publicar Agora' : 'Atualizar Código'))}</button>`
                 : ''
             }
             <a class="btn btn-secondary btn-sm" href="${escapeHtml(buildQuickOpenUrl(src))}" target="_blank" rel="noopener">Abrir no Expo ↗</a>
@@ -537,6 +543,7 @@ function renderDocument() {
   });
 
   renderCustomLinksLists();
+  renderDraftAlerts();
 
   const tbody = rows.length
     ? rows
@@ -572,6 +579,77 @@ function renderDocument() {
       </table>
     </div>
   `;
+}
+
+function renderDraftAlerts() {
+  const drafts = state.targetSnacks.filter((t) => t.isDraft);
+  const linkedDraftIndices = state.comparison.filter((c) => c.isDraft).map((c) => c.sourceIndex);
+  const boxes = [$('wizDraftAlert'), $('docDraftAlert')];
+
+  boxes.forEach((box) => {
+    if (!box) return;
+    if (drafts.length === 0) {
+      box.hidden = true;
+      return;
+    }
+    const names = drafts.slice(0, 4).map((d) => d.name || d.nome).join(', ');
+    const more = drafts.length > 4 ? ` e mais ${drafts.length - 4}` : '';
+    box.hidden = false;
+    box.innerHTML = `
+      <span>⚠ <b>${drafts.length} Snack(s) em Rascunho (Draft)</b> na sua conta (${escapeHtml(names)}${more}) — links em rascunho podem não abrir para o professor!</span>
+      ${linkedDraftIndices.length > 0 ? `<button type="button" class="btn btn-warn btn-sm" data-publish-drafts="1">Publicar Rascunhos Agora</button>` : ''}
+    `;
+  });
+}
+
+async function publishAllDrafts() {
+  const token = getToken();
+  if (!token) {
+    showBanner('Cole seu Token do Expo para publicar os rascunhos na sua conta.', 'warn');
+    return;
+  }
+  const indices = state.comparison.filter((c) => c.isDraft).map((c) => c.sourceIndex);
+  if (indices.length === 0) return;
+  showBanner(`Publicando ${indices.length} rascunho(s) na sua conta Expo...`, 'ok');
+  for (const idx of indices) {
+    await updateSingleSnackCode(idx);
+  }
+  showBanner(`Pronto! ${indices.length} rascunho(s) publicado(s) com sucesso.`, 'ok');
+}
+
+function saveAsPdf() {
+  renderDocument();
+  const content = $('docPreview').innerHTML;
+  const win = window.open('', '_blank', 'width=900,height=700');
+  if (!win) {
+    // Fallback se o navegador bloquear popup
+    window.print();
+    return;
+  }
+  win.document.write(`<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Links dos Snacks — Turma ${escapeHtml($('docTurma').value.trim() || '604A')}</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; color: #111827; margin: 28px; line-height: 1.45; }
+    h2 { margin-top: 0; font-size: 20px; }
+    p { font-size: 14px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+    caption { text-align: left; font-weight: 700; margin-bottom: 8px; font-size: 14px; }
+    th, td { border: 1px solid #9ca3af; padding: 7px 9px; text-align: left; }
+    th { background: #f3f4f6; font-weight: 700; }
+    a { color: #1d4ed8; text-decoration: none; word-break: break-all; }
+    @media print { body { margin: 12mm; } }
+  </style>
+</head>
+<body>${content}</body>
+</html>`);
+  win.document.close();
+  win.focus();
+  setTimeout(() => {
+    win.print();
+  }, 250);
 }
 
 function renderCustomLinksLists() {
@@ -723,6 +801,7 @@ async function updateSingleSnackCode(idx) {
         linked.code = src.code || '';
         linked.dependencies = src.dependencies || {};
         linked.url = item.url || linked.url;
+        linked.isDraft = false;
       }
       await recomputeComparison();
       showBanner(`Código de "${targetName}" atualizado com a versão oficial do site!`, 'ok');
@@ -998,9 +1077,16 @@ function bindEvents() {
     $(id).addEventListener('input', () => syncDocFields(true));
   });
   $('btnWizCopyDoc').addEventListener('click', copyDocumentToClipboard);
+  $('btnWizSavePdf').addEventListener('click', saveAsPdf);
   $('btnWizDownloadWord').addEventListener('click', downloadWordDocument);
   $('btnWizAddExtra').addEventListener('click', () => addCustomDocLink('wizExtraName', 'wizExtraUrl'));
   $('btnDocAddExtra').addEventListener('click', () => addCustomDocLink('docExtraName', 'docExtraUrl'));
+
+  ['wizDraftAlert', 'docDraftAlert'].forEach((id) => {
+    $(id).addEventListener('click', (e) => {
+      if (e.target.closest('[data-publish-drafts]')) publishAllDrafts();
+    });
+  });
 
   ['docExtraList', 'wizExtraList'].forEach((listId) => {
     $(listId).addEventListener('click', (e) => {
@@ -1156,6 +1242,7 @@ function bindEvents() {
   });
   $('docIncludeExtras').addEventListener('change', renderDocument);
   $('btnCopyDoc').addEventListener('click', copyDocumentToClipboard);
+  $('btnSavePdf').addEventListener('click', saveAsPdf);
   $('btnDownloadWord').addEventListener('click', downloadWordDocument);
 }
 
