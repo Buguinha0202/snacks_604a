@@ -124,7 +124,7 @@ function renderWizard() {
   }
 
   if (missing === 0 && state.accountLoaded) {
-    $('wizDiagTitle').textContent = 'Passo 2: Você já tem todos os 41 Snacks!';
+    $('wizDiagTitle').textContent = `Passo 2: Você já tem todos os ${state.summary.totalSource} Snacks!`;
     $('wizMissingPreview').textContent = attention > 0
       ? `Observação: ${attention} Snack(s) têm o mesmo nome mas código diferente. Você pode revisá-los ou atualizá-los no Painel Completo depois.`
       : 'Nenhum Snack faltando — pode ir direto gerar o documento da turma.';

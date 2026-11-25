@@ -1,7 +1,7 @@
 export default {
   "turma": "604A",
-  "total": 41,
-  "withCode": 41,
+  "total": 42,
+  "withCode": 42,
   "snacks": [
     {
       "id": "legacy-1",
@@ -1125,6 +1125,66 @@ export default {
       "sdkVersion": "56.0.0",
       "description": "No description",
       "fileCount": 1
+    },
+    {
+      "id": "legacy-42",
+      "name": "projeto604A",
+      "nome": "projeto604A",
+      "apelidos": [
+        "projeto604",
+        "projeto"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/projeto604a",
+      "origemUrl": "https://snack.expo.dev/@buu_2/projeto604a",
+      "urlCriar": "https://snack.expo.dev/@buu_2/projeto604a",
+      "pronto": false,
+      "code": "import 'react-native-gesture-handler';\nimport * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createStackNavigator } from '@react-navigation/stack';\nimport HomeScreen from './screens/HomeScreen';\nimport DetailsScreen from './screens/DetailsScreen';\n\nconst Stack = createStackNavigator();\n\nfunction App() {\n  return (\n    <NavigationContainer>\n      <Stack.Navigator initialRouteName=\"Nome\">\n        <Stack.Screen name=\"Nome\" component={HomeScreen} />\n        <Stack.Screen name=\"Details\" component={DetailsScreen} />\n      </Stack.Navigator>\n    </NavigationContainer>\n  );\n}\n\nexport default App;\n",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import 'react-native-gesture-handler';\nimport * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createStackNavigator } from '@react-navigation/stack';\nimport HomeScreen from './screens/HomeScreen';\nimport DetailsScreen from './screens/DetailsScreen';\n\nconst Stack = createStackNavigator();\n\nfunction App() {\n  return (\n    <NavigationContainer>\n      <Stack.Navigator initialRouteName=\"Nome\">\n        <Stack.Screen name=\"Nome\" component={HomeScreen} />\n        <Stack.Screen name=\"Details\" component={DetailsScreen} />\n      </Stack.Navigator>\n    </NavigationContainer>\n  );\n}\n\nexport default App;\n"
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        },
+        "screens/DetailsScreen.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport { View, Text, Button } from 'react-native';\nfunction DetailsScreen({ navigation }) {\n  return (\n    <View style={{ flex: 1, justifyContent: 'center' }}>\n      <Text>Details Screen</Text>\n      <Button title=\"Go to name\" onPress={() => navigation.navigate('Nome')} />\n    </View>\n  );\n}\nexport default DetailsScreen;"
+        },
+        "screens/HomeScreen.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport { View, Text, Button } from 'react-native';\n\nfunction HomeScreen({ navigation }) {\n  return (\n    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>\n      <Text>HomeScreen</Text>\n      <Button\n        title=\"Go to Details\"\n        onPress={() => navigation.navigate('Details')}\n      />\n    </View>\n  );\n}\n\nexport default HomeScreen;\n"
+        }
+      },
+      "dependencies": {
+        "@react-navigation/native": {
+          "version": "^6.1.18"
+        },
+        "@react-navigation/stack": {
+          "version": "^6.4.1"
+        },
+        "react-native-gesture-handler": {
+          "version": "*"
+        },
+        "react-native-screens": {
+          "version": "*"
+        },
+        "react-native-safe-area-context": {
+          "version": "*"
+        }
+      },
+      "sdkVersion": "54.0.0",
+      "description": "No description",
+      "fileCount": 6
     }
   ]
 };

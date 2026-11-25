@@ -283,21 +283,21 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
   const base = `http://127.0.0.1:${server.address().port}`;
 
   try {
-    // Carrega os 41 Snacks hidratados (via cache local)
+    // Carrega os 42 Snacks hidratados (do catálogo empacotado)
     const catRes = await fetch(`${base}/api/legacy-catalog`);
     const cat = await catRes.json();
-    assert.equal(cat.snacks.length, 41);
-    assert.equal(cat.withCode, 41);
+    assert.equal(cat.snacks.length, 42);
+    assert.equal(cat.withCode, 42);
 
     const getCode = (s) => s.files?.['App.js']?.contents || s.code || '';
 
-    // Cenário 1: Conta vazia (0 Snacks) -> todos os 41 faltam
+    // Cenário 1: Conta vazia (0 Snacks) -> todos os 42 faltam
     const emptyCmp = await (await fetch(`${base}/api/compare`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ source: cat.snacks, target: [] }),
     })).json();
-    assert.equal(emptyCmp.summary.faltantes, 41);
+    assert.equal(emptyCmp.summary.faltantes, 42);
 
     // Cenário 2: Aluno real com 5 situações mistas + 1 Snack extra fora dos 41
     const s0Idx = cat.snacks.findIndex((s) => s.name === 'Hello World');
@@ -327,9 +327,9 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
     assert.ok(mixCmp.results[s6Idx].similarity >= 85);
     assert.equal(mixCmp.results[s9Idx].status, 'duplicata_nome', 'Mesmo nome mas código diferente -> alerta');
     assert.equal(mixCmp.results[sTiIdx].status, 'duplicata_exata', 'Typo no nome normalizado');
-    assert.equal(mixCmp.summary.faltantes, 36, '41 - 5 reconhecidos = 36 faltantes');
+    assert.equal(mixCmp.summary.faltantes, 37, '42 - 5 reconhecidos = 37 faltantes');
 
-    // Cenário 3: Dry-run tentando enviar TODOS os 41 -> deve pular os 5 e só listar os 36 faltantes
+    // Cenário 3: Dry-run tentando enviar TODOS os 42 -> deve pular os 5 e só listar os 37 faltantes
     const dryRes = await (await fetch(`${base}/api/clone`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -341,7 +341,7 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
       }),
     })).json();
     assert.equal(dryRes.summary.skipped, 5);
-    assert.equal(dryRes.summary.wouldClone, 36);
+    assert.equal(dryRes.summary.wouldClone, 37);
 
     // Cenário 4: Proteção contra duplicata dentro da própria fila de envio
     const dupQueueRes = await (await fetch(`${base}/api/clone`, {
