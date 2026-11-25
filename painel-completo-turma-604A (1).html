@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Turma 604A — Snacks + Comparador de Código + Documento</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #111214; color: #f3f4f6; max-width: 980px; margin: 26px auto; padding: 0 16px; }
+  h1 { font-size: 1.45rem; margin-bottom: 4px; }
+  p { color: #9ca3af; font-size: 0.9rem; line-height: 1.5; margin: 4px 0 14px; }
+  .card { background: #181a1f; border: 1px solid #2e3138; padding: 16px; border-radius: 12px; margin-bottom: 16px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr 120px 140px; gap: 10px; margin-bottom: 12px; }
+  @media (max-width: 680px) { .grid { grid-template-columns: 1fr; } }
+  label.campo { display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem; color: #9ca3af; font-weight: 600; }
+  input[type="text"], select { background: #111214; border: 1px solid #374151; color: #f3f4f6; padding: 8px 10px; border-radius: 8px; font-size: 0.86rem; }
+  textarea { width: 100%; height: 70px; background: #111214; color: #e5e7eb; border: 1px dashed #4f46e5; border-radius: 8px; padding: 10px; font-family: inherit; font-size: 0.85rem; margin-top: 6px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+  .tab { flex: 1; text-align: center; padding: 11px; background: #181a1f; border: 1px solid #2e3138; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 0.92rem; color: #9ca3af; }
+  .tab.ativa { background: #4630eb; color: #fff; border-color: #4630eb; }
+  .btn { border: none; padding: 7px 12px; border-radius: 8px; font-weight: 600; font-size: 0.82rem; cursor: pointer; color: #fff; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+  .btn-roxo { background: #4630eb; }
+  .btn-verde { background: #0f766e; }
+  .btn-cinza { background: #262930; border: 1px solid #3f4451; color: #e5e7eb; }
+  .item { background: #1c1e22; border: 1px solid #2e3138; padding: 11px 14px; border-radius: 10px; margin-bottom: 9px; }
+  .item.feito { border-color: #065f46; background: #131c18; }
+  .item-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .tag-ok { color: #34d399; font-size: 0.8rem; font-weight: 600; margin-left: 6px; }
+  .comp-box { display: none; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #2e3138; }
+  .comp-box.aberto { display: grid; }
+  @media (max-width: 720px) { .comp-box.aberto { grid-template-columns: 1fr; } }
+  .code-col { background: #0d0e11; border: 1px solid #2e3138; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; }
+  .code-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.78rem; color: #9ca3af; margin-bottom: 6px; font-weight: 600; }
+  pre.code-view { margin: 0; font-family: ui-monospace, monospace; font-size: 0.77rem; color: #e5e7eb; white-space: pre-wrap; word-break: break-word; max-height: 220px; overflow-y: auto; line-height: 1.4; }
+  .preview-wrapper { background: #fff; color: #111827; padding: 28px; border-radius: 10px; overflow-x: auto; }
+  .preview-wrapper table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .preview-wrapper th, .preview-wrapper td { border: 1px solid #9ca3af; padding: 7px 10px; text-align: left; }
+  .preview-wrapper th { background: #f3f4f6; }
+  .preview-wrapper a { color: #1d4ed8; }
+  code.cmd { display: block; background: #0d0e11; padding: 8px 10px; border-radius: 6px; font-size: 0.76rem; color: #a5b4fc; margin: 6px 0; user-select: all; word-break: break-all; }
+</style>
+</head>
+<body>
+
+  <h1>Painel da Turma 604A — Snacks, Comparador de Código & Documento</h1>
+  <p>Compare o código original com os projetos da sua conta para vincular qualquer Snack salvo com nome diferente, evite duplicatas e gere o documento da Turma 604A.</p>
+
+  <div class="card">
+    <div class="grid">
+      <label class="campo">Nome do Aluno <input type="text" id="aluno" placeholder="Ex.: Anna Julia"></label>
+      <label class="campo">Usuário Expo <input type="text" id="usuario" placeholder="Ex.: @annaju08"></label>
+      <label class="campo">Turma <input type="text" id="turma" value="604A"></label>
+      <label class="campo">Data <input type="text" id="data"></label>
+    </div>
+
+    <div style="font-size:0.82rem; color:#d1d5db; margin-bottom:6px;">
+      <b>Como importar seus Snacks (escolha 1 opção):</b><br>
+      • <b>Opção A (Simples — Links + Nomes):</b> Na aba <b>Snacks</b> do Expo (clique em <i>Load more</i> até o fim), abra o Console (<b>F12</b>) e cole:
+      <code class="cmd">copy(JSON.stringify([...document.querySelectorAll('a[href*="snack.expo.dev/@"]')].map(a=>({nome:a.textContent.trim(),url:a.href}))))</code>
+      • <b>Opção B (Completa — Links + Nomes + Códigos para comparar aqui dentro):</b> Se estiver em <b>snack.expo.dev</b> ou quiser puxar os códigos junto:
+      <code class="cmd">(async()=>{const as=[...document.querySelectorAll('a[href*="snack.expo.dev/@"]')];const v=new Set(),L=[];for(const a of as){const u=a.href.split('?')[0].replace(/\/$/,''),n=a.textContent.trim();if(n&&!v.has(u)){v.add(u);L.push({nome:n,url:u});}}console.log('⏳ Lendo códigos de '+L.length+' snacks...');await Promise.all(L.map(async i=>{try{const p=new URL(i.url).pathname,h=await(await fetch('https://snack.expo.dev'+p,{credentials:'omit'})).text();let t=h;for(const c of h.matchAll(/self\.__next_f\.push\(\[1,("(?:\\.|[^"\\])*")\]\)/g)){try{t+='\n'+JSON.parse(c[1])}catch{}}const x=t.search(/"App\.(?:js|tsx)"/);if(x!==-1){const m=t.slice(x,x+15000).match(/"contents"\s*:\s*("(?:\\.|[^"\\])*")/);if(m)i.code=JSON.parse(m[1]);}}catch{}}));copy(JSON.stringify(L));console.log('✅ Copiado! Volte no painel e dê Ctrl+V.');})()</code>
+      • <b>Opção C:</b> Clique em <b>📂 Enviar arquivo .html salvo</b> abaixo.
+    </div>
+
+    <textarea id="entrada" placeholder="Cole aqui (Ctrl + V) o resultado copiado ou selecione seu arquivo .html no botão abaixo..."></textarea>
+    <div style="display:flex; gap:8px; margin-top:8px; align-items:center; flex-wrap:wrap;">
+      <button class="btn btn-cinza" onclick="document.getElementById('arq').click()">📂 Enviar arquivo .html salvo</button>
+      <input type="file" id="arq" accept=".html,.htm" hidden>
+      <button class="btn btn-cinza" onclick="alternarOcultos()" id="btnOcultar">Esconder já concluídos</button>
+      <span id="resumo" style="margin-left:auto; font-weight:700; font-size:0.88rem; color:#34d399;"></span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab ativa" id="tab1" onclick="mudarAba(1)">1. Comparar Códigos & Completar Snacks (Turma 604A)</div>
+    <div class="tab" id="tab2" onclick="mudarAba(2)">2. Gerar Documento com Meus Links (Turma 604A)</div>
+  </div>
+
+  <div id="abaSnacks"></div>
+
+  <div id="abaDoc" style="display:none;">
+    <div class="card" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+      <button class="btn btn-roxo" onclick="copiarDoc()">📋 Copiar Tabela para Google Docs</button>
+      <button class="btn btn-verde" onclick="baixarWord()">⬇️ Baixar Arquivo (.doc)</button>
+      <label style="font-size:0.83rem; display:flex; align-items:center; gap:6px; cursor:pointer;">
+        <input type="checkbox" id="incluirExtras" checked onchange="renderTudo()"> Incluir também meus outros Snacks fora da lista padrão
+      </label>
+      <span id="msgDoc" style="margin-left:auto; color:#34d399; font-size:0.85rem; font-weight:600;"></span>
+    </div>
+    <div class="preview-wrapper" id="docPreview"></div>
+  </div>
+
+<script>
+  const CATALOGO = [{"nome":"Hello World","apelidos":["helloworld","olamundo"],"code":"import {View, Text, Image, ScrollView, TextInput} from 'react-native'\n\nconst App = () => {\n  return (\n    <ScrollView>\n      <Text>Some text</Text>\n      <View>\n        <Text>Some more text</Text>\n        <Image\n          source = {{\n            uri: 'https://reactnative.dev/docs/assets/p_cat2.png',\n          }}\n          style={{width: 200, height: 200}}\n        />\n      </View>\n      <TextInput\n        style={{\n          height: 40,\n          borderColor: 'gray',\n          borderWidth: 1,\n        }}\n        defaultValue=\"You can type in me\"\n      />\n    </ScrollView>    \n  );\n};\nexport default App; ","origemUrl":"https://snack.expo.dev/@buu_2/hello-world","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/hello-world"},{"nome":"Hello world 2","apelidos":["helloworld2","olamundo2"],"code":"import React from 'react'\nimport {StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.title}>Hello World</Text>\n       <Text>with Expo.io</Text>\n      </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    backgroundColor:'#5c5c5c',\n    alignItems: 'center',\n    justifyContent: 'center',\n  },\n  title:{\n    fontSize:27\n  }\n});\n","origemUrl":"https://snack.expo.dev/@buu_2/hello-world-2","pronto":true,"urlCriar":"https://snack.expo.dev/?name=Hello%20world%202&code=import%20React%20from%20'react'%0Aimport%20%7BStyleSheet%2C%20Text%2C%20View%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.title%7D%3EHello%20World%3C%2FText%3E%0A%20%20%20%20%20%20%20%3CText%3Ewith%20Expo.io%3C%2FText%3E%0A%20%20%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20flex%3A%201%2C%0A%20%20%20%20backgroundColor%3A'%235c5c5c'%2C%0A%20%20%20%20alignItems%3A%20'center'%2C%0A%20%20%20%20justifyContent%3A%20'center'%2C%0A%20%20%7D%2C%0A%20%20title%3A%7B%0A%20%20%20%20fontSize%3A27%0A%20%20%7D%0A%7D)%3B%0A"},{"nome":"cores","apelidos":["cor","colors"],"code":"import React from 'react';\nimport {View, Text} from 'react-native'\n\nconst ViewBoxesWithColorAndText = () => {\n  return (\n    <View\n      style={{\n        flexDirection: 'row',\n        height: 100,\n        paddng: 20,\n      }}>\n      <View style={{backgroundColor: 'blue', flex: 0.3}} />\n      <View style={{backgroundColor: 'red', flex: 0.5}} />\n      <Text>Hello World</Text>\n    </View>\n  );\n};\n\nexport default ViewBoxesWithColorAndText;","origemUrl":"https://snack.expo.dev/@buu_2/cores","pronto":true,"urlCriar":"https://snack.expo.dev/?name=cores&code=import%20React%20from%20'react'%3B%0Aimport%20%7BView%2C%20Text%7D%20from%20'react-native'%0A%0Aconst%20ViewBoxesWithColorAndText%20%3D%20()%20%3D%3E%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%0A%20%20%20%20%20%20style%3D%7B%7B%0A%20%20%20%20%20%20%20%20flexDirection%3A%20'row'%2C%0A%20%20%20%20%20%20%20%20height%3A%20100%2C%0A%20%20%20%20%20%20%20%20paddng%3A%2020%2C%0A%20%20%20%20%20%20%7D%7D%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7B%7BbackgroundColor%3A%20'blue'%2C%20flex%3A%200.3%7D%7D%20%2F%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7B%7BbackgroundColor%3A%20'red'%2C%20flex%3A%200.5%7D%7D%20%2F%3E%0A%20%20%20%20%20%20%3CText%3EHello%20World%3C%2FText%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%3B%0A%0Aexport%20default%20ViewBoxesWithColorAndText%3B"},{"nome":"APP604a","apelidos":["app604"],"code":"import React from 'react'\nimport {View, Text} from 'react-native'\n\nconst App =() => {\n  return (\n    <View>\n\n    <Text>Dia Mudou</Text>\n    <Text> Luciano Guimaraes da Rocha </Text>\n\n    </View>\n  )\n}\n\nexport default App; ","origemUrl":"https://snack.expo.dev/@rodrigorubim/app604a","pronto":true,"urlCriar":"https://snack.expo.dev/?name=APP604a&code=import%20React%20from%20'react'%0Aimport%20%7BView%2C%20Text%7D%20from%20'react-native'%0A%0Aconst%20App%20%3D()%20%3D%3E%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%3E%0A%0A%20%20%20%20%3CText%3EDia%20Mudou%3C%2FText%3E%0A%20%20%20%20%3CText%3E%20Luciano%20Guimaraes%20da%20Rocha%20%3C%2FText%3E%0A%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%0A%7D%0A%0Aexport%20default%20App%3B%20"},{"nome":"604A","apelidos":[],"code":"import React, { useState } from 'react';\nimport { View, Text, Button, \nStyleSheet } from 'react-native';\n\nfunction App() {\n  const [contador, setContador] = useState(0);\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.text}>Contador: {contador}</Text>\n      <Button title=\"Incrementar\" onPress={() => setContador((prevContador) => prevContador + 1)}/>\n    </View>\n  );\n}\n\nconst styles = StyleSheet({\n  container: {\n    padding: 20,\n  },\n  text: {\n    fontSize: 10,\n    marginBottom: 10,\n  },\n});\n\nexport default App;","origemUrl":"https://snack.expo.dev/@buu_2/604a","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604A&code=import%20React%2C%20%7B%20useState%20%7D%20from%20'react'%3B%0Aimport%20%7B%20View%2C%20Text%2C%20Button%2C%20%0AStyleSheet%20%7D%20from%20'react-native'%3B%0A%0Afunction%20App()%20%7B%0A%20%20const%20%5Bcontador%2C%20setContador%5D%20%3D%20useState(0)%3B%0A%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.text%7D%3EContador%3A%20%7Bcontador%7D%3C%2FText%3E%0A%20%20%20%20%20%20%3CButton%20title%3D%22Incrementar%22%20onPress%3D%7B()%20%3D%3E%20setContador((prevContador)%20%3D%3E%20prevContador%20%2B%201)%7D%2F%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20padding%3A%2020%2C%0A%20%20%7D%2C%0A%20%20text%3A%20%7B%0A%20%20%20%20fontSize%3A%2010%2C%0A%20%20%20%20marginBottom%3A%2010%2C%0A%20%20%7D%2C%0A%7D)%3B%0A%0Aexport%20default%20App%3B"},{"nome":"604A1","apelidos":[],"code":"import React from 'react'\nimport {View, Text} from 'react-native'\n\nconst App =() => {\n  return (\n    <View>\n\n    <Text>Dia Mudou</Text>\n\n    </View>\n  )\n}\n\nexport default App;","origemUrl":"https://snack.expo.dev/@buu_2/604a1","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604A1&code=import%20React%20from%20'react'%0Aimport%20%7BView%2C%20Text%7D%20from%20'react-native'%0A%0Aconst%20App%20%3D()%20%3D%3E%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%3E%0A%0A%20%20%20%20%3CText%3EDia%20Mudou%3C%2FText%3E%0A%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%0A%7D%0A%0Aexport%20default%20App%3B"},{"nome":"604A2","apelidos":[],"code":"import React from 'react'\nimport {StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.title}>Hello World</Text>\n      <Text style ={styles.titulo}>Luciano Rocha</Text>\n      </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    backgroundColor:'#5c5c5c',\n    alignItems: 'center',\n    justifyContent: 'center',\n  },\n  title:{\n    fontSize:45\n  },\n  titulo:{fontSize:25}\n});","origemUrl":"https://snack.expo.dev/@buu_2/604a2","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604A2&code=import%20React%20from%20'react'%0Aimport%20%7BStyleSheet%2C%20Text%2C%20View%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.title%7D%3EHello%20World%3C%2FText%3E%0A%20%20%20%20%20%20%3CText%20style%20%3D%7Bstyles.titulo%7D%3ELuciano%20Rocha%3C%2FText%3E%0A%20%20%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20flex%3A%201%2C%0A%20%20%20%20backgroundColor%3A'%235c5c5c'%2C%0A%20%20%20%20alignItems%3A%20'center'%2C%0A%20%20%20%20justifyContent%3A%20'center'%2C%0A%20%20%7D%2C%0A%20%20title%3A%7B%0A%20%20%20%20fontSize%3A45%0A%20%20%7D%2C%0A%20%20titulo%3A%7BfontSize%3A25%7D%0A%7D)%3B"},{"nome":"604A3","apelidos":[],"code":"import {View, Text, Image, ScrollView, TextInput} from 'react-native'\n\nconst App = () => {\n  return (\n    <ScrollView>\n      <Text>Some text</Text>\n      <View>\n        <Text>Some more text</Text>\n        <Image\n          source = {{\n            uri: 'https://reactnative.dev/docs/assets/p_cat2.png',\n          }}\n          style={{width: 200, height: 200}}\n        />\n      </View>\n      <TextInput\n        style={{\n          height: 40,\n          borderColor: 'gray',\n          borderWidth: 1,\n        }}\n        defaultValue=\"You can type in me\"\n      />\n    </ScrollView>    \n  );\n};\nexport default App;","origemUrl":"https://snack.expo.dev/@buu_2/604a3","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/604a3"},{"nome":"604A4","apelidos":[],"code":"import React from 'react';\nimport {View, Text} from 'react-native'\n\nconst ViewBoxesWithColorAndText = () => {\n  return (\n    <View\n      style={{\n        flexDirection: 'row',\n        height: 100,\n        paddng: 20,\n      }}>\n      <View style={{backgroundColor: 'blue', flex: 0.3}} />\n      <View style={{backgroundColor: 'red', flex: 0.5}} />\n      <Text>Hello World</Text>\n    </View>\n  );\n};\n\nexport default ViewBoxesWithColorAndText;","origemUrl":"https://snack.expo.dev/@buu_2/604a4","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604A4&code=import%20React%20from%20'react'%3B%0Aimport%20%7BView%2C%20Text%7D%20from%20'react-native'%0A%0Aconst%20ViewBoxesWithColorAndText%20%3D%20()%20%3D%3E%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%0A%20%20%20%20%20%20style%3D%7B%7B%0A%20%20%20%20%20%20%20%20flexDirection%3A%20'row'%2C%0A%20%20%20%20%20%20%20%20height%3A%20100%2C%0A%20%20%20%20%20%20%20%20paddng%3A%2020%2C%0A%20%20%20%20%20%20%7D%7D%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7B%7BbackgroundColor%3A%20'blue'%2C%20flex%3A%200.3%7D%7D%20%2F%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7B%7BbackgroundColor%3A%20'red'%2C%20flex%3A%200.5%7D%7D%20%2F%3E%0A%20%20%20%20%20%20%3CText%3EHello%20World%3C%2FText%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%3B%0A%0Aexport%20default%20ViewBoxesWithColorAndText%3B"},{"nome":"604A6","apelidos":[],"code":"import { StyleSheet, Button, Alert } from 'react-native';\nimport { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';\n\nconst App = () => {\n  const createTwoButtonAlert = () =>\n    Alert.alert('Alert Title', 'My Alert Msg', [\n      {\n        text: 'Cancel',\n        onPress: () => console.log('Cancel pressed'),\n        style: 'cancel',\n      },\n      { text: 'OK', onPress: () => console.log('OK Pressed') },\n    ]);\n\n  const createThreeButtonAlert = () =>\n    Alert.alert('Alert Title', 'My Alert Msg', [\n      {\n        text: 'Ask me later',\n        onPress: () => console.log('Ask me later pressed'),\n      },\n      {\n        text: 'Cancel',\n        onPress: () => console.log('Cancel Pressed'),\n        style: 'cancel',\n      },\n      { text: 'OK', onPress: () => console.log('OK Pressed') },\n    ]);\n\n  return (\n    <SafeAreaProvider>\n      <SafeAreaView style={styles.container}>\n        <Button title={'2-Button Alert'} onPress={createTwoButtonAlert} />\n        <Button title={'3-Button Alert'} onPress={createThreeButtonAlert} />\n      </SafeAreaView>\n    </SafeAreaProvider>\n  );\n};\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    justifyContent: 'space-around',\n    alignItems: 'center',\n  },\n});\n\nexport default App;","origemUrl":"https://snack.expo.dev/@buu_2/604a6","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604A6&code=import%20%7B%20StyleSheet%2C%20Button%2C%20Alert%20%7D%20from%20'react-native'%3B%0Aimport%20%7B%20SafeAreaView%2C%20SafeAreaProvider%20%7D%20from%20'react-native-safe-area-context'%3B%0A%0Aconst%20App%20%3D%20()%20%3D%3E%20%7B%0A%20%20const%20createTwoButtonAlert%20%3D%20()%20%3D%3E%0A%20%20%20%20Alert.alert('Alert%20Title'%2C%20'My%20Alert%20Msg'%2C%20%5B%0A%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20text%3A%20'Cancel'%2C%0A%20%20%20%20%20%20%20%20onPress%3A%20()%20%3D%3E%20console.log('Cancel%20pressed')%2C%0A%20%20%20%20%20%20%20%20style%3A%20'cancel'%2C%0A%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%7B%20text%3A%20'OK'%2C%20onPress%3A%20()%20%3D%3E%20console.log('OK%20Pressed')%20%7D%2C%0A%20%20%20%20%5D)%3B%0A%0A%20%20const%20createThreeButtonAlert%20%3D%20()%20%3D%3E%0A%20%20%20%20Alert.alert('Alert%20Title'%2C%20'My%20Alert%20Msg'%2C%20%5B%0A%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20text%3A%20'Ask%20me%20later'%2C%0A%20%20%20%20%20%20%20%20onPress%3A%20()%20%3D%3E%20console.log('Ask%20me%20later%20pressed')%2C%0A%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20text%3A%20'Cancel'%2C%0A%20%20%20%20%20%20%20%20onPress%3A%20()%20%3D%3E%20console.log('Cancel%20Pressed')%2C%0A%20%20%20%20%20%20%20%20style%3A%20'cancel'%2C%0A%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%7B%20text%3A%20'OK'%2C%20onPress%3A%20()%20%3D%3E%20console.log('OK%20Pressed')%20%7D%2C%0A%20%20%20%20%5D)%3B%0A%0A%20%20return%20(%0A%20%20%20%20%3CSafeAreaProvider%3E%0A%20%20%20%20%20%20%3CSafeAreaView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%20%20%3CButton%20title%3D%7B'2-Button%20Alert'%7D%20onPress%3D%7BcreateTwoButtonAlert%7D%20%2F%3E%0A%20%20%20%20%20%20%20%20%3CButton%20title%3D%7B'3-Button%20Alert'%7D%20onPress%3D%7BcreateThreeButtonAlert%7D%20%2F%3E%0A%20%20%20%20%20%20%3C%2FSafeAreaView%3E%0A%20%20%20%20%3C%2FSafeAreaProvider%3E%0A%20%20)%3B%0A%7D%3B%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20flex%3A%201%2C%0A%20%20%20%20justifyContent%3A%20'space-around'%2C%0A%20%20%20%20alignItems%3A%20'center'%2C%0A%20%20%7D%2C%0A%7D)%3B%0A%0Aexport%20default%20App%3B"},{"nome":"604A7","apelidos":[],"code":"import React from 'react';\nimport { View, StyleSheet } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <View style={styles.box1} />\n      <View style={styles.box2} />\n      <View style={styles.box3} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    flexDirection: 'row',\n    //flexDirection: 'column',\n    //flexDirection: 'row-reverse',\n    //flexDirection: 'column-reverse',\n    //justifyContent: 'space-around',\n    //justifyContent: 'center',\n    //justifyContent: 'flex-end',\n    //justifyContent: 'space-between',\n    justifyContent: 'space-evenly',\n    //alignItems: 'center',\n    //alignItems: 'flex-end',\n    alignItems: 'stretch',\n    padding: 20,\n    backgroundColor: 'yellow',\n  },\n  box1: {\n    width: 50,\n    height: 50,\n    backgroundColor: 'red',\n  },\n  box2: {\n    width: 50,\n    height: 50,\n    backgroundColor: 'green',\n  },\n  box3: {\n    width: 50,\n    height: 50,\n    backgroundColor: 'blue',\n  },\n});","origemUrl":"https://snack.expo.dev/@buu_2/604a7","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604A7&code=import%20React%20from%20'react'%3B%0Aimport%20%7B%20View%2C%20StyleSheet%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box1%7D%20%2F%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box2%7D%20%2F%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box3%7D%20%2F%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20flex%3A%201%2C%0A%20%20%20%20flexDirection%3A%20'row'%2C%0A%20%20%20%20%2F%2FflexDirection%3A%20'column'%2C%0A%20%20%20%20%2F%2FflexDirection%3A%20'row-reverse'%2C%0A%20%20%20%20%2F%2FflexDirection%3A%20'column-reverse'%2C%0A%20%20%20%20%2F%2FjustifyContent%3A%20'space-around'%2C%0A%20%20%20%20%2F%2FjustifyContent%3A%20'center'%2C%0A%20%20%20%20%2F%2FjustifyContent%3A%20'flex-end'%2C%0A%20%20%20%20%2F%2FjustifyContent%3A%20'space-between'%2C%0A%20%20%20%20justifyContent%3A%20'space-evenly'%2C%0A%20%20%20%20%2F%2FalignItems%3A%20'center'%2C%0A%20%20%20%20%2F%2FalignItems%3A%20'flex-end'%2C%0A%20%20%20%20alignItems%3A%20'stretch'%2C%0A%20%20%20%20padding%3A%2020%2C%0A%20%20%20%20backgroundColor%3A%20'yellow'%2C%0A%20%20%7D%2C%0A%20%20box1%3A%20%7B%0A%20%20%20%20width%3A%2050%2C%0A%20%20%20%20height%3A%2050%2C%0A%20%20%20%20backgroundColor%3A%20'red'%2C%0A%20%20%7D%2C%0A%20%20box2%3A%20%7B%0A%20%20%20%20width%3A%2050%2C%0A%20%20%20%20height%3A%2050%2C%0A%20%20%20%20backgroundColor%3A%20'green'%2C%0A%20%20%7D%2C%0A%20%20box3%3A%20%7B%0A%20%20%20%20width%3A%2050%2C%0A%20%20%20%20height%3A%2050%2C%0A%20%20%20%20backgroundColor%3A%20'blue'%2C%0A%20%20%7D%2C%0A%7D)%3B"},{"nome":"604A8","apelidos":[],"code":"import React from 'react';\nimport { View, StyleSheet} from 'react-native';\n\nexport default function App() {\n   return (\n     <View style={styles.container}>\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n       <View style={styles.box} />\n     </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n      container: {\n        flex: 1,\n        flexDirection: 'row',\n        flexWrap: 'wrap',\n        justifyContent: 'flex-start',\n      },\n      box: {\n        width: 80,\n        height: 80,\n        backgroundColor: 'skyblue',\n        margin: 5,\n      }\n});","origemUrl":"https://snack.expo.dev/@buu_2/604a8","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604A8&code=import%20React%20from%20'react'%3B%0Aimport%20%7B%20View%2C%20StyleSheet%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20%20return%20(%0A%20%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%20%2F%3E%0A%20%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20%20%20%20%20container%3A%20%7B%0A%20%20%20%20%20%20%20%20flex%3A%201%2C%0A%20%20%20%20%20%20%20%20flexDirection%3A%20'row'%2C%0A%20%20%20%20%20%20%20%20flexWrap%3A%20'wrap'%2C%0A%20%20%20%20%20%20%20%20justifyContent%3A%20'flex-start'%2C%0A%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20box%3A%20%7B%0A%20%20%20%20%20%20%20%20width%3A%2080%2C%0A%20%20%20%20%20%20%20%20height%3A%2080%2C%0A%20%20%20%20%20%20%20%20backgroundColor%3A%20'skyblue'%2C%0A%20%20%20%20%20%20%20%20margin%3A%205%2C%0A%20%20%20%20%20%20%7D%0A%7D)%3B"},{"nome":"604A9","apelidos":[],"code":"import { StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <View style={styles.box}>\n        <Text style={styles.text}>Box 1</Text>\n      </View>\n      <View style={[styles.box, styles.alignSelfCenter]}>\n        <Text style={styles.text}>Box 2 (alignSelf: 'center')</Text>\n      </View>\n      \n      <View style={styles.box}>\n        <Text style={styles.text}>Box 3</Text>\n      </View>\n      <View style={[styles.box, styles.alignSelfflexEnd]}>\n        <Text style={styles.text}>Box 4 (alignSelf: 'flex-end')</Text>\n      </View>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    justifyContent: 'space-around',\n    alignItems: 'flex-start', \n    padding: 8,\n  },\n  box: {\n    width: 100,\n    height: 50,\n    backgroundColor: 'lightblue', \n    marginBottom: 10, \n    justifyContent: 'center',\n  },\n  text: {\n    textAlign: 'center',\n  },\n  alignSelfCenter: {\n    alignSelf: 'center',\n  },\n  alignSelfflexEnd: {\n    alignSelf: 'flex-end',\n  },\n});","origemUrl":"https://snack.expo.dev/@buu_2/604a9","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604A9&code=import%20%7B%20StyleSheet%2C%20Text%2C%20View%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%3E%0A%20%20%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.text%7D%3EBox%201%3C%2FText%3E%0A%20%20%20%20%20%20%3C%2FView%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7B%5Bstyles.box%2C%20styles.alignSelfCenter%5D%7D%3E%0A%20%20%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.text%7D%3EBox%202%20(alignSelf%3A%20'center')%3C%2FText%3E%0A%20%20%20%20%20%20%3C%2FView%3E%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20%3CView%20style%3D%7Bstyles.box%7D%3E%0A%20%20%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.text%7D%3EBox%203%3C%2FText%3E%0A%20%20%20%20%20%20%3C%2FView%3E%0A%20%20%20%20%20%20%3CView%20style%3D%7B%5Bstyles.box%2C%20styles.alignSelfflexEnd%5D%7D%3E%0A%20%20%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.text%7D%3EBox%204%20(alignSelf%3A%20'flex-end')%3C%2FText%3E%0A%20%20%20%20%20%20%3C%2FView%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20flex%3A%201%2C%0A%20%20%20%20justifyContent%3A%20'space-around'%2C%0A%20%20%20%20alignItems%3A%20'flex-start'%2C%20%0A%20%20%20%20padding%3A%208%2C%0A%20%20%7D%2C%0A%20%20box%3A%20%7B%0A%20%20%20%20width%3A%20100%2C%0A%20%20%20%20height%3A%2050%2C%0A%20%20%20%20backgroundColor%3A%20'lightblue'%2C%20%0A%20%20%20%20marginBottom%3A%2010%2C%20%0A%20%20%20%20justifyContent%3A%20'center'%2C%0A%20%20%7D%2C%0A%20%20text%3A%20%7B%0A%20%20%20%20textAlign%3A%20'center'%2C%0A%20%20%7D%2C%0A%20%20alignSelfCenter%3A%20%7B%0A%20%20%20%20alignSelf%3A%20'center'%2C%0A%20%20%7D%2C%0A%20%20alignSelfflexEnd%3A%20%7B%0A%20%20%20%20alignSelf%3A%20'flex-end'%2C%0A%20%20%7D%2C%0A%7D)%3B"},{"nome":"604Aview","apelidos":["view1","604view"],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/604aview","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/604aview"},{"nome":"604Aview2","apelidos":["view2","604view2"],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/604aview2","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/604aview2"},{"nome":"604Atext1","apelidos":["text1","texto1","604text1"],"code":"import React from 'react'\nimport {StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text>Ola, React Native!</Text>\n      </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n    container: {\n      flex: 1,\n      alignItems: 'center',\n      justifyContent: 'center',\n      backgroundColor:'#9932cc',\n      },\n});\n ","origemUrl":"https://snack.expo.dev/@buu_2/604atext1","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604Atext1&code=import%20React%20from%20'react'%0Aimport%20%7BStyleSheet%2C%20Text%2C%20View%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CText%3EOla%2C%20React%20Native!%3C%2FText%3E%0A%20%20%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20%20%20container%3A%20%7B%0A%20%20%20%20%20%20flex%3A%201%2C%0A%20%20%20%20%20%20alignItems%3A%20'center'%2C%0A%20%20%20%20%20%20justifyContent%3A%20'center'%2C%0A%20%20%20%20%20%20backgroundColor%3A'%239932cc'%2C%0A%20%20%20%20%20%20%7D%2C%0A%7D)%3B%0A%20"},{"nome":"604Atext2","apelidos":["text2","texto2","604text2"],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/604text2","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/604text2"},{"nome":"604Aimage2","apelidos":["image2","image","imagem2","604image2"],"code":"import { Image } from 'react-native';\n\nexport default function App() {\n  return (\n    <Image source={{uri:'https://reactnative.dev/img/tiny_logo.png'}}\n    style={{width: 100, height: 100}}/>\n  );\n}","origemUrl":"https://snack.expo.dev/@buu_2/604aimage2","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604Aimage2&code=import%20%7B%20Image%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CImage%20source%3D%7B%7Buri%3A'https%3A%2F%2Freactnative.dev%2Fimg%2Ftiny_logo.png'%7D%7D%0A%20%20%20%20style%3D%7B%7Bwidth%3A%20100%2C%20height%3A%20100%7D%7D%2F%3E%0A%20%20)%3B%0A%7D"},{"nome":"604Ascrollview2","apelidos":["scrollview","scrollview2","scroll"],"code":"import { ScrollView, Text } from 'react-native';\n\nexport default function App() {\n  return (\n    <ScrollView style={{ marginTop: 50}}>\n\n      <Text>Item 1</Text>\n      <Text>Item 2</Text>\n      <Text>Item 3</Text>\n\n    </ScrollView>\n  );\n}","origemUrl":"https://snack.expo.dev/@buu_2/604ascrollview","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604Ascrollview2&code=import%20%7B%20ScrollView%2C%20Text%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CScrollView%20style%3D%7B%7B%20marginTop%3A%2050%7D%7D%3E%0A%0A%20%20%20%20%20%20%3CText%3EItem%201%3C%2FText%3E%0A%20%20%20%20%20%20%3CText%3EItem%202%3C%2FText%3E%0A%20%20%20%20%20%20%3CText%3EItem%203%3C%2FText%3E%0A%0A%20%20%20%20%3C%2FScrollView%3E%0A%20%20)%3B%0A%7D"},{"nome":"604AtextInput2","apelidos":["textinput2","texinput2","input2"],"code":"import { View, TextInput, StyleSheet } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <TextInput style={styles.input} placeholder=\"Digite aqui...\"/>\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n\n  container: {\n    flex: 1,\n    justifyContent: 'center',\n    padding: 20,\n  },\n\n  input: {\n    borderWidth: 1,\n    borderColor: 'gray',\n    padding: 10,\n    borderRadius: 5,\n  },\n});","origemUrl":"https://snack.expo.dev/@buu_2/604atextinput2","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604AtextInput2&code=import%20%7B%20View%2C%20TextInput%2C%20StyleSheet%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CTextInput%20style%3D%7Bstyles.input%7D%20placeholder%3D%22Digite%20aqui...%22%2F%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%0A%20%20container%3A%20%7B%0A%20%20%20%20flex%3A%201%2C%0A%20%20%20%20justifyContent%3A%20'center'%2C%0A%20%20%20%20padding%3A%2020%2C%0A%20%20%7D%2C%0A%0A%20%20input%3A%20%7B%0A%20%20%20%20borderWidth%3A%201%2C%0A%20%20%20%20borderColor%3A%20'gray'%2C%0A%20%20%20%20padding%3A%2010%2C%0A%20%20%20%20borderRadius%3A%205%2C%0A%20%20%7D%2C%0A%7D)%3B"},{"nome":"604AtextInput3","apelidos":["textinput3","texinput3","input3"],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/604atextinput3","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/604atextinput3"},{"nome":"604Aestilo1","apelidos":["estilo1","estilo","style1"],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/604aestilo1","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/604aestilo1"},{"nome":"604Abutton","apelidos":["button","botao"],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/604abutton","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/604abutton"},{"nome":"604Aitems","apelidos":["items","itens"],"code":"import { ScrollView, Text } from 'react-native';\n\nexport default function App() {\n     return (\n       <ScrollView style={{ marginTop: 50 }}>\n         <Text> Item 1</Text>\n         <Text> Item 2</Text>\n         <Text> Item 3</Text>\n         </ScrollView>\n     )\n}","origemUrl":"https://snack.expo.dev/@buu_2/604aitems","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604Aitems&code=import%20%7B%20ScrollView%2C%20Text%20%7D%20from%20'react-native'%3B%0A%0Aexport%20default%20function%20App()%20%7B%0A%20%20%20%20%20return%20(%0A%20%20%20%20%20%20%20%3CScrollView%20style%3D%7B%7B%20marginTop%3A%2050%20%7D%7D%3E%0A%20%20%20%20%20%20%20%20%20%3CText%3E%20Item%201%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%3CText%3E%20Item%202%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%3CText%3E%20Item%203%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%3C%2FScrollView%3E%0A%20%20%20%20%20)%0A%7D"},{"nome":"604AonChangeText","apelidos":["onchangetext","changetext"],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/604aonchangetext","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/604aonchangetext"},{"nome":"604Aonpress","apelidos":["onpress","press"],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/604aonpress","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/604aonpress"},{"nome":"604AperfilUsuario","apelidos":["604perfilusuario","perfilusuario1"],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/604aperfilusuario","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/604aperfilusuario"},{"nome":"605AperfilUsuario","apelidos":["605perfilusuario","605perfil"],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/605aperfilusuario","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/605aperfilusuario"},{"nome":"604AestadoValorAnterior","apelidos":["estadovaloranterior","valoranterior"],"code":"import React, { useState } from 'react';\nimport { View, Text, Button, \nStyleSheet } from 'react-native';\n\nfunction App() {\n  const [contador, setContador] = useState(0);\n\n  return (\n    <View style={styles.container}>\n      <Text style={styles.text}>Contador: {contador}</Text>\n      <Button title=\"Incrementar\" onPress={() => setContador((prevContador) => prevContador + 1)}/>\n    </View>\n  );\n}\n\nconst styles = StyleSheet({\n  container: {\n    padding: 20,\n  },\n  text: {\n    fontSize: 10,\n    marginBottom: 10,\n  },\n});\n\nexport default App;","origemUrl":"https://snack.expo.dev/@buu_2/604aestadovaloranterior","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604AestadoValorAnterior&code=import%20React%2C%20%7B%20useState%20%7D%20from%20'react'%3B%0Aimport%20%7B%20View%2C%20Text%2C%20Button%2C%20%0AStyleSheet%20%7D%20from%20'react-native'%3B%0A%0Afunction%20App()%20%7B%0A%20%20const%20%5Bcontador%2C%20setContador%5D%20%3D%20useState(0)%3B%0A%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.text%7D%3EContador%3A%20%7Bcontador%7D%3C%2FText%3E%0A%20%20%20%20%20%20%3CButton%20title%3D%22Incrementar%22%20onPress%3D%7B()%20%3D%3E%20setContador((prevContador)%20%3D%3E%20prevContador%20%2B%201)%7D%2F%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0A%0Aconst%20styles%20%3D%20StyleSheet(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20padding%3A%2020%2C%0A%20%20%7D%2C%0A%20%20text%3A%20%7B%0A%20%20%20%20fontSize%3A%2010%2C%0A%20%20%20%20marginBottom%3A%2010%2C%0A%20%20%7D%2C%0A%7D)%3B%0A%0Aexport%20default%20App%3B"},{"nome":"604Acfhooks","apelidos":["cfhooks","hooks"],"code":"import React, { useState } from 'react';\nimport { View, Text, Button, StyleSheet } from 'react-native';\n\nfunction Contador() {\n  const [contador, setContador] = useState(0);\n  return (\n    <View style={styles.container}>\n      <Text style={styles.text}>\n        Contador: {contador}\n      </Text>\n      <Button title=\"Incrementar\" onPress={() => setContador(contador + 1)} />\n    </View>\n  );\n}\nconst styles = StyleSheet.create({\n  container: {\n    padding: 20,\n  },\n  text: {\n    fontSize: 40,\n    marginBottom: 10,\n  },\n});\n\nexport default Contador;","origemUrl":"https://snack.expo.dev/@buu_2/604acfhooks","pronto":true,"urlCriar":"https://snack.expo.dev/?name=604Acfhooks&code=import%20React%2C%20%7B%20useState%20%7D%20from%20'react'%3B%0Aimport%20%7B%20View%2C%20Text%2C%20Button%2C%20StyleSheet%20%7D%20from%20'react-native'%3B%0A%0Afunction%20Contador()%20%7B%0A%20%20const%20%5Bcontador%2C%20setContador%5D%20%3D%20useState(0)%3B%0A%20%20return%20(%0A%20%20%20%20%3CView%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%3CText%20style%3D%7Bstyles.text%7D%3E%0A%20%20%20%20%20%20%20%20Contador%3A%20%7Bcontador%7D%0A%20%20%20%20%20%20%3C%2FText%3E%0A%20%20%20%20%20%20%3CButton%20title%3D%22Incrementar%22%20onPress%3D%7B()%20%3D%3E%20setContador(contador%20%2B%201)%7D%20%2F%3E%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%3B%0A%7D%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20container%3A%20%7B%0A%20%20%20%20padding%3A%2020%2C%0A%20%20%7D%2C%0A%20%20text%3A%20%7B%0A%20%20%20%20fontSize%3A%2040%2C%0A%20%20%20%20marginBottom%3A%2010%2C%0A%20%20%7D%2C%0A%7D)%3B%0A%0Aexport%20default%20Contador%3B"},{"nome":"604A17titulo","apelidos":["17titulo","titulo17","aula17"],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/604a17titulo","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/604a17titulo"},{"nome":"cadastro","apelidos":["formcadastro"],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/cadastro","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/cadastro"},{"nome":"604Awelcome","apelidos":["welcome","boasvindas"],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/604awelcome","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/604awelcome"},{"nome":"app1","apelidos":[],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/app1","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/app1"},{"nome":"app3","apelidos":[],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/app3","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/app3"},{"nome":"app4","apelidos":[],"code":"import React from 'react';\nimport {Text} from 'react-native';\nconst Cat = () => {\n    const name = \"Maru\";\n    return <Text> Hello, I am {name}!</Text>\n}\nexport default Cat;","origemUrl":"https://snack.expo.dev/@buu_2/app4","pronto":true,"urlCriar":"https://snack.expo.dev/?name=app4&code=import%20React%20from%20'react'%3B%0Aimport%20%7BText%7D%20from%20'react-native'%3B%0Aconst%20Cat%20%3D%20()%20%3D%3E%20%7B%0A%20%20%20%20const%20name%20%3D%20%22Maru%22%3B%0A%20%20%20%20return%20%3CText%3E%20Hello%2C%20I%20am%20%7Bname%7D!%3C%2FText%3E%0A%7D%0Aexport%20default%20Cat%3B"},{"nome":"app5","apelidos":[],"code":"import {View, Image, StyleSheet, Txet, ScrollView} from 'react-native';\nimport {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';\n\nconst asset = require('@expo/snack-static/react-native-logo.png');\n\nconst DisplayAnImageWithStyle = () => (\n    <SafeAreaProvider>\n        <SafeAreaview style={styles.container}>\n            <ScrollView style={styles.scrollView}>\n\n\n\n                <View>\n                    <Image style={[styles.image,\n                       { borderTopRightRadius: 20}]}\n                            source={asset}\n                    />\n                    <Text>borderTopRightRadius</Text>\n                </View>\n\n\n\n                <View>\n                    <Image style={[styles.image,\n                       { borderBottomRightRadius: 20}]}\n                            source={asset}\n                    />\n                    <Text>borderBottomRightRadius</Text>\n                </View>\n\n\n\n                <View>\n                    <Image style={[styles.image,\n                       { borderBottomLeftRadius: 20}]}\n                            source={asset}\n                    />\n                    <Text>borderBottomLeftRadius</Text>\n                </View>\n\n\n\n                <View>\n                    <Image style={[styles.image,\n                       { borderTopLeftRadius: 20}]}\n                            source={asset}\n                    />\n                    <Text>borderTopLeftRadius</Text>\n                </View>\n                \n\n\n            </ScrollView>\n        </SafeAreaview>\n    </SafeAreaProvider>\n)\n\n\nconst styles = StyleSheet.create({\n    container: {\n        flex: 1,\n    },\n    scrollView:{\n        flex: 1,\n        justifyContent: 'center',\n        alignItems: 'center',\n    },\n    image:{\n        borderWidth: 1,\n        borderColor: 'red',\n        height: 100,\n        width: 200,\n    },\n});\n\nexport default DisplayAnImageWithStyle;","origemUrl":"https://snack.expo.dev/@buu_2/app5","pronto":true,"urlCriar":"https://snack.expo.dev/?name=app5&code=import%20%7BView%2C%20Image%2C%20StyleSheet%2C%20Txet%2C%20ScrollView%7D%20from%20'react-native'%3B%0Aimport%20%7BSafeAreaView%2C%20SafeAreaProvider%7D%20from%20'react-native-safe-area-context'%3B%0A%0Aconst%20asset%20%3D%20require('%40expo%2Fsnack-static%2Freact-native-logo.png')%3B%0A%0Aconst%20DisplayAnImageWithStyle%20%3D%20()%20%3D%3E%20(%0A%20%20%20%20%3CSafeAreaProvider%3E%0A%20%20%20%20%20%20%20%20%3CSafeAreaview%20style%3D%7Bstyles.container%7D%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3CScrollView%20style%3D%7Bstyles.scrollView%7D%3E%0A%0A%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CView%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CImage%20style%3D%7B%5Bstyles.image%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%20borderTopRightRadius%3A%2020%7D%5D%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20source%3D%7Basset%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CText%3EborderTopRightRadius%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FView%3E%0A%0A%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CView%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CImage%20style%3D%7B%5Bstyles.image%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%20borderBottomRightRadius%3A%2020%7D%5D%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20source%3D%7Basset%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CText%3EborderBottomRightRadius%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FView%3E%0A%0A%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CView%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CImage%20style%3D%7B%5Bstyles.image%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%20borderBottomLeftRadius%3A%2020%7D%5D%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20source%3D%7Basset%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CText%3EborderBottomLeftRadius%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FView%3E%0A%0A%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CView%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CImage%20style%3D%7B%5Bstyles.image%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7B%20borderTopLeftRadius%3A%2020%7D%5D%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20source%3D%7Basset%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CText%3EborderTopLeftRadius%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FView%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FScrollView%3E%0A%20%20%20%20%20%20%20%20%3C%2FSafeAreaview%3E%0A%20%20%20%20%3C%2FSafeAreaProvider%3E%0A)%0A%0A%0Aconst%20styles%20%3D%20StyleSheet.create(%7B%0A%20%20%20%20container%3A%20%7B%0A%20%20%20%20%20%20%20%20flex%3A%201%2C%0A%20%20%20%20%7D%2C%0A%20%20%20%20scrollView%3A%7B%0A%20%20%20%20%20%20%20%20flex%3A%201%2C%0A%20%20%20%20%20%20%20%20justifyContent%3A%20'center'%2C%0A%20%20%20%20%20%20%20%20alignItems%3A%20'center'%2C%0A%20%20%20%20%7D%2C%0A%20%20%20%20image%3A%7B%0A%20%20%20%20%20%20%20%20borderWidth%3A%201%2C%0A%20%20%20%20%20%20%20%20borderColor%3A%20'red'%2C%0A%20%20%20%20%20%20%20%20height%3A%20100%2C%0A%20%20%20%20%20%20%20%20width%3A%20200%2C%0A%20%20%20%20%7D%2C%0A%7D)%3B%0A%0Aexport%20default%20DisplayAnImageWithStyle%3B"},{"nome":"app10","apelidos":[],"code":"import React from 'react';\nimport {View, TouchableOpacity, Text} from 'react-native';\n\nconst App = () => {\n    const handleLongPress = () => {\n        console.log('Pressionado por um tempo longo');\n    };\n    const handlePress = () => {\n        console.log('Pressionado rapidamente');\n    };\n    return (\n        <View>\n            <TouchableOpacity onPress={handlePress} onLongPress={handleLongPress}>\n                <Text style ={{ padding: 20, backgroundColor: '#ddd'}}>Pressiona-me</Text>\n            </TouchableOpacity>\n        </View>\n    );\n};\n\nexport default App;","origemUrl":"https://snack.expo.dev/@buu_2/app10","pronto":true,"urlCriar":"https://snack.expo.dev/?name=app10&code=import%20React%20from%20'react'%3B%0Aimport%20%7BView%2C%20TouchableOpacity%2C%20Text%7D%20from%20'react-native'%3B%0A%0Aconst%20App%20%3D%20()%20%3D%3E%20%7B%0A%20%20%20%20const%20handleLongPress%20%3D%20()%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20console.log('Pressionado%20por%20um%20tempo%20longo')%3B%0A%20%20%20%20%7D%3B%0A%20%20%20%20const%20handlePress%20%3D%20()%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20console.log('Pressionado%20rapidamente')%3B%0A%20%20%20%20%7D%3B%0A%20%20%20%20return%20(%0A%20%20%20%20%20%20%20%20%3CView%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3CTouchableOpacity%20onPress%3D%7BhandlePress%7D%20onLongPress%3D%7BhandleLongPress%7D%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CText%20style%20%3D%7B%7B%20padding%3A%2020%2C%20backgroundColor%3A%20'%23ddd'%7D%7D%3EPressiona-me%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FTouchableOpacity%3E%0A%20%20%20%20%20%20%20%20%3C%2FView%3E%0A%20%20%20%20)%3B%0A%7D%3B%0A%0Aexport%20default%20App%3B"},{"nome":"app11","apelidos":[],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/app11","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/app11"},{"nome":"app12","apelidos":[],"code":"import React, {Component, component} from 'react';\nimport {View,Text,Button} from 'react-native';\n\nclass App extends Component {\n    state = {\n        contador: 0,\n    };\n     \n    incrementarContador = () => {\n        this.setState({\n            contador: this.state.contador + 1,\n        });\n    };\n    render() {\n        return(\n            <View>\n                <Text>Contador: {this.state.contador}</Text>\n                <Button title=\"Incrementar\" onPress={this.incrementarContador} />\n            </View>\n        );\n    }    \n}\n\nexport default App;","origemUrl":"https://snack.expo.dev/@buu_2/app12","pronto":true,"urlCriar":"https://snack.expo.dev/?name=app12&code=import%20React%2C%20%7BComponent%2C%20component%7D%20from%20'react'%3B%0Aimport%20%7BView%2CText%2CButton%7D%20from%20'react-native'%3B%0A%0Aclass%20App%20extends%20Component%20%7B%0A%20%20%20%20state%20%3D%20%7B%0A%20%20%20%20%20%20%20%20contador%3A%200%2C%0A%20%20%20%20%7D%3B%0A%20%20%20%20%20%0A%20%20%20%20incrementarContador%20%3D%20()%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20this.setState(%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20contador%3A%20this.state.contador%20%2B%201%2C%0A%20%20%20%20%20%20%20%20%7D)%3B%0A%20%20%20%20%7D%3B%0A%20%20%20%20render()%20%7B%0A%20%20%20%20%20%20%20%20return(%0A%20%20%20%20%20%20%20%20%20%20%20%20%3CView%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CText%3EContador%3A%20%7Bthis.state.contador%7D%3C%2FText%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3CButton%20title%3D%22Incrementar%22%20onPress%3D%7Bthis.incrementarContador%7D%20%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2FView%3E%0A%20%20%20%20%20%20%20%20)%3B%0A%20%20%20%20%7D%20%20%20%20%0A%7D%0A%0Aexport%20default%20App%3B"},{"nome":"socorro","apelidos":["redacao","enem"],"code":"","origemUrl":"https://snack.expo.dev/@buu_2/socorro","pronto":false,"urlCriar":"https://snack.expo.dev/@buu_2/socorro"}];
+  let meusSnacks = []; // [{ nome, url, code? }]
+  let vinculos = {};   // idxCatalogo -> indice em meusSnacks
+  let abertos = {};    // idxCatalogo -> boolean (painel de código aberto)
+  let previewSub = {}; // idxCatalogo -> indice em meusSnacks sendo visualizado no comparador
+  let esconderFeitos = false;
+
+  document.getElementById('data').value = new Date().toLocaleDateString('pt-BR');
+  ['aluno', 'usuario', 'turma', 'data'].forEach(id => document.getElementById(id).addEventListener('input', renderTudo));
+
+  const norm = (s) => (s || '').toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[\s_-]+/g, '')
+    .replace(/^(60[45])a(?=[a-z])/g, '$1')
+    .replace('texinput', 'textinput')
+    .replace('scrollview2', 'scrollview');
+
+  const normCode = (c) => (c || '').replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '').replace(/\s+/g, '').trim();
+
+  const distUm = (a, b) => {
+    if (a === b) return true;
+    if (a.length < 6 || Math.abs(a.length - b.length) > 1) return false;
+    let i = 0, j = 0, err = 0;
+    while (i < a.length && j < b.length) {
+      if (a[i] === b[j]) { i++; j++; continue; }
+      if (++err > 1) return false;
+      if (a.length > b.length) i++; else if (b.length > a.length) j++; else { i++; j++; }
+    }
+    return true;
+  };
+
+  function casarAutomatico() {
+    vinculos = {};
+    const usados = new Set();
+
+    // 1ª passada: nome exato normalizado ou apelido
+    CATALOGO.forEach((cat, cIdx) => {
+      const alvos = [norm(cat.nome), ...(cat.apelidos || []).map(norm)];
+      const achou = meusSnacks.findIndex((m, mIdx) => !usados.has(mIdx) && alvos.includes(norm(m.nome)));
+      if (achou !== -1) { vinculos[cIdx] = achou; previewSub[cIdx] = achou; usados.add(achou); }
+    });
+
+    // 2ª passada: código idêntico (quando a pessoa importou com código e salvou com nome diferente!)
+    CATALOGO.forEach((cat, cIdx) => {
+      if (vinculos[cIdx] !== undefined || !cat.code) return;
+      const alvoCode = normCode(cat.code);
+      if (alvoCode.length < 25) return;
+      const achou = meusSnacks.findIndex((m, mIdx) => !usados.has(mIdx) && m.code && normCode(m.code) === alvoCode);
+      if (achou !== -1) { vinculos[cIdx] = achou; previewSub[cIdx] = achou; usados.add(achou); }
+    });
+
+    // 3ª passada: tolerância de 1 letra ou palavra-chave contida
+    CATALOGO.forEach((cat, cIdx) => {
+      if (vinculos[cIdx] !== undefined) return;
+      const alvos = [norm(cat.nome), ...(cat.apelidos || []).map(norm)];
+      const achou = meusSnacks.findIndex((m, mIdx) => {
+        if (usados.has(mIdx)) return false;
+        const nm = norm(m.nome);
+        return alvos.some(a => distUm(nm, a) || (a.length >= 6 && nm.includes(a)));
+      });
+      if (achou !== -1) { vinculos[cIdx] = achou; previewSub[cIdx] = achou; usados.add(achou); }
+    });
+  }
+
+  function importarDados(raw) {
+    meusSnacks = [];
+    const limpo = raw.trim();
+    if (!limpo) return;
+
+    if (limpo.startsWith('[')) {
+      try {
+        const arr = JSON.parse(limpo);
+        const vistos = new Set();
+        arr.forEach(x => {
+          if (!x.nome || !x.url) return;
+          const u = x.url.split('?')[0].replace(/\/$/, '');
+          if (vistos.has(u)) return;
+          vistos.add(u);
+          const m = u.match(/snack\.expo\.dev\/(@[^/]+)/);
+          if (m && !document.getElementById('usuario').value) document.getElementById('usuario').value = m[1];
+          meusSnacks.push({ nome: x.nome.trim(), url: u, code: x.code || '' });
+        });
+      } catch {}
+    }
+
+    if (!meusSnacks.length && limpo.includes('<a ')) {
+      const doc = new DOMParser().parseFromString(limpo, 'text/html');
+      const links = [...doc.querySelectorAll('a[href*="snack.expo.dev/@"]')];
+      const vistos = new Set();
+      links.forEach(a => {
+        const u = a.getAttribute('href').split('?')[0].replace(/\/$/, '');
+        const nome = a.textContent.trim();
+        if (!nome || vistos.has(u)) return;
+        vistos.add(u);
+        const m = u.match(/snack\.expo\.dev\/(@[^/]+)/);
+        if (m && !document.getElementById('usuario').value) document.getElementById('usuario').value = m[1];
+        meusSnacks.push({ nome, url: u, code: '' });
+      });
+    }
+
+    if (!meusSnacks.length) {
+      const ignorar = new Set(['selectproject','account','overview','snacks','usage','runners','members','environmentvariables','android&ioscredentials','appledevices','settings','snack','status','sdk','lastsaved','none','draft','newsnack','loadmore']);
+      const linhas = limpo.split(/[\r\n]+/).map(l => l.trim()).filter(Boolean);
+      let user = document.getElementById('usuario').value.trim() || '@usuario';
+      if (!user.startsWith('@')) user = '@' + user;
+
+      linhas.forEach(l => {
+        if (ignorar.has(norm(l)) || /^\d+\.\d+\.\d+$/.test(l) || /^(oct|nov|dec|jan|feb|mar|apr|may|jun|jul|aug|sep)\s+\d+/i.test(l)) return;
+        if (l.endsWith('account icon')) {
+          const u = '@' + l.replace('account icon', '').trim();
+          document.getElementById('usuario').value = u;
+          user = u;
+          return;
+        }
+        const slug = l.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9_-]/g, '');
+        if (slug && !meusSnacks.some(s => norm(s.nome) === norm(l))) {
+          meusSnacks.push({ nome: l, url: 'https://snack.expo.dev/' + user + '/' + slug, code: '' });
+        }
+      });
+    }
+
+    casarAutomatico();
+    renderTudo();
+  }
+
+  document.getElementById('entrada').addEventListener('input', (e) => importarDados(e.target.value));
+  document.getElementById('arq').addEventListener('change', (e) => {
+    if (!e.target.files[0]) return;
+    const r = new FileReader();
+    r.onload = (ev) => importarDados(ev.target.result);
+    r.readAsText(e.target.files[0], 'UTF-8');
+  });
+
+  window.vincularManual = (cIdx, val) => {
+    if (val === '') {
+      delete vinculos[cIdx];
+    } else {
+      vinculos[cIdx] = Number(val);
+      previewSub[cIdx] = Number(val);
+    }
+    renderTudo();
+  };
+
+  window.toggleCodigo = (cIdx) => {
+    abertos[cIdx] = !abertos[cIdx];
+    renderTudo();
+  };
+
+  window.mudarPreviewAluno = (cIdx, mIdxStr) => {
+    if (mIdxStr === '') delete previewSub[cIdx];
+    else previewSub[cIdx] = Number(mIdxStr);
+    renderTudo();
+  };
+
+  window.confirmarVinculoDoPreview = (cIdx) => {
+    if (previewSub[cIdx] !== undefined) {
+      vinculos[cIdx] = previewSub[cIdx];
+      renderTudo();
+    }
+  };
+
+  window.alternarOcultos = () => {
+    esconderFeitos = !esconderFeitos;
+    document.getElementById('btnOcultar').textContent = esconderFeitos ? 'Mostrar todos (41)' : 'Esconder já concluídos';
+    renderTudo();
+  };
+
+  window.mudarAba = (n) => {
+    document.getElementById('tab1').classList.toggle('ativa', n === 1);
+    document.getElementById('tab2').classList.toggle('ativa', n === 2);
+    document.getElementById('abaSnacks').style.display = n === 1 ? 'block' : 'none';
+    document.getElementById('abaDoc').style.display = n === 2 ? 'block' : 'none';
+  };
+
+  const esc = (s) => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  function renderTudo() {
+    const total = CATALOGO.length;
+    const feitos = Object.keys(vinculos).length;
+    document.getElementById('resumo').textContent = 'Reconhecidos: ' + feitos + ' de ' + total + ' (Faltam ' + (total - feitos) + ')';
+
+    const opcoesSelect = (selecionado, prefixo) => {
+      return '<option value="">-- ' + prefixo + ' --</option>' +
+        meusSnacks.map((m, idx) => '<option value="' + idx + '" ' + (selecionado === idx ? 'selected' : '') + '>' + esc(m.nome) + '</option>').join('');
+    };
+
+    document.getElementById('abaSnacks').innerHTML = CATALOGO.map((cat, cIdx) => {
+      const mIdx = vinculos[cIdx];
+      const tem = mIdx !== undefined;
+      if (esconderFeitos && tem) return '';
+      const meu = tem ? meusSnacks[mIdx] : null;
+      const pIdx = previewSub[cIdx] !== undefined ? previewSub[cIdx] : mIdx;
+      const meuPreview = pIdx !== undefined ? meusSnacks[pIdx] : null;
+      const isAberto = !!abertos[cIdx];
+
+      return '<div class="item ' + (tem ? 'feito' : '') + '">' +
+        '<div class="item-head">' +
+          '<div style="flex:1; min-width:190px;">' +
+            '<strong>' + (cIdx + 1) + '. ' + esc(cat.nome) + '</strong>' +
+            (tem ? '<span class="tag-ok">✓ Vinculado a "' + esc(meu.nome) + '"</span>' : '') +
+          '</div>' +
+          '<button class="btn btn-cinza" onclick="toggleCodigo(' + cIdx + ')">👁️ ' + (isAberto ? 'Fechar Código' : 'Ver / Comparar Código') + '</button>' +
+          (meusSnacks.length ? '<select onchange="vincularManual(' + cIdx + ', this.value)" title="Vincular a um Snack da sua conta">' + opcoesSelect(mIdx, 'Já tenho como...') + '</select>' : '') +
+          '<a class="btn ' + (cat.pronto ? 'btn-roxo' : 'btn-verde') + '" href="' + cat.urlCriar.replace(/&/g, '&amp;') + '" target="_blank">' +
+            (cat.pronto ? 'Abrir e Salvar' : 'Abrir (Espaço + Save)') +
+          '</a>' +
+        '</div>' +
+        '<div class="comp-box ' + (isAberto ? 'aberto' : '') + '">' +
+          '<div class="code-col">' +
+            '<div class="code-head">' +
+              '<span>📌 Código Original (' + esc(cat.nome) + ')</span>' +
+              '<a href="' + cat.origemUrl + '" target="_blank" style="color:#818cf8;">Abrir original ↗</a>' +
+            '</div>' +
+            '<pre class="code-view">' + (cat.code ? esc(cat.code) : 'Projeto com múltiplos arquivos/assets. Clique em "Abrir original ↗" acima para ver no Expo.') + '</pre>' +
+          '</div>' +
+          '<div class="code-col">' +
+            '<div class="code-head">' +
+              '<span>🔎 Comparar com Snack da sua conta:</span>' +
+              (meuPreview ? '<a href="' + meuPreview.url + '" target="_blank" style="color:#34d399;">Abrir meu Snack no Expo ↗</a>' : '') +
+            '</div>' +
+            (meusSnacks.length
+              ? '<div style="display:flex;gap:6px;margin-bottom:8px;">' +
+                  '<select style="flex:1;" onchange="mudarPreviewAluno(' + cIdx + ', this.value)">' + opcoesSelect(pIdx, 'Escolha um Snack seu para comparar...') + '</select>' +
+                  (pIdx !== undefined && mIdx !== pIdx ? '<button class="btn btn-verde" onclick="confirmarVinculoDoPreview(' + cIdx + ')">✓ É este!</button>' : '') +
+                '</div>' +
+                '<pre class="code-view">' +
+                  (meuPreview
+                    ? (meuPreview.code
+                        ? esc(meuPreview.code)
+                        : 'Código não carregado na importação rápida.\n\n👉 Clique em "Abrir meu Snack no Expo ↗" acima para conferir o código dele em outra aba, ou use a Opção B lá no topo para importar todos os códigos.')
+                    : 'Selecione qualquer Snack da sua lista acima para comparar com o código original ao lado.') +
+                '</pre>'
+              : '<pre class="code-view">Importe sua lista de Snacks no topo da página para comparar com os seus projetos.</pre>') +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    // Renderizar Aba 2 (Documento Turma 604A)
+    const aluno = document.getElementById('aluno').value.trim() || 'Nome do Aluno';
+    let user = document.getElementById('usuario').value.trim() || '@usuario';
+    if (!user.startsWith('@')) user = '@' + user;
+    const turma = document.getElementById('turma').value.trim() || '604A';
+    const data = document.getElementById('data').value.trim();
+
+    const linhasDoc = [];
+    const usados = new Set();
+
+    CATALOGO.forEach((cat, cIdx) => {
+      const mIdx = vinculos[cIdx];
+      if (mIdx !== undefined && meusSnacks[mIdx]) {
+        usados.add(mIdx);
+        const urlFinal = meusSnacks[mIdx].url.replace(/snack\.expo\.dev\/@[^/]+/, 'snack.expo.dev/' + user);
+        linhasDoc.push({ nome: meusSnacks[mIdx].nome, url: urlFinal });
+      }
+    });
+
+    if (document.getElementById('incluirExtras').checked) {
+      meusSnacks.forEach((m, mIdx) => {
+        if (!usados.has(mIdx)) {
+          const urlFinal = m.url.replace(/snack\.expo\.dev\/@[^/]+/, 'snack.expo.dev/' + user);
+          linhasDoc.push({ nome: m.nome, url: urlFinal });
+        }
+      });
+    }
+
+    const tbody = linhasDoc.length
+      ? linhasDoc.map((item, i) => '<tr><td>' + (i + 1) + '</td><td>' + esc(item.nome) + '</td><td><a href="' + item.url + '">' + item.url + '</a></td></tr>').join('')
+      : '<tr><td colspan="3" style="text-align:center;color:#6b7280;">Importe seus Snacks no quadro acima para montar o documento.</td></tr>';
+
+    document.getElementById('docPreview').innerHTML =
+      '<h2>Links dos Snacks — Expo (Turma ' + esc(turma) + ')</h2>' +
+      '<p style="color:#111;font-size:0.95rem;"><b>Aluno:</b> ' + esc(aluno) + '<br><b>Turma:</b> ' + esc(turma) + '<br><b>Usuário Expo:</b> ' + esc(user) + '<br><b>Data:</b> ' + esc(data) + '</p>' +
+      '<h3>Lista de Projetos</h3>' +
+      '<table><thead><tr><th style="width:45px;">#</th><th>Projeto / Snack</th><th>Link</th></tr></thead><tbody>' + tbody + '</tbody></table>';
+  }
+
+  window.copiarDoc = async () => {
+    const el = document.getElementById('docPreview');
+    try {
+      await navigator.clipboard.write([new ClipboardItem({
+        'text/html': new Blob([el.innerHTML], { type: 'text/html' }),
+        'text/plain': new Blob([el.innerText], { type: 'text/plain' })
+      })]);
+    } catch {
+      const r = document.createRange(); r.selectNodeContents(el);
+      const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      document.execCommand('copy'); s.removeAllRanges();
+    }
+    document.getElementById('msgDoc').textContent = '✓ Copiado! Abra docs.new e aperte Ctrl + V.';
+  };
+
+  window.baixarWord = () => {
+    const user = (document.getElementById('usuario').value.trim() || 'aluno').replace('@', '');
+    const html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><style>body{font-family:Arial,sans-serif}table{border-collapse:collapse;width:100%}th,td{border:1px solid #888;padding:6px 8px;text-align:left}th{background:#f2f2f2}</style></head><body>' + document.getElementById('docPreview').innerHTML + '</body></html>';
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['\ufeff', html], { type: 'application/msword;charset=utf-8' }));
+    a.download = 'Links_Snacks_604A_' + user + '.doc';
+    a.click();
+  };
+
+  renderTudo();
+</script>
+</body>
+</html>

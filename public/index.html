@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Turma 604A — Conferir &amp; Copiar Snacks Faltantes</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div>
+        <h1 class="brand-title">Painel Turma 604A — Snacks Faltantes &amp; Documento</h1>
+        <p class="brand-subtitle">
+          Veja na hora quais dos 41 Snacks da turma já existem na sua conta (por nome ou por código), copie os faltantes direto para a sua conta sem duplicar e gere o documento da turma.
+        </p>
+      </div>
+      <div class="status-pill" id="catalogStatus">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>Carregando lista dos 41 Snacks...</span>
+      </div>
+    </header>
+
+    <div id="liveBanner" class="live-banner" role="status" aria-live="polite" hidden></div>
+
+    <div class="tabs-container">
+      <div class="tablist" focusgroup="tablist nomemory" role="tablist" aria-label="Abas do Painel Turma 604A">
+        <button type="button" role="tab" id="tab-clonar" aria-selected="true" focusgroupstart>
+          1. Conferir &amp; Copiar Snacks Faltantes
+        </button>
+        <button type="button" role="tab" id="tab-doc" aria-selected="false">
+          2. Gerar Documento com Meus Links
+        </button>
+      </div>
+
+      <div class="panels-stack">
+        <!-- ABA 1: CONFERIR E COPIAR FALTANTES -->
+        <section role="tabpanel" id="panel-clonar" aria-labelledby="tab-clonar" tabindex="0">
+          <div class="panel-body">
+            <!-- CONECTAR CONTA (GUIA 3 PASSOS) -->
+            <div class="card">
+              <h2 class="card-title">Conectar sua Conta Expo (3 passos rápidos)</h2>
+              <ol class="steps-guide">
+                <li>
+                  <span class="step-num">1</span>
+                  <span>Abra a página de tokens do Expo: <a href="https://expo.dev/settings/access-tokens" target="_blank" rel="noopener"><b>Abrir página do Expo ↗</b></a></span>
+                </li>
+                <li>
+                  <span class="step-num">2</span>
+                  <span>Clique em <b>Create token</b>, digite qualquer nome (ex.: <i>604A</i>) e copie o código gerado.</span>
+                </li>
+                <li>
+                  <span class="step-num">3</span>
+                  <span>Cole o código abaixo e clique em <b>Ver o que Falta</b> (nada é salvo no servidor).</span>
+                </li>
+              </ol>
+
+              <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end; margin-top:12px;">
+                <label class="field" style="flex:1; min-width:240px;">
+                  Código do Token Expo:
+                  <div class="token-input-wrap">
+                    <input type="text" id="targetToken" class="masked-token" autocomplete="off" spellcheck="false" data-lpignore="true" placeholder="Cole aqui o código copiado do Expo...">
+                    <button type="button" class="btn btn-secondary btn-sm" id="btnPasteToken">Colar</button>
+                    <button type="button" class="btn btn-secondary btn-sm" id="btnToggleToken" aria-label="Mostrar ou ocultar token">Mostrar</button>
+                  </div>
+                </label>
+                <button type="button" class="btn btn-primary" id="btnLoadTargetAccount">Ver o que Falta</button>
+              </div>
+
+              <div class="snack-meta" id="targetCountLabel" style="margin-top:8px;">
+                Nenhum Snack da sua conta carregado ainda.
+              </div>
+              <div class="snack-meta" style="margin-top:4px; color:var(--text-muted);">
+                🔒 Privacidade: seu token fica só na memória do navegador e não é salvo em lugar nenhum. Assim que terminar de copiar, você pode apagá-lo na mesma página do Expo.
+              </div>
+
+              <details class="helper-box">
+                <summary>Prefere importar sua lista manualmente (F12 / arquivo .html) sem token?</summary>
+                <p style="margin:8px 0 4px;">Na aba <b>Snacks</b> do Expo (clique em <i>Load more</i> até o fim), abra o Console (<b>F12</b>) e cole:</p>
+                <code class="snippet">copy(JSON.stringify([...document.querySelectorAll('a[href*="snack.expo.dev/@"]')].map(a=>({nome:a.textContent.trim(),url:a.href}))))</code>
+                <div class="btn-row">
+                  <button type="button" class="btn btn-secondary btn-sm" id="btnUploadTarget">Enviar arquivo .html / .json</button>
+                  <input type="file" id="fileTarget" accept=".json,.html,.htm,.txt" hidden>
+                  <button type="button" class="btn btn-secondary btn-sm" id="btnResolveTarget" disabled>Baixar Códigos dos Meus Snacks</button>
+                </div>
+                <textarea id="rawTargetInput" style="margin-top:8px;" placeholder="Cole aqui (Ctrl+V) o resultado copiado do Console..."></textarea>
+                <div class="btn-row">
+                  <button type="button" class="btn btn-secondary btn-sm" id="btnParseTarget">Importar Minha Lista</button>
+                </div>
+              </details>
+            </div>
+
+            <!-- KPIs -->
+            <div class="kpi-strip" aria-label="Resumo dos 41 Snacks">
+              <div class="kpi-card">
+                <div class="kpi-label">Total da Lista</div>
+                <div class="kpi-value" id="kpiTotal">0</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-label">Já Tenho (Repetidos)</div>
+                <div class="kpi-value ok" id="kpiExisting">0</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-label">Atenção (Código Diferente)</div>
+                <div class="kpi-value warn" id="kpiAttention">0</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-label">Faltam na Minha Conta</div>
+                <div class="kpi-value info" id="kpiMissing">0</div>
+              </div>
+            </div>
+
+            <!-- Fluxo Guiado (CTA principal quando conectado) -->
+            <div id="guidedBanner" class="guided-banner" hidden></div>
+
+            <!-- Barra de filtros e cópia em lote -->
+            <div class="card">
+              <div class="action-bar">
+                <div class="filter-group">
+                  <input type="search" id="searchSnacks" placeholder="Buscar Snack..." aria-label="Buscar Snack por nome" style="width:200px;">
+                  <select id="filterStatus" aria-label="Filtrar por status" style="width:auto;">
+                    <option value="all">Mostrar todos</option>
+                    <option value="faltante">Só os que faltam</option>
+                    <option value="duplicatas">Só os que já tenho</option>
+                    <option value="duplicata_nome">Só atenção (código diferente)</option>
+                  </select>
+                  <button type="button" class="btn btn-secondary btn-sm" id="btnSelectMissing">Marcar Faltantes</button>
+                  <button type="button" class="btn btn-secondary btn-sm" id="btnSelectNone">Desmarcar</button>
+                </div>
+
+                <div class="filter-group">
+                  <button type="button" class="btn btn-secondary" id="btnDryRun" disabled>Simular Cópia</button>
+                  <button type="button" class="btn btn-success" id="btnCloneSelected" disabled>Copiar Faltantes para Minha Conta (0)</button>
+                </div>
+              </div>
+
+              <div id="cloneProgressBox" class="progress-box" hidden>
+                <div style="display:flex; justify-content:space-between; font-size:0.84rem;">
+                  <strong id="cloneProgressText">Copiando...</strong>
+                  <span id="cloneProgressCount">0 / 0</span>
+                </div>
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill" id="cloneProgressFill"></div>
+                </div>
+                <div id="cloneLog" style="font-size:0.8rem; color:var(--text-secondary); max-height:160px; overflow:auto;"></div>
+              </div>
+            </div>
+
+            <!-- Lista dos 41 Snacks -->
+            <div id="snackListContainer" class="snack-list">
+              <div class="empty-state">Carregando lista dos 41 Snacks da Turma 604A...</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ABA 2: GERAR DOCUMENTO -->
+        <section role="tabpanel" id="panel-doc" aria-labelledby="tab-doc" hidden="until-found">
+          <div class="panel-body">
+            <div class="card">
+              <h2 class="card-title">Dados do Documento da Turma</h2>
+              <div class="form-grid-4">
+                <label class="field">
+                  Nome do Aluno
+                  <input type="text" id="docAluno" placeholder="Ex.: Anna Julia">
+                </label>
+                <label class="field">
+                  Usuário Expo
+                  <input type="text" id="docUsuario" placeholder="Ex.: @annaju08">
+                </label>
+                <label class="field">
+                  Turma
+                  <input type="text" id="docTurma" value="604A">
+                </label>
+                <label class="field">
+                  Data
+                  <input type="text" id="docData">
+                </label>
+              </div>
+
+              <div class="btn-row">
+                <button type="button" class="btn btn-primary" id="btnCopyDoc">Copiar Tabela para Google Docs</button>
+                <button type="button" class="btn btn-success" id="btnDownloadWord">Baixar Arquivo (.doc)</button>
+                <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.84rem; color:var(--text-secondary); cursor:pointer;">
+                  <input type="checkbox" id="docIncludeExtras" checked>
+                  Incluir também meus outros Snacks fora da lista de 41
+                </label>
+              </div>
+            </div>
+
+            <div class="doc-preview-card" id="docPreview"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastStack" class="toast-stack" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
