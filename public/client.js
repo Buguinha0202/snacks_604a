@@ -96,11 +96,32 @@ function renderWizard() {
   const existing = state.summary.duplicatasExatas + state.summary.duplicatasCodigo;
   const attention = state.summary.duplicatasNome;
   const missing = state.summary.faltantes;
+  const withErrors = state.summary.comErro || 0;
 
   $('wizKpiTotal').textContent = String(state.summary.totalSource);
   $('wizKpiExisting').textContent = String(existing);
   $('wizKpiAttention').textContent = String(attention);
   $('wizKpiMissing').textContent = String(missing);
+
+  const errBox = $('wizErrorAlert');
+  if (errBox) {
+    if (withErrors > 0 && state.accountLoaded) {
+      const errNames = state.comparison
+        .filter((c) => c.hasCodeError)
+        .slice(0, 5)
+        .map((c) => state.sourceSnacks[c.sourceIndex]?.name || '')
+        .filter(Boolean);
+      const more = withErrors > 5 ? ` e mais ${withErrors - 5}` : '';
+      errBox.hidden = false;
+      errBox.innerHTML = `
+        <span>⚠ Encontramos <b>${withErrors} Snack(s)</b> na sua conta com erro no código (${escapeHtml(errNames.join(', '))}${more}).</span>
+        <button type="button" class="btn btn-warn btn-sm" id="btnWizFixErrors">Corrigir os ${withErrors} com Erro</button>
+      `;
+      $('btnWizFixErrors').addEventListener('click', () => fixAllCodeErrors(true));
+    } else {
+      errBox.hidden = true;
+    }
+  }
 
   if (missing === 0 && state.accountLoaded) {
     $('wizDiagTitle').textContent = 'Passo 2: Você já tem todos os 41 Snacks!';
@@ -205,6 +226,7 @@ async function recomputeComparison() {
     duplicatasCodigo: state.comparison.filter((r) => r.status === 'duplicata_codigo').length,
     duplicatasNome: state.comparison.filter((r) => r.status === 'duplicata_nome').length,
     faltantes: state.comparison.filter((r) => r.status === 'faltante').length,
+    comErro: state.comparison.filter((r) => r.hasCodeError).length,
   };
 
   state.selectedForClone = new Set(
@@ -272,27 +294,46 @@ function renderGuidedBanner() {
   }
 
   const missing = state.summary.faltantes;
+  const withErrors = state.summary.comErro || 0;
   el.hidden = false;
 
-  if (missing === 0) {
+  if (missing === 0 && withErrors === 0) {
     el.className = 'guided-banner done';
     el.innerHTML = `
       <div>
-        <strong>Tudo completo! Todos os ${state.summary.totalSource} Snacks estão na sua conta.</strong>
+        <strong>Tudo completo! Todos os ${state.summary.totalSource} Snacks estão na sua conta sem erros.</strong>
         <p>Você pode gerar o documento na Aba 2 ou usar "Atualizar Código" em qualquer card abaixo.</p>
       </div>
       <button type="button" class="btn btn-success" id="btnGoToDoc">Gerar Documento da Turma →</button>
     `;
     $('btnGoToDoc').addEventListener('click', () => state.selectTabFn?.(1, true));
+  } else if (missing === 0 && withErrors > 0) {
+    el.className = 'guided-banner';
+    el.innerHTML = `
+      <div>
+        <strong>⚠ Todos os 41 existem, mas ${withErrors} Snack(s) têm erro no código</strong>
+        <p>Sugerimos atualizar esses códigos pela versão corrigida do site antes de entregar.</p>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button type="button" class="btn btn-warn" id="btnGuidedFixErrors">Corrigir os ${withErrors} com Erro</button>
+        <button type="button" class="btn btn-secondary" id="btnGoToDoc">Ir para o Documento →</button>
+      </div>
+    `;
+    $('btnGuidedFixErrors').addEventListener('click', () => fixAllCodeErrors(false));
+    $('btnGoToDoc').addEventListener('click', () => state.selectTabFn?.(1, true));
   } else {
     el.className = 'guided-banner';
     el.innerHTML = `
       <div>
-        <strong>Faltam ${missing} Snack${missing > 1 ? 's' : ''} na sua conta</strong>
+        <strong>Faltam ${missing} Snack${missing > 1 ? 's' : ''} na sua conta${withErrors > 0 ? ` · ⚠ ${withErrors} com erro no código` : ''}</strong>
         <p>Os ${state.summary.duplicatasExatas + state.summary.duplicatasCodigo + state.summary.duplicatasNome} que você já tem serão pulados automaticamente.</p>
       </div>
-      <button type="button" class="btn btn-success" id="btnGuidedCloneAll">Copiar todos os ${missing} faltantes de uma vez</button>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        ${withErrors > 0 ? `<button type="button" class="btn btn-warn" id="btnGuidedFixErrors">Corrigir ${withErrors} com Erro</button>` : ''}
+        <button type="button" class="btn btn-success" id="btnGuidedCloneAll">Copiar todos os ${missing} faltantes</button>
+      </div>
     `;
+    if (withErrors > 0) $('btnGuidedFixErrors').addEventListener('click', () => fixAllCodeErrors(false));
     $('btnGuidedCloneAll').addEventListener('click', () => {
       const missingIndices = state.comparison.filter((r) => !r.shouldSkipClone).map((r) => r.sourceIndex);
       runClone(missingIndices, false);
@@ -342,6 +383,7 @@ function renderSnackList() {
 
     if (query && !name.toLowerCase().includes(query)) return;
     if (filter === 'faltante' && cmp.status !== 'faltante') return;
+    if (filter === 'com_erro' && !cmp.hasCodeError) return;
     if (filter === 'duplicatas' && !['duplicata_exata', 'duplicata_codigo'].includes(cmp.status)) return;
     if (filter === 'duplicata_nome' && cmp.status !== 'duplicata_nome') return;
 
@@ -398,11 +440,19 @@ function renderSnackList() {
           <div class="snack-title-wrap">
             <input type="checkbox" data-action="toggle-select" data-idx="${idx}" ${checked} aria-label="Selecionar ${escapeHtml(name)}">
             <div>
-              <div class="snack-name">${idx + 1}. ${escapeHtml(name)} ${statusBadgeHtml(cmp)}</div>
+              <div class="snack-name">
+                ${idx + 1}. ${escapeHtml(name)} ${statusBadgeHtml(cmp)}
+                ${cmp.hasCodeError ? '<span class="badge badge-err">⚠ Erro no código</span>' : ''}
+              </div>
               <div class="snack-meta">
                 ${escapeHtml(cmp.reason)}
                 ${linkedTarget ? ` · Meu Snack: <b>${escapeHtml(linkedTarget.name || linkedTarget.nome)}</b>` : ''}
               </div>
+              ${
+                cmp.hasCodeError
+                  ? `<div class="snack-meta" style="color:#fca5a5; margin-top:2px;">⚠ ${escapeHtml(cmp.targetErrors.join(' · '))} — sugerimos clicar em <b>Corrigir Código</b>.</div>`
+                  : ''
+              }
             </div>
           </div>
 
@@ -422,7 +472,7 @@ function renderSnackList() {
             }
             ${
               canUpdateCode
-                ? `<button type="button" class="btn ${cmp.status === 'duplicata_nome' ? 'btn-warn' : 'btn-secondary'} btn-sm" data-action="update-one" data-idx="${idx}" ${isBusy ? 'disabled' : ''} title="Substituir o código do seu Snack pelo código oficial do site">${isBusy ? 'Atualizando...' : 'Atualizar Código'}</button>`
+                ? `<button type="button" class="btn ${cmp.hasCodeError || cmp.status === 'duplicata_nome' ? 'btn-warn' : 'btn-secondary'} btn-sm" data-action="update-one" data-idx="${idx}" ${isBusy ? 'disabled' : ''} title="Substituir o código do seu Snack pelo código oficial corrigido do site">${isBusy ? 'Atualizando...' : (cmp.hasCodeError ? 'Corrigir Código' : 'Atualizar Código')}</button>`
                 : ''
             }
             <a class="btn btn-secondary btn-sm" href="${escapeHtml(buildQuickOpenUrl(src))}" target="_blank" rel="noopener">Abrir no Expo ↗</a>
@@ -566,6 +616,39 @@ function downloadWordDocument() {
 /* ===========================
    CÓPIA E ATUALIZAÇÃO DE CÓDIGO
 =========================== */
+async function fixAllCodeErrors(inWizard = false) {
+  const token = getToken();
+  if (!token) {
+    showBanner('Cole seu código de Token do Expo para corrigir os Snacks na sua conta.', 'warn');
+    return;
+  }
+  const errorIndices = state.comparison.filter((c) => c.hasCodeError).map((c) => c.sourceIndex);
+  if (errorIndices.length === 0) return;
+
+  if (inWizard) {
+    goToWizardStep(3);
+    $('wizCloneTitle').textContent = `Corrigindo ${errorIndices.length} Snack(s) com erro...`;
+    $('btnWizToStep4').disabled = true;
+  }
+
+  let fixed = 0;
+  for (const idx of errorIndices) {
+    await updateSingleSnackCode(idx);
+    fixed++;
+    if (inWizard) {
+      $('wizProgressText').textContent = `Corrigido ${fixed} de ${errorIndices.length}...`;
+      $('wizProgressCount').textContent = `${fixed} / ${errorIndices.length}`;
+      $('wizProgressFill').style.width = `${Math.round((fixed / errorIndices.length) * 100)}%`;
+    }
+  }
+
+  if (inWizard) {
+    $('wizCloneTitle').textContent = 'Correção concluída!';
+    $('btnWizToStep4').disabled = false;
+  }
+  showBanner(`Pronto! ${fixed} Snack(s) com erro foram atualizados pelo código oficial corrigido.`, 'ok');
+}
+
 async function updateSingleSnackCode(idx) {
   const token = getToken();
   if (!token) {

@@ -7,6 +7,7 @@ import {
   normalizeCode,
   computeSnackFingerprint,
   codeSimilarity,
+  inspectSnackCodeErrors,
   compareSnackLists,
   diffLines,
 } from '../lib/matcher.mjs';
@@ -174,6 +175,32 @@ test('compareSnackLists detecta código parecido (>= 85%) quando aluno só mudou
   assert.equal(results[0].status, 'duplicata_codigo');
   assert.equal(results[0].shouldSkipClone, true);
   assert.ok(results[0].similarity >= 75);
+});
+
+test('inspectSnackCodeErrors detecta erros comuns no código do aluno e sinaliza para atualização', () => {
+  // Arrange
+  const source = [
+    {
+      name: '604A',
+      code: "import React from 'react'; import { View, StyleSheet } from 'react-native'; const styles = StyleSheet.create({ c: { padding: 20 } }); export default () => <View style={styles.c} />;",
+    },
+  ];
+  const targetBroken = [
+    {
+      name: '604A',
+      code: "import React from 'react'; import { View, StyleSheet } from 'react-native'; const styles = StyleSheet({ c: { paddng: 20 } }); export default () => <View style={styles.c} />;",
+    },
+  ];
+
+  // Act
+  const errs = inspectSnackCodeErrors(targetBroken[0]);
+  const { results, summary } = compareSnackLists(source, targetBroken);
+
+  // Assert
+  assert.ok(errs.some((e) => e.includes('StyleSheet')));
+  assert.ok(errs.some((e) => e.includes('paddng')));
+  assert.equal(results[0].hasCodeError, true);
+  assert.equal(summary.comErro, 1);
 });
 
 test('diffLines marca linhas removidas, mantidas e adicionadas', () => {

@@ -110,6 +110,7 @@
         </div>
 
         <div id="wizMissingPreview" class="snack-meta" style="margin-bottom:8px;"></div>
+        <div id="wizErrorAlert" class="live-banner warn" style="margin-top:10px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;" hidden></div>
 
         <div class="wizard-actions">
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
@@ -260,6 +261,7 @@
                   <select id="filterStatus" aria-label="Filtrar por status" style="width:auto;">
                     <option value="all">Mostrar todos</option>
                     <option value="faltante">Só os que faltam</option>
+                    <option value="com_erro">Só com erro no código</option>
                     <option value="duplicatas">Só os que já tenho</option>
                     <option value="duplicata_nome">Só atenção (código diferente)</option>
                   </select>
