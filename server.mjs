@@ -1,5 +1,7 @@
 /**
- * Expo Snack Cloner Studio — Servidor Local (Node.js nativo, zero dependências).
+ * Expo Snack Cloner Studio — Entrypoint Unificado (Vercel + Servidor Local).
+ * - Na Vercel: exporta `default async function handler(req, res)` atendendo `/api/*` e `/`
+ * - Localmente (`node server.mjs` ou `iniciar.bat`): sobe servidor HTTP em http://localhost:3456
  */
 
 import http from 'node:http';
@@ -21,6 +23,7 @@ const MIME_TYPES = {
   '.json': 'application/json; charset=utf-8',
   '.svg': 'image/svg+xml',
   '.png': 'image/png',
+  '.ico': 'image/x-icon',
 };
 
 function serveStatic(req, res, pathname) {
@@ -31,37 +34,47 @@ function serveStatic(req, res, pathname) {
     return;
   }
 
-  fs.readFile(resolved, (err, content) => {
-    if (err) {
-      sendError(res, 404, 'NOT_FOUND', 'Recurso não encontrado.');
-      return;
-    }
+  try {
+    const content = fs.readFileSync(resolved);
     const ext = path.extname(resolved).toLowerCase();
     res.writeHead(200, {
       'Content-Type': MIME_TYPES[ext] || 'application/octet-stream',
       'Cache-Control': 'no-cache',
     });
     res.end(content);
-  });
+  } catch {
+    if (pathname === '/favicon.ico') {
+      res.writeHead(204);
+      res.end();
+      return;
+    }
+    sendError(res, 404, 'NOT_FOUND', 'Recurso não encontrado.');
+  }
 }
 
-export function createAppServer() {
-  return http.createServer(async (req, res) => {
+export default async function handler(req, res) {
+  try {
     const handled = await handleApiRequest(req, res);
     if (handled) return;
 
-    const urlObj = new URL(req.url || '/', `http://localhost:${PORT}`);
-    if (req.method === 'GET') {
+    const urlObj = new URL(req.url || '/', 'http://localhost');
+    if (req.method === 'GET' || req.method === 'HEAD') {
       serveStatic(req, res, urlObj.pathname);
       return;
     }
 
     sendError(res, 404, 'ROUTE_NOT_FOUND', `Rota ${req.method} ${urlObj.pathname} não encontrada.`);
-  });
+  } catch (err) {
+    sendError(res, 500, 'SERVER_ERROR', err?.message || 'Erro interno no servidor.');
+  }
+}
+
+export function createAppServer() {
+  return http.createServer(handler);
 }
 
 const isDirectRun = process.argv[1] && path.resolve(process.argv[1]) === __filename;
-if (isDirectRun) {
+if (isDirectRun && !process.env.VERCEL) {
   const server = createAppServer();
   server.listen(PORT, '127.0.0.1', () => {
     console.log('');

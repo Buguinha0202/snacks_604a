@@ -11,7 +11,7 @@ import {
   diffLines,
 } from '../lib/matcher.mjs';
 import { loadLegacyCatalogFromDir, parseRawInput } from '../lib/catalog-importer.mjs';
-import { createAppServer } from '../local-server.mjs';
+import { createAppServer } from '../server.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, '..');

@@ -3,9 +3,10 @@
   "version": "1.1.0",
   "private": true,
   "type": "module",
+  "main": "server.mjs",
   "description": "Painel da Turma 604A para conferir Snacks faltantes, copiar sem duplicar e gerar documento da turma.",
   "scripts": {
-    "start": "node local-server.mjs",
+    "start": "node server.mjs",
     "test": "node --test tests/matcher.test.mjs"
   }
 }
