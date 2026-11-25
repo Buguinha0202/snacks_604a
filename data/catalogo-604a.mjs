@@ -1104,11 +1104,13 @@ export default {
     },
     {
       "id": "legacy-41",
-      "name": "socorro",
-      "nome": "socorro",
+      "name": "604Atitulo",
+      "nome": "604Atitulo",
       "apelidos": [
         "redacao",
-        "enem"
+        "enem",
+        "socorro",
+        "604titulo"
       ],
       "url": "https://snack.expo.dev/@buu_2/socorro",
       "origemUrl": "https://snack.expo.dev/@buu_2/socorro",

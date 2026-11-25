@@ -497,12 +497,10 @@ function syncDocFields(fromWizard = false) {
     $('docAluno').value = $('wizDocAluno').value;
     $('docUsuario').value = $('wizDocUsuario').value;
     $('docTurma').value = $('wizDocTurma').value;
-    $('docData').value = $('wizDocData').value;
   } else {
     $('wizDocAluno').value = $('docAluno').value;
     $('wizDocUsuario').value = $('docUsuario').value;
     $('wizDocTurma').value = $('docTurma').value;
-    $('wizDocData').value = $('docData').value;
   }
   renderDocument();
 }
@@ -512,7 +510,6 @@ function renderDocument() {
   let user = $('docUsuario').value.trim() || '@usuario';
   if (!user.startsWith('@')) user = '@' + user;
   const turma = $('docTurma').value.trim() || '604A';
-  const data = $('docData').value.trim();
 
   const rows = [];
   const usedTargets = new Set();
@@ -559,8 +556,7 @@ function renderDocument() {
     <p style="font-size:0.94rem; margin-bottom:16px;">
       <b>Aluno:</b> ${escapeHtml(aluno)}<br>
       <b>Turma:</b> ${escapeHtml(turma)}<br>
-      <b>Usuário Expo:</b> ${escapeHtml(user)}<br>
-      <b>Data:</b> ${escapeHtml(data)}
+      <b>Usuário Expo:</b> ${escapeHtml(user)}
     </p>
     <div tabindex="0" role="region" aria-labelledby="doc-table-caption" class="table-wrapper">
       <table class="doc-table">
@@ -998,7 +994,7 @@ function bindEvents() {
   $('btnWizToStep4').addEventListener('click', () => goToWizardStep(4));
   $('btnWizDoneToFull').addEventListener('click', () => setViewMode('full'));
 
-  ['wizDocAluno', 'wizDocUsuario', 'wizDocTurma', 'wizDocData'].forEach((id) => {
+  ['wizDocAluno', 'wizDocUsuario', 'wizDocTurma'].forEach((id) => {
     $(id).addEventListener('input', () => syncDocFields(true));
   });
   $('btnWizCopyDoc').addEventListener('click', copyDocumentToClipboard);
@@ -1155,7 +1151,7 @@ function bindEvents() {
   $('btnCloneSelected').addEventListener('click', () => runClone([...state.selectedForClone].sort((a, b) => a - b), false));
 
   // Aba 2: Documento
-  ['docAluno', 'docUsuario', 'docTurma', 'docData'].forEach((id) => {
+  ['docAluno', 'docUsuario', 'docTurma'].forEach((id) => {
     $(id).addEventListener('input', () => syncDocFields(false));
   });
   $('docIncludeExtras').addEventListener('change', renderDocument);
@@ -1166,9 +1162,6 @@ function bindEvents() {
 async function bootstrap() {
   initTabs();
   bindEvents();
-  const today = new Date().toLocaleDateString('pt-BR');
-  $('docData').value = today;
-  $('wizDocData').value = today;
 
   try {
     const res = await fetch('/api/legacy-catalog');
