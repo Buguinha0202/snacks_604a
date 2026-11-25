@@ -1,5 +1,10 @@
-import { handleApiRequest, sendError } from '../lib/api-handler.mjs';
 export default async function handler(req, res) {
-  try { await handleApiRequest(req, res); }
-  catch (err) { sendError(res, 500, 'FUNCTION_ERROR', err?.message || 'Erro interno.'); }
+  try {
+    const { handleApiRequest } = await import('../lib/api-handler.mjs');
+    await handleApiRequest(req, res);
+  } catch (err) {
+    res.statusCode = 500;
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.end(JSON.stringify({ error: { code: 'FUNCTION_ERROR', message: err?.message || String(err), stack: err?.stack } }));
+  }
 }
