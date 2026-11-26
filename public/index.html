@@ -136,49 +136,6 @@
         </div>
       </section>
 
-      <!-- ETAPA 2B: ESTATÍSTICAS DETALHADAS (SOMENTE CONSULTA) -->
-      <section class="wizard-card" id="wizardStatsView" hidden>
-        <h2 id="statsTitle">Estatísticas da sua Conta Expo</h2>
-        <p class="card-desc" id="statsSubtitle">Resumo completo sem modificar nada na sua conta.</p>
-
-        <div class="progress-bar-track" style="height:12px; margin:10px 0 14px;">
-          <div class="progress-bar-fill" id="statsProgressFill" style="background:var(--ok);"></div>
-        </div>
-
-        <div class="kpi-strip" style="margin-bottom:14px;">
-          <div class="kpi-card">
-            <div class="kpi-label">Já Concluídos</div>
-            <div class="kpi-value ok" id="statsDone">0</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-label">Faltam Fazer</div>
-            <div class="kpi-value info" id="statsMissing">0</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-label">Com Erro no Código</div>
-            <div class="kpi-value" style="color:var(--err);" id="statsErrors">0</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-label">Em Rascunho (Draft)</div>
-            <div class="kpi-value warn" id="statsDrafts">0</div>
-          </div>
-        </div>
-
-        <div id="statsMissingBox" class="stats-section"></div>
-        <div id="statsErrorsBox" class="stats-section" hidden></div>
-        <div id="statsDraftsBox" class="stats-section" hidden></div>
-        <div id="statsDoneBox" class="stats-section"></div>
-
-        <div class="wizard-actions">
-          <button type="button" class="btn btn-secondary" id="btnStatsBack2">← Voltar</button>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button type="button" class="btn btn-secondary" id="btnStatsToFull">Abrir Painel Completo</button>
-            <button type="button" class="btn btn-primary" id="btnStatsToDoc">Ir para o Documento →</button>
-            <button type="button" class="btn btn-success" id="btnStatsRunAuto">Copiar Faltantes / Corrigir →</button>
-          </div>
-        </div>
-      </section>
-
       <!-- ETAPA 3: COPIANDO AO VIVO -->
       <section class="wizard-card" id="wizardStep3" hidden>
         <h2 id="wizCloneTitle">Passo 3: Copiando seus Snacks faltantes...</h2>
@@ -326,6 +283,24 @@
             </div>
 
             <div id="guidedBanner" class="guided-banner" hidden></div>
+
+            <!-- Bloco de Estatísticas no topo do Painel Completo -->
+            <div id="fullStatsCard" class="card" hidden>
+              <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px;">
+                <div>
+                  <h2 class="card-title" id="statsTitle">Estatísticas da sua Conta</h2>
+                  <p class="card-desc" id="statsSubtitle" style="margin-bottom:0;"></p>
+                </div>
+                <span class="badge badge-info" id="statsDraftBadge" hidden></span>
+              </div>
+              <div class="progress-bar-track" style="height:10px; margin:10px 0 12px;">
+                <div class="progress-bar-fill" id="statsProgressFill" style="background:var(--ok);"></div>
+              </div>
+              <div id="statsMissingBox" class="stats-section" style="margin-top:8px;"></div>
+              <div id="statsErrorsBox" class="stats-section" style="margin-top:8px;" hidden></div>
+              <div id="statsDraftsBox" class="stats-section" style="margin-top:8px;" hidden></div>
+              <div id="statsDoneBox" class="stats-section" style="margin-top:8px;"></div>
+            </div>
 
             <div class="card">
               <div class="action-bar">

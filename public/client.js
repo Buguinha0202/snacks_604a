@@ -83,22 +83,32 @@ function setViewMode(mode) {
 
 function goToWizardStep(step) {
   state.wizardStep = step;
-  const statsSec = $('wizardStatsView');
-  if (statsSec) statsSec.hidden = step !== 'stats';
-
-  const numericStep = step === 'stats' ? 2 : step;
   for (let i = 1; i <= 4; i++) {
     const sec = $(`wizardStep${i}`);
     const pill = $(`stepPill${i}`);
     sec.hidden = i !== step;
-    pill.classList.toggle('active', i === numericStep);
-    pill.classList.toggle('done', i < numericStep);
+    pill.classList.toggle('active', i === step);
+    pill.classList.toggle('done', i < step);
   }
   renderWizard();
-  if (step === 'stats') renderWizardStats();
 }
 
-function renderWizardStats() {
+function shortMatchLabel(cmp) {
+  if (cmp.status === 'duplicata_exata') return 'mesmo nome';
+  if (cmp.status === 'duplicata_nome') return 'mesmo nome, código diferente';
+  if (cmp.similarity && cmp.similarity < 100) return `${cmp.similarity}% igual`;
+  return 'código idêntico';
+}
+
+function renderFullStats() {
+  const card = $('fullStatsCard');
+  if (!card) return;
+  if (!state.accountLoaded || state.sourceSnacks.length === 0) {
+    card.hidden = true;
+    return;
+  }
+
+  card.hidden = false;
   const total = state.summary.totalSource || 1;
   const missingItems = state.comparison.filter((c) => c.status === 'faltante');
   const errorItems = state.comparison.filter((c) => c.hasCodeError);
@@ -107,15 +117,17 @@ function renderWizardStats() {
   const pct = Math.round((doneItems.length / total) * 100);
 
   $('statsTitle').textContent = `Estatísticas da sua Conta (${pct}% concluído)`;
-  $('statsSubtitle').textContent = `Você já tem ${doneItems.length} de ${state.summary.totalSource} Snacks da Turma 604A.`;
+  $('statsSubtitle').textContent = `${doneItems.length} de ${state.summary.totalSource} Snacks feitos · ${missingItems.length} faltando · ${errorItems.length} com erro · ${draftItems.length} em rascunho. Role abaixo para ver o código de qualquer um.`;
   $('statsProgressFill').style.width = `${pct}%`;
 
-  $('statsDone').textContent = String(doneItems.length);
-  $('statsMissing').textContent = String(missingItems.length);
-  $('statsErrors').textContent = String(errorItems.length);
-  $('statsDrafts').textContent = String(draftItems.length);
+  const draftBadge = $('statsDraftBadge');
+  if (draftItems.length > 0) {
+    draftBadge.hidden = false;
+    draftBadge.textContent = `${draftItems.length} em rascunho`;
+  } else {
+    draftBadge.hidden = true;
+  }
 
-  // Faltantes
   $('statsMissingBox').innerHTML = missingItems.length
     ? `<h3>❌ Faltam na sua conta (${missingItems.length})</h3>
        <ul class="stats-list">${missingItems
@@ -126,60 +138,46 @@ function renderWizardStats() {
          .join('')}</ul>`
     : `<h3>✅ Nenhum Snack faltando!</h3><p class="snack-meta" style="margin:0;">Todos os ${state.summary.totalSource} Snacks da turma já existem na sua conta.</p>`;
 
-  // Erros no código
   const errBox = $('statsErrorsBox');
   if (errorItems.length > 0) {
     errBox.hidden = false;
-    errBox.innerHTML = `<h3>⚠️ Snacks com erro no código (${errorItems.length})</h3>
+    errBox.innerHTML = `<h3>⚠️ Com erro no código (${errorItems.length})</h3>
       <ul class="stats-list">${errorItems
         .map((c) => {
           const s = state.sourceSnacks[c.sourceIndex];
           const t = c.targetIndex !== null ? state.targetSnacks[c.targetIndex] : null;
-          return `<li><b>${escapeHtml(s.name)}</b>${t ? ` (seu: "${escapeHtml(t.name)}")` : ''}: <span style="color:#fca5a5;">${escapeHtml(c.targetErrors.join(' · '))}</span></li>`;
+          return `<li><b>${escapeHtml(s.name)}</b>${t ? ` ("${escapeHtml(t.name)}")` : ''}: <span style="color:#fca5a5;">${escapeHtml(c.targetErrors.join(' · '))}</span></li>`;
         })
         .join('')}</ul>`;
   } else {
     errBox.hidden = true;
   }
 
-  // Rascunhos (Draft)
   const draftBox = $('statsDraftsBox');
   if (draftItems.length > 0) {
     draftBox.hidden = false;
-    draftBox.innerHTML = `<h3>📝 Snacks em Rascunho / Draft (${draftItems.length})</h3>
+    draftBox.innerHTML = `<h3>📝 Em Rascunho / Draft (${draftItems.length})</h3>
       <ul class="stats-list">${draftItems
         .map((c) => {
           const t = c.targetIndex !== null ? state.targetSnacks[c.targetIndex] : null;
-          return `<li><b>${escapeHtml(t?.name || state.sourceSnacks[c.sourceIndex].name)}</b> — salvo como rascunho (pode não abrir para o professor)</li>`;
+          return `<li><b>${escapeHtml(t?.name || state.sourceSnacks[c.sourceIndex].name)}</b> — rascunho não publicado</li>`;
         })
         .join('')}</ul>`;
   } else {
     draftBox.hidden = true;
   }
 
-  // Já concluídos
   $('statsDoneBox').innerHTML = doneItems.length
     ? `<details><summary style="cursor:pointer; font-weight:700; font-size:0.9rem;">✅ Ver lista dos ${doneItems.length} Snacks que você já tem</summary>
        <ul class="stats-list" style="margin-top:8px;">${doneItems
          .map((c) => {
            const s = state.sourceSnacks[c.sourceIndex];
            const t = c.targetIndex !== null ? state.targetSnacks[c.targetIndex] : null;
-           return `<li><b>#${c.sourceIndex + 1} ${escapeHtml(s.name)}</b> → seu Snack: "${escapeHtml(t?.name || '')}" (${escapeHtml(c.reason)})</li>`;
+           const tName = t?.name || '';
+           return `<li><b>#${c.sourceIndex + 1} ${escapeHtml(s.name)}</b> → "${escapeHtml(tName)}" <span style="color:var(--text-muted);">(${escapeHtml(shortMatchLabel(c))})</span></li>`;
          })
          .join('')}</ul></details>`
     : `<h3>Nenhum Snack da lista encontrado ainda</h3>`;
-
-  const autoBtn = $('btnStatsRunAuto');
-  if (missingItems.length === 0 && errorItems.length === 0) {
-    autoBtn.hidden = true;
-  } else {
-    autoBtn.hidden = false;
-    autoBtn.textContent = missingItems.length > 0 && errorItems.length > 0
-      ? `Copiar ${missingItems.length} faltantes e corrigir ${errorItems.length} erros →`
-      : missingItems.length > 0
-        ? `Copiar os ${missingItems.length} faltantes agora →`
-        : `Corrigir os ${errorItems.length} com erro agora →`;
-  }
 }
 
 function renderWizard() {
@@ -372,6 +370,7 @@ function renderAll() {
   $('btnDryRun').disabled = selectedCount === 0;
 
   renderGuidedBanner();
+  renderFullStats();
   renderSnackList();
   renderDocument();
 }
@@ -537,8 +536,11 @@ function renderSnackList() {
                 ${cmp.isDraft ? '<span class="badge badge-warn">⚠ Rascunho (Draft)</span>' : ''}
               </div>
               <div class="snack-meta">
-                ${escapeHtml(cmp.reason)}
-                ${linkedTarget ? ` · Meu Snack: <b>${escapeHtml(linkedTarget.name || linkedTarget.nome)}</b>` : ''}
+                ${
+                  linkedTarget
+                    ? `Meu Snack: <b>${escapeHtml(linkedTarget.name || linkedTarget.nome)}</b> · ${escapeHtml(shortMatchLabel(cmp))}`
+                    : escapeHtml(cmp.reason)
+                }
               </div>
               ${
                 cmp.hasCodeError
@@ -1148,10 +1150,17 @@ function bindEvents() {
   $('btnWizConnect').addEventListener('click', () => connectAccount({ advanceWizard: true }));
   $('btnWizSkipToFull').addEventListener('click', () => setViewMode('full'));
 
-  // Wizard Etapa 2 & Estatísticas (2B)
+  // Wizard Etapa 2 -> Painel Completo com Estatísticas no topo
   $('btnWizBack1').addEventListener('click', () => goToWizardStep(1));
   $('btnWizReviewInFull').addEventListener('click', () => setViewMode('full'));
-  $('btnWizOnlyStats').addEventListener('click', () => goToWizardStep('stats'));
+  $('btnWizOnlyStats').addEventListener('click', () => {
+    setViewMode('full');
+    if (state.summary.faltantes > 0) {
+      $('filterStatus').value = 'faltante';
+      renderSnackList();
+    }
+    $('fullStatsCard')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 
   async function runWizardAutoFlow() {
     const missingIndices = state.comparison.filter((r) => !r.shouldSkipClone).map((r) => r.sourceIndex);
@@ -1172,10 +1181,6 @@ function bindEvents() {
   }
 
   $('btnWizStartClone').addEventListener('click', runWizardAutoFlow);
-  $('btnStatsBack2').addEventListener('click', () => goToWizardStep(2));
-  $('btnStatsToFull').addEventListener('click', () => setViewMode('full'));
-  $('btnStatsToDoc').addEventListener('click', () => goToWizardStep(4));
-  $('btnStatsRunAuto').addEventListener('click', runWizardAutoFlow);
 
   // Wizard Etapa 3 & 4
   $('btnWizOpenFullFrom3').addEventListener('click', () => setViewMode('full'));
