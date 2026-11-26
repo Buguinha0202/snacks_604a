@@ -17,6 +17,8 @@ const state = {
   accountLoaded: false,
   selectTabFn: null,
   customDocLinks: [], // [{ nome, url }]
+  reviewPairs: [],
+  reviewChoices: {}, // pairKey -> 'iguais' | 'parecidos' | 'diferentes'
 };
 
 const $ = (id) => document.getElementById(id);
@@ -150,7 +152,7 @@ function renderWizard() {
 =========================== */
 function initTabs() {
   const tabs = [...document.querySelectorAll('[role="tab"]')];
-  const panels = [$('panel-clonar'), $('panel-doc')];
+  const panels = [$('panel-clonar'), $('panel-doc'), $('panel-revisar')];
 
   function selectTab(index, moveFocus = false) {
     tabs.forEach((tab, i) => {
@@ -158,6 +160,7 @@ function initTabs() {
       tab.setAttribute('aria-selected', String(active));
       tab.toggleAttribute('focusgroupstart', active);
       const panel = panels[i];
+      if (!panel) return;
       if (active) {
         panel.removeAttribute('hidden');
         panel.setAttribute('tabindex', '0');
@@ -169,6 +172,7 @@ function initTabs() {
     tabs[index].scrollIntoView({ block: 'nearest', inline: 'nearest' });
     if (moveFocus) tabs[index].focus();
     if (index === 1) renderDocument();
+    if (index === 2) renderReviewPairs();
   }
 
   state.selectTabFn = selectTab;
@@ -493,6 +497,136 @@ function renderSnackList() {
   container.innerHTML = rows.length
     ? rows.join('')
     : '<div class="empty-state">Nenhum Snack corresponde ao filtro atual.</div>';
+}
+
+/* ===========================
+   ABA 3 (TEMPORÁRIA): REVISAR PARES PARECIDOS
+=========================== */
+function normalizeCodeClient(code) {
+  return String(code || '').replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '').replace(/\s+/g, '').trim();
+}
+
+function codeSimilarityClient(codeA, codeB) {
+  const a = normalizeCodeClient(codeA);
+  const b = normalizeCodeClient(codeB);
+  if (!a || !b) return 0;
+  if (a === b) return 1;
+  if (a.length < 20 || b.length < 20) return 0;
+  const grams = new Map();
+  for (let i = 0; i <= a.length - 3; i++) {
+    const g = a.slice(i, i + 3);
+    grams.set(g, (grams.get(g) || 0) + 1);
+  }
+  let inter = 0;
+  for (let i = 0; i <= b.length - 3; i++) {
+    const g = b.slice(i, i + 3);
+    const c = grams.get(g) || 0;
+    if (c > 0) {
+      inter++;
+      grams.set(g, c - 1);
+    }
+  }
+  return (2 * inter) / (a.length - 2 + b.length - 2);
+}
+
+function computeReviewPairs() {
+  const pairs = [];
+  const snacks = state.sourceSnacks;
+  for (let i = 0; i < snacks.length; i++) {
+    const ci = getPrimaryCodeText(snacks[i]);
+    for (let j = i + 1; j < snacks.length; j++) {
+      const cj = getPrimaryCodeText(snacks[j]);
+      const sim = codeSimilarityClient(ci, cj);
+      if (sim >= 0.80) {
+        pairs.push({
+          key: `${i}-${j}`,
+          i,
+          j,
+          a: snacks[i],
+          b: snacks[j],
+          codeA: ci,
+          codeB: cj,
+          pct: Math.round(sim * 100),
+        });
+      }
+    }
+  }
+  pairs.sort((x, y) => y.pct - x.pct);
+  state.reviewPairs = pairs;
+}
+
+function renderReviewPairs() {
+  const container = $('reviewPairsContainer');
+  if (!container) return;
+  if (state.reviewPairs.length === 0 && state.sourceSnacks.length > 0) {
+    computeReviewPairs();
+  }
+
+  const total = state.reviewPairs.length;
+  const answered = Object.keys(state.reviewChoices).length;
+  $('reviewProgressLabel').textContent = `${answered} de ${total} pares respondidos.`;
+
+  if (total === 0) {
+    container.innerHTML = '<div class="empty-state">Nenhum par parecido (>= 80%) encontrado.</div>';
+    return;
+  }
+
+  container.innerHTML = state.reviewPairs
+    .map((p, idx) => {
+      const choice = state.reviewChoices[p.key] || '';
+      const btnCls = (val, activeCls) => (choice === val ? `btn ${activeCls} btn-sm` : 'btn btn-secondary btn-sm');
+      return `
+        <article class="snack-item">
+          <div class="snack-item-head" style="margin-bottom:10px;">
+            <div>
+              <div class="snack-name">
+                Par ${idx + 1}: #${p.i + 1} ${escapeHtml(p.a.name)} ↔ #${p.j + 1} ${escapeHtml(p.b.name)}
+                <span class="badge ${p.pct === 100 ? 'badge-err' : 'badge-warn'}">${p.pct}% igual</span>
+                ${choice ? `<span class="badge badge-ok">Marcado: ${escapeHtml(choice.toUpperCase())}</span>` : ''}
+              </div>
+            </div>
+            <div class="snack-actions">
+              <button type="button" class="${btnCls('iguais', 'btn-warn')}" data-review-key="${p.key}" data-review-val="iguais">Iguais</button>
+              <button type="button" class="${btnCls('parecidos', 'btn-primary')}" data-review-key="${p.key}" data-review-val="parecidos">Parecidos</button>
+              <button type="button" class="${btnCls('diferentes', 'btn-success')}" data-review-key="${p.key}" data-review-val="diferentes">Diferentes</button>
+            </div>
+          </div>
+
+          <div class="compare-panel" style="margin-top:0; padding-top:10px;">
+            <div class="code-pane">
+              <div class="code-pane-head">
+                <span>#${p.i + 1} ${escapeHtml(p.a.name)}</span>
+                ${p.a.origemUrl ? `<a href="${escapeHtml(p.a.origemUrl)}" target="_blank" rel="noopener">Abrir ↗</a>` : ''}
+              </div>
+              <pre class="code-block">${escapeHtml(p.codeA)}</pre>
+            </div>
+            <div class="code-pane">
+              <div class="code-pane-head">
+                <span>#${p.j + 1} ${escapeHtml(p.b.name)}</span>
+                ${p.b.origemUrl ? `<a href="${escapeHtml(p.b.origemUrl)}" target="_blank" rel="noopener">Abrir ↗</a>` : ''}
+              </div>
+              <pre class="code-block">${escapeHtml(p.codeB)}</pre>
+            </div>
+          </div>
+        </article>
+      `;
+    })
+    .join('');
+}
+
+async function copyReviewResult() {
+  if (state.reviewPairs.length === 0) computeReviewPairs();
+  const lines = state.reviewPairs.map((p) => {
+    const c = state.reviewChoices[p.key] || 'sem resposta';
+    return `- ${p.a.name} x ${p.b.name} (${p.pct}%): ${c.toUpperCase()}`;
+  });
+  const text = `Resultado da revisão dos pares:\n${lines.join('\n')}`;
+  try {
+    await navigator.clipboard.writeText(text);
+    showBanner('Resultado copiado! Agora é só colar no chat (Ctrl + V).', 'ok');
+  } catch {
+    prompt('Copie o texto abaixo:', text);
+  }
 }
 
 /* ===========================
@@ -1247,6 +1381,15 @@ function bindEvents() {
   $('btnCopyDoc').addEventListener('click', copyDocumentToClipboard);
   $('btnSavePdf').addEventListener('click', saveAsPdf);
   $('btnDownloadWord').addEventListener('click', downloadWordDocument);
+
+  // Aba 3 (Temp): Revisar Pares
+  $('reviewPairsContainer').addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-review-key]');
+    if (!btn) return;
+    state.reviewChoices[btn.dataset.reviewKey] = btn.dataset.reviewVal;
+    renderReviewPairs();
+  });
+  $('btnCopyReviewResult').addEventListener('click', copyReviewResult);
 }
 
 async function bootstrap() {

@@ -1,7 +1,7 @@
 export default {
   "turma": "604A",
-  "total": 42,
-  "withCode": 42,
+  "total": 41,
+  "withCode": 41,
   "snacks": [
     {
       "id": "legacy-1",
@@ -70,27 +70,6 @@ export default {
       "sdkVersion": "54.0.0"
     },
     {
-      "id": "legacy-4",
-      "name": "APP604a",
-      "nome": "APP604a",
-      "apelidos": [
-        "app604"
-      ],
-      "url": "https://snack.expo.dev/@rodrigorubim/app604a",
-      "origemUrl": "https://snack.expo.dev/@rodrigorubim/app604a",
-      "urlCriar": "https://snack.expo.dev/?name=APP604a&code=import%20React%20from%20'react'%0Aimport%20%7BView%2C%20Text%7D%20from%20'react-native'%0A%0Aconst%20App%20%3D()%20%3D%3E%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%3E%0A%0A%20%20%20%20%3CText%3EDia%20Mudou%3C%2FText%3E%0A%20%20%20%20%3CText%3E%20Luciano%20Guimaraes%20da%20Rocha%20%3C%2FText%3E%0A%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%0A%7D%0A%0Aexport%20default%20App%3B%20",
-      "pronto": true,
-      "code": "import React from 'react'\nimport {View, Text} from 'react-native'\n\nconst App =() => {\n  return (\n    <View>\n\n    <Text>Dia Mudou</Text>\n    <Text> Luciano Guimaraes da Rocha </Text>\n\n    </View>\n  )\n}\n\nexport default App; ",
-      "files": {
-        "App.js": {
-          "type": "CODE",
-          "contents": "import React from 'react'\nimport {View, Text} from 'react-native'\n\nconst App =() => {\n  return (\n    <View>\n\n    <Text>Dia Mudou</Text>\n    <Text> Luciano Guimaraes da Rocha </Text>\n\n    </View>\n  )\n}\n\nexport default App; "
-        }
-      },
-      "dependencies": {},
-      "sdkVersion": "54.0.0"
-    },
-    {
       "id": "legacy-5",
       "name": "604A",
       "nome": "604A",
@@ -113,7 +92,10 @@ export default {
       "id": "legacy-6",
       "name": "604A1",
       "nome": "604A1",
-      "apelidos": [],
+      "apelidos": [
+        "app604a",
+        "app604"
+      ],
       "url": "https://snack.expo.dev/@buu_2/604a1",
       "origemUrl": "https://snack.expo.dev/@buu_2/604a1",
       "urlCriar": "https://snack.expo.dev/?name=604A1&code=import%20React%20from%20'react'%0Aimport%20%7BView%2C%20Text%7D%20from%20'react-native'%0A%0Aconst%20App%20%3D()%20%3D%3E%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CView%3E%0A%0A%20%20%20%20%3CText%3EDia%20Mudou%3C%2FText%3E%0A%0A%20%20%20%20%3C%2FView%3E%0A%20%20)%0A%7D%0A%0Aexport%20default%20App%3B",

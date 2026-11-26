@@ -293,21 +293,21 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
   const base = `http://127.0.0.1:${server.address().port}`;
 
   try {
-    // Carrega os 42 Snacks hidratados (do catálogo empacotado)
+    // Carrega os 41 Snacks hidratados (do catálogo empacotado, sem APP604a)
     const catRes = await fetch(`${base}/api/legacy-catalog`);
     const cat = await catRes.json();
-    assert.equal(cat.snacks.length, 42);
-    assert.equal(cat.withCode, 42);
+    assert.equal(cat.snacks.length, 41);
+    assert.equal(cat.withCode, 41);
 
     const getCode = (s) => s.files?.['App.js']?.contents || s.code || '';
 
-    // Cenário 1: Conta vazia (0 Snacks) -> todos os 42 faltam
+    // Cenário 1: Conta vazia (0 Snacks) -> todos os 41 faltam
     const emptyCmp = await (await fetch(`${base}/api/compare`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ source: cat.snacks, target: [] }),
     })).json();
-    assert.equal(emptyCmp.summary.faltantes, 42);
+    assert.equal(emptyCmp.summary.faltantes, 41);
 
     // Cenário 2: Aluno real com 5 situações mistas + 1 Snack extra fora dos 42
     const s0Idx = cat.snacks.findIndex((s) => s.name === 'Hello World');
@@ -351,7 +351,7 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
         skipDuplicates: true,
       }),
     })).json();
-    assert.equal(dryRes.summary.skipped, 42 - mixCmp.summary.faltantes);
+    assert.equal(dryRes.summary.skipped, 41 - mixCmp.summary.faltantes);
     assert.equal(dryRes.summary.wouldClone, mixCmp.summary.faltantes);
 
     // Cenário 4: Proteção contra duplicata dentro da própria fila de envio
