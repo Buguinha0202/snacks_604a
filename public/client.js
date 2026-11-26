@@ -91,6 +91,7 @@ function goToWizardStep(step) {
     pill.classList.toggle('done', i < step);
   }
   renderWizard();
+  if (step === 4) renderDocument();
 }
 
 function shortMatchLabel(cmp) {
@@ -650,7 +651,7 @@ function renderDocument() {
         .join('')
     : `<tr><td colspan="3" style="text-align:center;color:#6b7280;">Conecte sua conta para montar o documento.</td></tr>`;
 
-  $('docPreview').innerHTML = `
+  const docHtml = `
     <h2>Links dos Snacks — Expo (Turma ${escapeHtml(turma)})</h2>
     <p style="font-size:0.94rem; margin-bottom:16px;">
       <b>Aluno:</b> ${escapeHtml(aluno)}<br>
@@ -671,6 +672,9 @@ function renderDocument() {
       </table>
     </div>
   `;
+
+  $('docPreview').innerHTML = docHtml;
+  if ($('wizDocPreview')) $('wizDocPreview').innerHTML = docHtml;
 }
 
 function renderDraftAlerts() {
