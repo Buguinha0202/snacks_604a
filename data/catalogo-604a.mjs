@@ -9,8 +9,7 @@ export default {
       "nome": "Hello World",
       "apelidos": [
         "helloworld",
-        "olamundo",
-        "604a3"
+        "olamundo"
       ],
       "url": "https://snack.expo.dev/@buu_2/hello-world",
       "origemUrl": "https://snack.expo.dev/@buu_2/hello-world",
