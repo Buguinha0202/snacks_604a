@@ -223,6 +223,81 @@ test('codeSimilarity reconhece exercícios iguais mesmo quando todos os textos e
   assert.ok(score >= 0.95, `Esperava score estrutural >= 0.95, veio ${score}`);
 });
 
+test('QA: reconhece mesmo com imports fora de ordem, sem import React, sem ponto-e-virgula, arrow fn e tamanhos diferentes', () => {
+  const oficial = `
+    import React from 'react';
+    import { StyleSheet, Text, View } from 'react-native';
+
+    export default function App() {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.title}>Hello World</Text>
+          <Text style={styles.titulo}>Luciano Rocha</Text>
+        </View>
+      );
+    }
+
+    const styles = StyleSheet.create({
+      container: { flex: 1, backgroundColor: '#5c5c5c', alignItems: 'center', justifyContent: 'center' },
+      title: { fontSize: 45 },
+      titulo: { fontSize: 25 },
+    });
+  `;
+  const alunoVariado = `
+    import { View, Text, StyleSheet } from 'react-native'
+
+    const MeuProjeto = () => {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.title}>Ola Mundo</Text>
+          <Text style={styles.titulo}>Joao Pedro Silva</Text>
+        </View>
+      )
+    }
+
+    const styles = StyleSheet.create({
+      container: { flex: 1, backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center' },
+      title: { fontSize: 22 },
+      titulo: { fontSize: 16 }
+    })
+
+    export default MeuProjeto
+  `;
+
+  const score = codeSimilarity(oficial, alunoVariado);
+  assert.ok(score >= 0.85, `Esperava >= 0.85 mesmo com todas as variações, veio ${score}`);
+});
+
+test('QA anti-falso-positivo: exercícios com componentes diferentes NÃO casam erroneamente', () => {
+  const scrollEx = `
+    import { ScrollView, Text } from 'react-native';
+    export default function App() {
+      return (
+        <ScrollView style={{ marginTop: 50 }}>
+          <Text>Item 1</Text>
+          <Text>Item 2</Text>
+          <Text>Item 3</Text>
+        </ScrollView>
+      );
+    }
+  `;
+  const buttonAlertEx = `
+    import React from 'react';
+    import { View, Button, Alert, StyleSheet } from 'react-native';
+    export default function App() {
+      return (
+        <View style={styles.box}>
+          <Button title="Clique" onPress={() => Alert.alert('Oi', 'Tudo bem?')} />
+        </View>
+      );
+    }
+    const styles = StyleSheet.create({ box: { flex: 1, padding: 16 } });
+  `;
+
+  const score = codeSimilarity(scrollEx, buttonAlertEx);
+  assert.ok(score < 0.70, `Não deveria casar exercícios distintos, mas veio ${score}`);
+});
+
 test('inspectSnackCodeErrors detecta erros comuns no código do aluno e sinaliza para atualização', () => {
   // Arrange
   const source = [
