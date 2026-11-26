@@ -1004,7 +1004,10 @@ async function connectAccount({ advanceWizard = false } = {}) {
       $('filterStatus').value = 'faltante';
       renderSnackList();
     }
-    showBanner(`Conta ${data.username} conectada! Você já tem ${state.summary.duplicatasExatas + state.summary.duplicatasCodigo} e faltam ${state.summary.faltantes}.`, 'ok');
+    showBanner(
+      `Conta ${data.username} conectada (${data.codesLoaded ?? state.targetSnacks.length}/${state.targetSnacks.length} códigos lidos)! Você já tem ${state.summary.duplicatasExatas + state.summary.duplicatasCodigo} e faltam ${state.summary.faltantes}.`,
+      'ok'
+    );
   } catch (err) {
     showBanner(`Falha ao conectar conta: ${err.message}`, 'err');
   } finally {

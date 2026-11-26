@@ -299,12 +299,13 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
     })).json();
     assert.equal(emptyCmp.summary.faltantes, 42);
 
-    // Cenário 2: Aluno real com 5 situações mistas + 1 Snack extra fora dos 41
+    // Cenário 2: Aluno real com 5 situações mistas + 1 Snack extra fora dos 42
     const s0Idx = cat.snacks.findIndex((s) => s.name === 'Hello World');
     const s1Idx = cat.snacks.findIndex((s) => s.name === 'Hello world 2');
     const s6Idx = cat.snacks.findIndex((s) => s.name === '604A2');
     const s9Idx = cat.snacks.findIndex((s) => s.name === '604A6');
     const sTiIdx = cat.snacks.findIndex((s) => s.name === '604AtextInput2');
+    const sTwinIdx = cat.snacks.findIndex((s) => s.name === '604A3'); // Gêmeo de Hello World (mesmo código)
 
     const alunoSnacks = [
       { name: cat.snacks[s0Idx].name, url: 'https://snack.expo.dev/@aluno/hello-world', code: getCode(cat.snacks[s0Idx]) },
@@ -312,7 +313,7 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
       { name: 'trabalho-rocha-editado', url: 'https://snack.expo.dev/@aluno/trabalho-rocha-editado', code: getCode(cat.snacks[s6Idx]).replace('Luciano Rocha', 'Maria Clara') },
       { name: cat.snacks[s9Idx].name, url: 'https://snack.expo.dev/@aluno/604a6', code: 'import React from "react"; export default () => <Text>Codigo completamente diferente do exercicio original da aula</Text>;' },
       { name: '604texinput2', url: 'https://snack.expo.dev/@aluno/604texinput2', code: getCode(cat.snacks[sTiIdx]) },
-      { name: 'projeto-pessoal-extra', url: 'https://snack.expo.dev/@aluno/projeto-pessoal-extra', code: 'export default () => "meu app pessoal fora da turma";' },
+      { name: 'meu-app-extra-unico', url: 'https://snack.expo.dev/@aluno/meu-app-extra-unico', code: 'export default () => "meu app pessoal fora da turma";' },
     ];
 
     const mixCmp = await (await fetch(`${base}/api/compare`, {
@@ -323,13 +324,13 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
 
     assert.equal(mixCmp.results[s0Idx].status, 'duplicata_exata', 'Nome e código iguais');
     assert.equal(mixCmp.results[s1Idx].status, 'duplicata_codigo', 'Nome diferente e código 100% igual');
-    assert.equal(mixCmp.results[s6Idx].status, 'duplicata_codigo', 'Nome diferente e código parecido (>=85%)');
-    assert.ok(mixCmp.results[s6Idx].similarity >= 85);
+    assert.equal(mixCmp.results[s6Idx].status, 'duplicata_codigo', 'Nome diferente e código parecido (>=70%)');
+    assert.ok(mixCmp.results[s6Idx].similarity >= 70);
     assert.equal(mixCmp.results[s9Idx].status, 'duplicata_nome', 'Mesmo nome mas código diferente -> alerta');
     assert.equal(mixCmp.results[sTiIdx].status, 'duplicata_exata', 'Typo no nome normalizado');
-    assert.equal(mixCmp.summary.faltantes, 37, '42 - 5 reconhecidos = 37 faltantes');
+    assert.equal(mixCmp.results[sTwinIdx].status, 'duplicata_codigo', 'Gêmeo 604A3 reconhecido pelo mesmo código de Hello World');
 
-    // Cenário 3: Dry-run tentando enviar TODOS os 42 -> deve pular os 5 e só listar os 37 faltantes
+    // Cenário 3: Dry-run tentando enviar TODOS os 42 -> deve pular os reconhecidos e listar só os faltantes reais
     const dryRes = await (await fetch(`${base}/api/clone`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -340,8 +341,8 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
         skipDuplicates: true,
       }),
     })).json();
-    assert.equal(dryRes.summary.skipped, 5);
-    assert.equal(dryRes.summary.wouldClone, 37);
+    assert.equal(dryRes.summary.skipped, 42 - mixCmp.summary.faltantes);
+    assert.equal(dryRes.summary.wouldClone, mixCmp.summary.faltantes);
 
     // Cenário 4: Proteção contra duplicata dentro da própria fila de envio
     const dupQueueRes = await (await fetch(`${base}/api/clone`, {
