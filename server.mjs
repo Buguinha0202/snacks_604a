@@ -24,6 +24,7 @@ const MIME_TYPES = {
   '.svg': 'image/svg+xml',
   '.png': 'image/png',
   '.ico': 'image/x-icon',
+  '.mp4': 'video/mp4',
 };
 
 function serveStatic(req, res, pathname) {
@@ -37,9 +38,29 @@ function serveStatic(req, res, pathname) {
   try {
     const content = fs.readFileSync(resolved);
     const ext = path.extname(resolved).toLowerCase();
+    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+    const range = req.headers?.range;
+    if (range && ext === '.mp4') {
+      const total = content.length;
+      const parts = range.replace(/bytes=/, '').split('-');
+      const start = parseInt(parts[0], 10);
+      const end = parts[1] ? parseInt(parts[1], 10) : total - 1;
+      const chunk = content.subarray(start, end + 1);
+      res.writeHead(206, {
+        'Content-Range': `bytes ${start}-${end}/${total}`,
+        'Accept-Ranges': 'bytes',
+        'Content-Length': chunk.length,
+        'Content-Type': contentType,
+        'Cache-Control': 'public, max-age=3600',
+      });
+      res.end(chunk);
+      return;
+    }
     res.writeHead(200, {
-      'Content-Type': MIME_TYPES[ext] || 'application/octet-stream',
-      'Cache-Control': 'no-cache',
+      'Content-Type': contentType,
+      'Content-Length': content.length,
+      'Accept-Ranges': 'bytes',
+      'Cache-Control': ext === '.mp4' ? 'public, max-age=3600' : 'no-cache',
     });
     res.end(content);
   } catch {
