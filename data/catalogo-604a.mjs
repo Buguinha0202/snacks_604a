@@ -1,7 +1,7 @@
 export default {
   "turma": "604A",
-  "total": 36,
-  "withCode": 36,
+  "total": 37,
+  "withCode": 37,
   "snacks": [
     {
       "id": "legacy-1",
@@ -107,6 +107,25 @@ export default {
         "App.js": {
           "type": "CODE",
           "contents": "import React from 'react'\nimport {StyleSheet, Text, View } from 'react-native';\n\nexport default function App() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.title}>Hello World</Text>\n      <Text style ={styles.titulo}>Luciano Rocha</Text>\n      </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    backgroundColor:'#5c5c5c',\n    alignItems: 'center',\n    justifyContent: 'center',\n  },\n  title:{\n    fontSize:45\n  },\n  titulo:{fontSize:25}\n});"
+        }
+      },
+      "dependencies": {},
+      "sdkVersion": "54.0.0"
+    },
+    {
+      "id": "legacy-8",
+      "name": "604A3",
+      "nome": "604A3",
+      "apelidos": [],
+      "url": "https://snack.expo.dev/@buu_2/604a3",
+      "origemUrl": "https://snack.expo.dev/@buu_2/604a3",
+      "urlCriar": "https://snack.expo.dev/@buu_2/604a3",
+      "pronto": false,
+      "code": "import {View, Text, Image, ScrollView, TextInput} from 'react-native'\n\nconst App = () => {\n  return (\n    <ScrollView>\n      <Text>Some text</Text>\n      <View>\n        <Text>Some more text</Text>\n        <Image\n          source = {{\n            uri: 'https://reactnative.dev/docs/assets/p_cat2.png',\n          }}\n          style={{width: 200, height: 200}}\n        />\n      </View>\n      <TextInput\n        style={{\n          height: 40,\n          borderColor: 'gray',\n          borderWidth: 1,\n        }}\n        defaultValue=\"You can type in me\"\n      />\n    </ScrollView>    \n  );\n};\nexport default App;",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import {View, Text, Image, ScrollView, TextInput} from 'react-native'\n\nconst App = () => {\n  return (\n    <ScrollView>\n      <Text>Some text</Text>\n      <View>\n        <Text>Some more text</Text>\n        <Image\n          source = {{\n            uri: 'https://reactnative.dev/docs/assets/p_cat2.png',\n          }}\n          style={{width: 200, height: 200}}\n        />\n      </View>\n      <TextInput\n        style={{\n          height: 40,\n          borderColor: 'gray',\n          borderWidth: 1,\n        }}\n        defaultValue=\"You can type in me\"\n      />\n    </ScrollView>    \n  );\n};\nexport default App;"
         }
       },
       "dependencies": {},

@@ -293,21 +293,21 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
   const base = `http://127.0.0.1:${server.address().port}`;
 
   try {
-    // Carrega os 36 Snacks únicos do catálogo empacotado
+    // Carrega os 37 Snacks do catálogo empacotado
     const catRes = await fetch(`${base}/api/legacy-catalog`);
     const cat = await catRes.json();
-    assert.equal(cat.snacks.length, 36);
-    assert.equal(cat.withCode, 36);
+    assert.equal(cat.snacks.length, 37);
+    assert.equal(cat.withCode, 37);
 
     const getCode = (s) => s.files?.['App.js']?.contents || s.code || '';
 
-    // Cenário 1: Conta vazia (0 Snacks) -> todos os 36 faltam
+    // Cenário 1: Conta vazia (0 Snacks) -> todos os 37 faltam
     const emptyCmp = await (await fetch(`${base}/api/compare`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ source: cat.snacks, target: [] }),
     })).json();
-    assert.equal(emptyCmp.summary.faltantes, 36);
+    assert.equal(emptyCmp.summary.faltantes, 37);
 
     // Cenário 2: Aluno real com 5 situações mistas + 1 Snack extra fora dos 34
     const s0Idx = cat.snacks.findIndex((s) => s.name === 'Hello World');
@@ -331,7 +331,7 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
       body: JSON.stringify({ source: cat.snacks, target: alunoSnacks }),
     })).json();
 
-    assert.equal(mixCmp.results[s0Idx].status, 'duplicata_exata', 'Apelido 604A3 casa com Hello World');
+    assert.equal(mixCmp.results[s0Idx].status, 'duplicata_codigo', 'Hello World reconhecido pelo código idêntico de 604A3');
     assert.equal(mixCmp.results[s1Idx].status, 'duplicata_codigo', 'Nome diferente e código 100% igual');
     assert.equal(mixCmp.results[s6Idx].status, 'duplicata_codigo', 'Nome diferente e código parecido (>=70%)');
     assert.ok(mixCmp.results[s6Idx].similarity >= 70);
@@ -349,7 +349,7 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
         skipDuplicates: true,
       }),
     })).json();
-    assert.equal(dryRes.summary.skipped, 36 - mixCmp.summary.faltantes);
+    assert.equal(dryRes.summary.skipped, 37 - mixCmp.summary.faltantes);
     assert.equal(dryRes.summary.wouldClone, mixCmp.summary.faltantes);
 
     // Cenário 4: Proteção contra duplicata dentro da própria fila de envio
