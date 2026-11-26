@@ -26,6 +26,16 @@ test('normalizeName trata acentos, espaços, hífens e variações comuns', () =
   assert.equal(a, b);
 });
 
+test('getPrimaryCode lê files[App.js] mesmo quando o campo legado code é string vazia', async () => {
+  const { getPrimaryCode } = await import('../lib/matcher.mjs');
+  const snack = {
+    name: '604Aview',
+    code: '',
+    files: { 'App.js': { type: 'CODE', contents: 'export default function App() { return null; }' } },
+  };
+  assert.equal(getPrimaryCode(snack), 'export default function App() { return null; }');
+});
+
 test('compareSnackLists detecta duplicata por código idêntico mesmo com nome totalmente diferente', () => {
   // Arrange
   const source = [
