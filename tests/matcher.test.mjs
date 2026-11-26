@@ -187,6 +187,42 @@ test('compareSnackLists detecta código parecido (>= 85%) quando aluno só mudou
   assert.ok(results[0].similarity >= 75);
 });
 
+test('codeSimilarity reconhece exercícios iguais mesmo quando todos os textos e strings mudam', () => {
+  // Arrange
+  const original = `
+    import React from 'react';
+    import { View, Text, Button, Alert } from 'react-native';
+    export default function App() {
+      const handlePress = () => Alert.alert('Aviso', 'Botão pressionado!');
+      return (
+        <View>
+          <Text>Clique no botão abaixo</Text>
+          <Button title="Pressionar" onPress={handlePress} />
+        </View>
+      );
+    }
+  `;
+  const alunoTextosDiferentes = `
+    import React from 'react';
+    import { View, Text, Button, Alert } from 'react-native';
+    export default function App() {
+      const handlePress = () => Alert.alert('Opa!', 'Me impressione de novo!');
+      return (
+        <View>
+          <Text>Meu texto totalmente personalizado da turma 604A</Text>
+          <Button title="Apertar aqui agora" onPress={handlePress} />
+        </View>
+      );
+    }
+  `;
+
+  // Act
+  const score = codeSimilarity(original, alunoTextosDiferentes);
+
+  // Assert
+  assert.ok(score >= 0.95, `Esperava score estrutural >= 0.95, veio ${score}`);
+});
+
 test('inspectSnackCodeErrors detecta erros comuns no código do aluno e sinaliza para atualização', () => {
   // Arrange
   const source = [
