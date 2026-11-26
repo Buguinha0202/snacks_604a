@@ -189,19 +189,25 @@
         </div>
 
         <details class="helper-box" style="margin-bottom:12px;">
-          <summary>+ Adicionar outros links extras no documento</summary>
-          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; align-items:flex-end;">
-            <label class="field" style="flex:1; min-width:160px;">
-              Nome do Projeto (opcional)
-              <input type="text" id="wizExtraName" placeholder="Ex.: Projeto Final">
+          <summary>⚙️ Opções avançadas do documento (links extras e outros Snacks)</summary>
+          <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">
+            <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.84rem; color:var(--text-secondary); cursor:pointer;">
+              <input type="checkbox" id="wizDocIncludeExtras">
+              Incluir também meus outros Snacks fora da lista de 38
             </label>
-            <label class="field" style="flex:2; min-width:220px;">
-              Link (URL)
-              <input type="text" id="wizExtraUrl" placeholder="https://snack.expo.dev/@usuario/meu-projeto">
-            </label>
-            <button type="button" class="btn btn-secondary" id="btnWizAddExtra">+ Adicionar</button>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end;">
+              <label class="field" style="flex:1; min-width:160px;">
+                Nome do Projeto (opcional)
+                <input type="text" id="wizExtraName" placeholder="Ex.: Projeto Final">
+              </label>
+              <label class="field" style="flex:2; min-width:220px;">
+                Link extra (URL)
+                <input type="text" id="wizExtraUrl" placeholder="https://snack.expo.dev/@usuario/meu-projeto">
+              </label>
+              <button type="button" class="btn btn-secondary" id="btnWizAddExtra">+ Adicionar</button>
+            </div>
+            <div id="wizExtraList" class="snack-meta"></div>
           </div>
-          <div id="wizExtraList" class="snack-meta" style="margin-top:8px;"></div>
         </details>
 
         <div id="wizDocPreview" class="doc-preview-card" style="margin-top:14px;"></div>
@@ -369,27 +375,29 @@
                 <button type="button" class="btn btn-primary" id="btnCopyDoc">Copiar Tabela para Google Docs</button>
                 <button type="button" class="btn btn-success" id="btnSavePdf">Salvar em PDF</button>
                 <button type="button" class="btn btn-secondary" id="btnDownloadWord">Baixar Word (.doc)</button>
-                <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.84rem; color:var(--text-secondary); cursor:pointer;">
-                  <input type="checkbox" id="docIncludeExtras" checked>
-                  Incluir também meus outros Snacks fora da lista de 38
-                </label>
               </div>
 
-              <div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--border-subtle);">
-                <div style="font-size:0.86rem; font-weight:700; margin-bottom:8px;">Adicionar links extras ao documento (opcional)</div>
-                <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end;">
-                  <label class="field" style="flex:1; min-width:180px;">
-                    Nome do Projeto (opcional)
-                    <input type="text" id="docExtraName" placeholder="Ex.: Trabalho Extra">
+              <details class="helper-box" style="margin-top:12px;">
+                <summary>⚙️ Opções avançadas do documento (links extras e outros Snacks)</summary>
+                <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">
+                  <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.84rem; color:var(--text-secondary); cursor:pointer;">
+                    <input type="checkbox" id="docIncludeExtras">
+                    Incluir também meus outros Snacks fora da lista de 38
                   </label>
-                  <label class="field" style="flex:2; min-width:240px;">
-                    Link (URL)
-                    <input type="text" id="docExtraUrl" placeholder="https://snack.expo.dev/@usuario/trabalho-extra">
-                  </label>
-                  <button type="button" class="btn btn-secondary" id="btnDocAddExtra">+ Adicionar Link</button>
+                  <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end;">
+                    <label class="field" style="flex:1; min-width:180px;">
+                      Nome do Projeto (opcional)
+                      <input type="text" id="docExtraName" placeholder="Ex.: Trabalho Extra">
+                    </label>
+                    <label class="field" style="flex:2; min-width:240px;">
+                      Link extra (URL)
+                      <input type="text" id="docExtraUrl" placeholder="https://snack.expo.dev/@usuario/trabalho-extra">
+                    </label>
+                    <button type="button" class="btn btn-secondary" id="btnDocAddExtra">+ Adicionar Link</button>
+                  </div>
+                  <div id="docExtraList" class="snack-meta"></div>
                 </div>
-                <div id="docExtraList" class="snack-meta" style="margin-top:8px;"></div>
-              </div>
+              </details>
             </div>
 
             <div class="doc-preview-card" id="docPreview"></div>

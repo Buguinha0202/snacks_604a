@@ -1358,7 +1358,14 @@ function bindEvents() {
   ['docAluno', 'docUsuario', 'docTurma'].forEach((id) => {
     $(id).addEventListener('input', () => syncDocFields(false));
   });
-  $('docIncludeExtras').addEventListener('change', renderDocument);
+  $('docIncludeExtras').addEventListener('change', (e) => {
+    if ($('wizDocIncludeExtras')) $('wizDocIncludeExtras').checked = e.target.checked;
+    renderDocument();
+  });
+  $('wizDocIncludeExtras')?.addEventListener('change', (e) => {
+    $('docIncludeExtras').checked = e.target.checked;
+    renderDocument();
+  });
   $('btnCopyDoc').addEventListener('click', copyDocumentToClipboard);
   $('btnSavePdf').addEventListener('click', saveAsPdf);
   $('btnDownloadWord').addEventListener('click', downloadWordDocument);
