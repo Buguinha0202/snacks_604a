@@ -12,13 +12,13 @@
       <div>
         <h1 class="brand-title">Painel Turma 604A — Snacks Expo</h1>
         <p class="brand-subtitle">
-          Descubra quais dos 41 Snacks faltam na sua conta, copie sem duplicar, atualize códigos e gere o documento da turma.
+          Descubra quais dos 33 Snacks faltam na sua conta, copie sem duplicar, atualize códigos e gere o documento da turma.
         </p>
       </div>
       <div class="mode-bar">
         <div class="status-pill" id="catalogStatus">
           <span class="status-dot" aria-hidden="true"></span>
-          <span>Carregando 41 Snacks...</span>
+          <span>Carregando 33 Snacks...</span>
         </div>
         <button type="button" class="btn btn-secondary btn-sm" id="btnSwitchMode">
           Abrir Painel Completo
@@ -87,13 +87,13 @@
       <section class="wizard-card" id="wizardStep2" hidden>
         <h2 id="wizDiagTitle">Passo 2: Resultado da sua conta</h2>
         <p class="card-desc" id="wizDiagSubtitle">
-          Conferimos todos os 41 Snacks da Turma 604A (por nome e por código, mesmo com nomes diferentes).
+          Conferimos todos os 33 Snacks da Turma 604A (por nome e por código, mesmo com nomes diferentes).
         </p>
 
         <div class="kpi-strip" style="margin:14px 0;">
           <div class="kpi-card">
             <div class="kpi-label">Total da Turma</div>
-            <div class="kpi-value" id="wizKpiTotal">41</div>
+            <div class="kpi-value" id="wizKpiTotal">33</div>
           </div>
           <div class="kpi-card">
             <div class="kpi-label">Você Já Tem</div>
@@ -202,13 +202,10 @@
     <div id="fullView" class="tabs-container" hidden>
       <div class="tablist" focusgroup="tablist nomemory" role="tablist" aria-label="Abas do Painel Turma 604A">
         <button type="button" role="tab" id="tab-clonar" aria-selected="true" focusgroupstart>
-          1. Conferir, Copiar &amp; Atualizar Snacks (41)
+          1. Conferir, Copiar &amp; Atualizar Snacks (33)
         </button>
         <button type="button" role="tab" id="tab-doc" aria-selected="false">
           2. Gerar Documento com Meus Links
-        </button>
-        <button type="button" role="tab" id="tab-revisar" aria-selected="false">
-          3. Revisar Pares Parecidos (Temp)
         </button>
       </div>
 
@@ -339,7 +336,7 @@
                 <button type="button" class="btn btn-secondary" id="btnDownloadWord">Baixar Word (.doc)</button>
                 <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.84rem; color:var(--text-secondary); cursor:pointer;">
                   <input type="checkbox" id="docIncludeExtras" checked>
-                  Incluir também meus outros Snacks fora da lista de 41
+                  Incluir também meus outros Snacks fora da lista de 33
                 </label>
               </div>
 
@@ -361,26 +358,6 @@
             </div>
 
             <div class="doc-preview-card" id="docPreview"></div>
-          </div>
-        </section>
-
-        <!-- ABA 3 (TEMPORÁRIA): REVISAR PARES PARECIDOS LADO A LADO -->
-        <section role="tabpanel" id="panel-revisar" aria-labelledby="tab-revisar" hidden="until-found">
-          <div class="panel-body">
-            <div class="card">
-              <div style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;">
-                <div>
-                  <h2 class="card-title">Revisão de Pares Parecidos (Aba Temporária)</h2>
-                  <p class="card-desc" style="margin-bottom:0;">
-                    Compare os códigos lado a lado, marque se são <b>Iguais</b>, <b>Parecidos</b> ou <b>Diferentes</b> e clique em copiar resultado para mandar no chat.
-                  </p>
-                </div>
-                <button type="button" class="btn btn-primary" id="btnCopyReviewResult">Copiar Resultado</button>
-              </div>
-              <div class="snack-meta" id="reviewProgressLabel" style="margin-top:8px;"></div>
-            </div>
-
-            <div id="reviewPairsContainer" class="snack-list"></div>
           </div>
         </section>
       </div>
