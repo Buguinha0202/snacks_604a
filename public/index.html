@@ -83,9 +83,9 @@
         </div>
       </section>
 
-      <!-- ETAPA 2: DIAGNÓSTICO -->
+      <!-- ETAPA 2: ESCOLHER O QUE FAZER -->
       <section class="wizard-card" id="wizardStep2" hidden>
-        <h2 id="wizDiagTitle">Passo 2: Resultado da sua conta</h2>
+        <h2 id="wizDiagTitle">Passo 2: O que você quer fazer agora?</h2>
         <p class="card-desc" id="wizDiagSubtitle">
           Conferimos todos os 38 Snacks da Turma 604A (por nome e por código, mesmo com nomes diferentes).
         </p>
@@ -100,7 +100,7 @@
             <div class="kpi-value ok" id="wizKpiExisting">0</div>
           </div>
           <div class="kpi-card">
-            <div class="kpi-label">Código Diferente</div>
+            <div class="kpi-label">Com Erro / Atenção</div>
             <div class="kpi-value warn" id="wizKpiAttention">0</div>
           </div>
           <div class="kpi-card">
@@ -112,12 +112,70 @@
         <div id="wizMissingPreview" class="snack-meta" style="margin-bottom:8px;"></div>
         <div id="wizErrorAlert" class="live-banner warn" style="margin-top:10px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;" hidden></div>
 
-        <div class="wizard-actions">
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button type="button" class="btn btn-secondary" id="btnWizBack1">← Voltar</button>
-            <button type="button" class="btn btn-secondary" id="btnWizReviewInFull">Revisar no Painel Completo</button>
+        <div class="choice-grid">
+          <div class="choice-card primary">
+            <div>
+              <h3>⚡ Corrigir códigos e adicionar faltantes</h3>
+              <p id="wizChoiceAutoDesc">Copia automaticamente todos os Snacks que faltam (e corrige erros) na sua conta, depois gera o documento pronto.</p>
+            </div>
+            <button type="button" class="btn btn-success btn-lg" id="btnWizStartClone">Copiar Faltantes Agora →</button>
           </div>
-          <button type="button" class="btn btn-success btn-lg" id="btnWizStartClone">Copiar Faltantes Agora →</button>
+
+          <div class="choice-card">
+            <div>
+              <h3>📊 Só Revisar / Ver o que Falta</h3>
+              <p>Mostra as estatísticas completas da sua conta: quantos você já tem, quais faltam, quais têm erro no código e quais estão em rascunho — sem alterar nada.</p>
+            </div>
+            <button type="button" class="btn btn-secondary btn-lg" id="btnWizOnlyStats">Ver Estatísticas Completas →</button>
+          </div>
+        </div>
+
+        <div class="wizard-actions">
+          <button type="button" class="btn btn-secondary" id="btnWizBack1">← Voltar</button>
+          <button type="button" class="btn btn-secondary" id="btnWizReviewInFull">Abrir Painel Completo</button>
+        </div>
+      </section>
+
+      <!-- ETAPA 2B: ESTATÍSTICAS DETALHADAS (SOMENTE CONSULTA) -->
+      <section class="wizard-card" id="wizardStatsView" hidden>
+        <h2 id="statsTitle">Estatísticas da sua Conta Expo</h2>
+        <p class="card-desc" id="statsSubtitle">Resumo completo sem modificar nada na sua conta.</p>
+
+        <div class="progress-bar-track" style="height:12px; margin:10px 0 14px;">
+          <div class="progress-bar-fill" id="statsProgressFill" style="background:var(--ok);"></div>
+        </div>
+
+        <div class="kpi-strip" style="margin-bottom:14px;">
+          <div class="kpi-card">
+            <div class="kpi-label">Já Concluídos</div>
+            <div class="kpi-value ok" id="statsDone">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Faltam Fazer</div>
+            <div class="kpi-value info" id="statsMissing">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Com Erro no Código</div>
+            <div class="kpi-value" style="color:var(--err);" id="statsErrors">0</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Em Rascunho (Draft)</div>
+            <div class="kpi-value warn" id="statsDrafts">0</div>
+          </div>
+        </div>
+
+        <div id="statsMissingBox" class="stats-section"></div>
+        <div id="statsErrorsBox" class="stats-section" hidden></div>
+        <div id="statsDraftsBox" class="stats-section" hidden></div>
+        <div id="statsDoneBox" class="stats-section"></div>
+
+        <div class="wizard-actions">
+          <button type="button" class="btn btn-secondary" id="btnStatsBack2">← Voltar</button>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn btn-secondary" id="btnStatsToFull">Abrir Painel Completo</button>
+            <button type="button" class="btn btn-primary" id="btnStatsToDoc">Ir para o Documento →</button>
+            <button type="button" class="btn btn-success" id="btnStatsRunAuto">Copiar Faltantes / Corrigir →</button>
+          </div>
         </div>
       </section>
 

@@ -83,14 +83,103 @@ function setViewMode(mode) {
 
 function goToWizardStep(step) {
   state.wizardStep = step;
+  const statsSec = $('wizardStatsView');
+  if (statsSec) statsSec.hidden = step !== 'stats';
+
+  const numericStep = step === 'stats' ? 2 : step;
   for (let i = 1; i <= 4; i++) {
     const sec = $(`wizardStep${i}`);
     const pill = $(`stepPill${i}`);
     sec.hidden = i !== step;
-    pill.classList.toggle('active', i === step);
-    pill.classList.toggle('done', i < step);
+    pill.classList.toggle('active', i === numericStep);
+    pill.classList.toggle('done', i < numericStep);
   }
   renderWizard();
+  if (step === 'stats') renderWizardStats();
+}
+
+function renderWizardStats() {
+  const total = state.summary.totalSource || 1;
+  const missingItems = state.comparison.filter((c) => c.status === 'faltante');
+  const errorItems = state.comparison.filter((c) => c.hasCodeError);
+  const draftItems = state.comparison.filter((c) => c.isDraft);
+  const doneItems = state.comparison.filter((c) => c.status !== 'faltante');
+  const pct = Math.round((doneItems.length / total) * 100);
+
+  $('statsTitle').textContent = `Estatísticas da sua Conta (${pct}% concluído)`;
+  $('statsSubtitle').textContent = `Você já tem ${doneItems.length} de ${state.summary.totalSource} Snacks da Turma 604A.`;
+  $('statsProgressFill').style.width = `${pct}%`;
+
+  $('statsDone').textContent = String(doneItems.length);
+  $('statsMissing').textContent = String(missingItems.length);
+  $('statsErrors').textContent = String(errorItems.length);
+  $('statsDrafts').textContent = String(draftItems.length);
+
+  // Faltantes
+  $('statsMissingBox').innerHTML = missingItems.length
+    ? `<h3>❌ Faltam na sua conta (${missingItems.length})</h3>
+       <ul class="stats-list">${missingItems
+         .map((c) => {
+           const s = state.sourceSnacks[c.sourceIndex];
+           return `<li><b>#${c.sourceIndex + 1} ${escapeHtml(s.name)}</b></li>`;
+         })
+         .join('')}</ul>`
+    : `<h3>✅ Nenhum Snack faltando!</h3><p class="snack-meta" style="margin:0;">Todos os ${state.summary.totalSource} Snacks da turma já existem na sua conta.</p>`;
+
+  // Erros no código
+  const errBox = $('statsErrorsBox');
+  if (errorItems.length > 0) {
+    errBox.hidden = false;
+    errBox.innerHTML = `<h3>⚠️ Snacks com erro no código (${errorItems.length})</h3>
+      <ul class="stats-list">${errorItems
+        .map((c) => {
+          const s = state.sourceSnacks[c.sourceIndex];
+          const t = c.targetIndex !== null ? state.targetSnacks[c.targetIndex] : null;
+          return `<li><b>${escapeHtml(s.name)}</b>${t ? ` (seu: "${escapeHtml(t.name)}")` : ''}: <span style="color:#fca5a5;">${escapeHtml(c.targetErrors.join(' · '))}</span></li>`;
+        })
+        .join('')}</ul>`;
+  } else {
+    errBox.hidden = true;
+  }
+
+  // Rascunhos (Draft)
+  const draftBox = $('statsDraftsBox');
+  if (draftItems.length > 0) {
+    draftBox.hidden = false;
+    draftBox.innerHTML = `<h3>📝 Snacks em Rascunho / Draft (${draftItems.length})</h3>
+      <ul class="stats-list">${draftItems
+        .map((c) => {
+          const t = c.targetIndex !== null ? state.targetSnacks[c.targetIndex] : null;
+          return `<li><b>${escapeHtml(t?.name || state.sourceSnacks[c.sourceIndex].name)}</b> — salvo como rascunho (pode não abrir para o professor)</li>`;
+        })
+        .join('')}</ul>`;
+  } else {
+    draftBox.hidden = true;
+  }
+
+  // Já concluídos
+  $('statsDoneBox').innerHTML = doneItems.length
+    ? `<details><summary style="cursor:pointer; font-weight:700; font-size:0.9rem;">✅ Ver lista dos ${doneItems.length} Snacks que você já tem</summary>
+       <ul class="stats-list" style="margin-top:8px;">${doneItems
+         .map((c) => {
+           const s = state.sourceSnacks[c.sourceIndex];
+           const t = c.targetIndex !== null ? state.targetSnacks[c.targetIndex] : null;
+           return `<li><b>#${c.sourceIndex + 1} ${escapeHtml(s.name)}</b> → seu Snack: "${escapeHtml(t?.name || '')}" (${escapeHtml(c.reason)})</li>`;
+         })
+         .join('')}</ul></details>`
+    : `<h3>Nenhum Snack da lista encontrado ainda</h3>`;
+
+  const autoBtn = $('btnStatsRunAuto');
+  if (missingItems.length === 0 && errorItems.length === 0) {
+    autoBtn.hidden = true;
+  } else {
+    autoBtn.hidden = false;
+    autoBtn.textContent = missingItems.length > 0 && errorItems.length > 0
+      ? `Copiar ${missingItems.length} faltantes e corrigir ${errorItems.length} erros →`
+      : missingItems.length > 0
+        ? `Copiar os ${missingItems.length} faltantes agora →`
+        : `Corrigir os ${errorItems.length} com erro agora →`;
+  }
 }
 
 function renderWizard() {
@@ -101,7 +190,7 @@ function renderWizard() {
 
   $('wizKpiTotal').textContent = String(state.summary.totalSource);
   $('wizKpiExisting').textContent = String(existing);
-  $('wizKpiAttention').textContent = String(attention);
+  $('wizKpiAttention').textContent = String(attention + withErrors);
   $('wizKpiMissing').textContent = String(missing);
 
   const errBox = $('wizErrorAlert');
@@ -1059,18 +1148,34 @@ function bindEvents() {
   $('btnWizConnect').addEventListener('click', () => connectAccount({ advanceWizard: true }));
   $('btnWizSkipToFull').addEventListener('click', () => setViewMode('full'));
 
-  // Wizard Etapa 2
+  // Wizard Etapa 2 & Estatísticas (2B)
   $('btnWizBack1').addEventListener('click', () => goToWizardStep(1));
   $('btnWizReviewInFull').addEventListener('click', () => setViewMode('full'));
-  $('btnWizStartClone').addEventListener('click', () => {
+  $('btnWizOnlyStats').addEventListener('click', () => goToWizardStep('stats'));
+
+  async function runWizardAutoFlow() {
     const missingIndices = state.comparison.filter((r) => !r.shouldSkipClone).map((r) => r.sourceIndex);
-    if (missingIndices.length === 0) {
+    const errorIndices = state.comparison.filter((r) => r.hasCodeError).map((r) => r.sourceIndex);
+
+    if (missingIndices.length === 0 && errorIndices.length === 0) {
       goToWizardStep(4);
       return;
     }
+
     goToWizardStep(3);
-    runClone(missingIndices, false, { inWizard: true });
-  });
+    if (missingIndices.length > 0) {
+      await runClone(missingIndices, false, { inWizard: true });
+    }
+    if (errorIndices.length > 0) {
+      await fixAllCodeErrors(true);
+    }
+  }
+
+  $('btnWizStartClone').addEventListener('click', runWizardAutoFlow);
+  $('btnStatsBack2').addEventListener('click', () => goToWizardStep(2));
+  $('btnStatsToFull').addEventListener('click', () => setViewMode('full'));
+  $('btnStatsToDoc').addEventListener('click', () => goToWizardStep(4));
+  $('btnStatsRunAuto').addEventListener('click', runWizardAutoFlow);
 
   // Wizard Etapa 3 & 4
   $('btnWizOpenFullFrom3').addEventListener('click', () => setViewMode('full'));

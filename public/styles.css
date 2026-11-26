@@ -940,6 +940,73 @@ details.helper-box summary {
   gap: 10px;
 }
 
+/* Escolha de caminho no Passo 2 + Tela de Estatísticas */
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (max-width: 640px) {
+  .choice-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.choice-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background: var(--bg-inset);
+  border: 1px solid var(--border-strong);
+  text-align: left;
+}
+
+.choice-card.primary {
+  border-color: var(--accent);
+  background: linear-gradient(180deg, rgba(99, 102, 241, 0.14), var(--bg-inset));
+}
+
+.choice-card h3 {
+  margin: 0 0 4px;
+  font-size: 1rem;
+}
+
+.choice-card p {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+}
+
+.stats-section {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-inset);
+  border: 1px solid var(--border-subtle);
+}
+
+.stats-section h3 {
+  margin: 0 0 8px;
+  font-size: 0.92rem;
+}
+
+.stats-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 220px;
+  overflow: auto;
+}
+
 @media print {
   body {
     background: #fff !important;
