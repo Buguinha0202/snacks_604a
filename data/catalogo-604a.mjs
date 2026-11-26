@@ -1,7 +1,7 @@
 export default {
   "turma": "604A",
-  "total": 37,
-  "withCode": 37,
+  "total": 38,
+  "withCode": 38,
   "snacks": [
     {
       "id": "legacy-1",
@@ -1015,6 +1015,67 @@ export default {
       "fileCount": 6
     },
     {
+      "id": "legacy-p2",
+      "name": "projeto604A2",
+      "nome": "projeto604A2",
+      "apelidos": [
+        "projeto604a2",
+        "projeto6042",
+        "projeto2"
+      ],
+      "url": "https://snack.expo.dev/@buu_2/projeto604a2",
+      "origemUrl": "https://snack.expo.dev/@buu_2/projeto604a2",
+      "urlCriar": "https://snack.expo.dev/@buu_2/projeto604a2",
+      "pronto": false,
+      "code": "import 'react-native-gesture-handler';\nimport * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createStackNavigator } from '@react-navigation/stack';\nimport HomeScreen from './screens/HomeScreen';\nimport DetailsScreen from './screens/DetailsScreen';\n\nconst Stack = createStackNavigator();\n\nfunction App() {\n  return (\n    <NavigationContainer>\n      <Stack.Navigator initialRouteName=\"Home\">\n        <Stack.Screen name=\"Home\" component={HomeScreen} />\n        <Stack.Screen name=\"Details\" component={DetailsScreen} />\n      </Stack.Navigator>\n    </NavigationContainer>\n  );\n}\n\nexport default App;",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import 'react-native-gesture-handler';\nimport * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createStackNavigator } from '@react-navigation/stack';\nimport HomeScreen from './screens/HomeScreen';\nimport DetailsScreen from './screens/DetailsScreen';\n\nconst Stack = createStackNavigator();\n\nfunction App() {\n  return (\n    <NavigationContainer>\n      <Stack.Navigator initialRouteName=\"Home\">\n        <Stack.Screen name=\"Home\" component={HomeScreen} />\n        <Stack.Screen name=\"Details\" component={DetailsScreen} />\n      </Stack.Navigator>\n    </NavigationContainer>\n  );\n}\n\nexport default App;"
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        },
+        "screens/DetailsScreen.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport { View, Text, Button } from 'react-native';\n\nfunction DetailsScreen({ route, navigation }) {\n\n  const { itemId, otherParam } = route.params;\n\n  return (\n    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>\n      <Text>Details Screen</Text>\n      <Text>Item ID: {itemId}</Text>\n      <Text>Other Param: {otherParam}</Text>\n    </View>\n  );\n}\nexport default DetailsScreen;"
+        },
+        "screens/HomeScreen.js": {
+          "type": "CODE",
+          "contents": "import React from 'react';\nimport { View, Text, Button } from 'react-native';\n\nfunction HomeScreen({ navigation }) {\n  return (\n    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>\n      <Text>HomeScreen</Text>\n      <Button\n        title=\"Go to Details\"\n        onPress={() => navigation.navigate('Details', {itemId: 42,otherParam: 'Hello World'})}\n      />\n    </View>\n  );\n}\n\nexport default HomeScreen;"
+        }
+      },
+      "dependencies": {
+        "react-native-screens": {
+          "version": "~4.16.0"
+        },
+        "@react-navigation/stack": {
+          "version": "^6.4.1"
+        },
+        "@react-navigation/native": {
+          "version": "^6.1.18"
+        },
+        "react-native-gesture-handler": {
+          "version": "~2.28.0"
+        },
+        "react-native-safe-area-context": {
+          "version": "~5.6.0"
+        }
+      },
+      "sdkVersion": "54.0.0",
+      "description": "No description",
+      "fileCount": 6
+    },
+    {
       "id": "legacy-p3",
       "name": "projeto604A3",
       "nome": "projeto604A3",
@@ -1023,15 +1084,15 @@ export default {
         "projeto6043",
         "projeto3"
       ],
-      "url": "https://snack.expo.dev/@verdefutureii/4b1d0d",
-      "origemUrl": "https://snack.expo.dev/@verdefutureii/4b1d0d",
-      "urlCriar": "https://snack.expo.dev/@verdefutureii/4b1d0d",
+      "url": "https://snack.expo.dev/@buu_2/projeto604a3",
+      "origemUrl": "https://snack.expo.dev/@buu_2/projeto604a3",
+      "urlCriar": "https://snack.expo.dev/@buu_2/projeto604a3",
       "pronto": false,
-      "code": "import * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\nimport { View, Text } from 'react-native';\n\nconst Tab = createBottomTabNavigator();\n\nfunction HomeScreen(){\n  return (\n    <View>\n    <Text> HomeScreen </Text>\n    </View>\n  );\n}\nfunction SettingsScreen() {\n  return (\n    <View>\n    <Text>SettingsScreen</Text>\n    </View>\n  );\n}\n\nexport default function App () {\n  return (\n    <NavigationContainer>\n    <Tab.Navigator>\n    <Tab.Screen name=\"Home\" component={HomeScreen} />\n    <Tab.Screen name=\"Settings\" component={SettingsScreen} />\n    </Tab.Navigator>\n    </NavigationContainer>\n  )\n}",
+      "code": "import * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\nimport { View, Text } from 'react-native';\n\nconst Tab = createBottomTabNavigator();\n\nfunction HomeScreen() {\n  return (\n    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>\n      <Text>Home Screen</Text>\n    </View>\n  );\n}\n\nfunction SettingsScreen() {\n  return (\n    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>\n      <Text>Settings Screen</Text>\n    </View>\n  );\n}\n\nexport default function App() {\n  return (\n    <NavigationContainer>\n      <Tab.Navigator>\n        <Tab.Screen name=\"Home\" component={HomeScreen} />\n        <Tab.Screen name=\"Settings\" component={SettingsScreen} />\n      </Tab.Navigator>\n    </NavigationContainer>\n  );\n}",
       "files": {
         "App.js": {
           "type": "CODE",
-          "contents": "import * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\nimport { View, Text } from 'react-native';\n\nconst Tab = createBottomTabNavigator();\n\nfunction HomeScreen(){\n  return (\n    <View>\n    <Text> HomeScreen </Text>\n    </View>\n  );\n}\nfunction SettingsScreen() {\n  return (\n    <View>\n    <Text>SettingsScreen</Text>\n    </View>\n  );\n}\n\nexport default function App () {\n  return (\n    <NavigationContainer>\n    <Tab.Navigator>\n    <Tab.Screen name=\"Home\" component={HomeScreen} />\n    <Tab.Screen name=\"Settings\" component={SettingsScreen} />\n    </Tab.Navigator>\n    </NavigationContainer>\n  )\n}"
+          "contents": "import * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\nimport { View, Text } from 'react-native';\n\nconst Tab = createBottomTabNavigator();\n\nfunction HomeScreen() {\n  return (\n    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>\n      <Text>Home Screen</Text>\n    </View>\n  );\n}\n\nfunction SettingsScreen() {\n  return (\n    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>\n      <Text>Settings Screen</Text>\n    </View>\n  );\n}\n\nexport default function App() {\n  return (\n    <NavigationContainer>\n      <Tab.Navigator>\n        <Tab.Screen name=\"Home\" component={HomeScreen} />\n        <Tab.Screen name=\"Settings\" component={SettingsScreen} />\n      </Tab.Navigator>\n    </NavigationContainer>\n  );\n}"
         },
         "assets/snack-icon.png": {
           "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
@@ -1077,17 +1138,18 @@ export default {
       "apelidos": [
         "projeto604a4",
         "projeto6044",
-        "projeto4"
+        "projeto4",
+        "projeto604atabpersonalizado"
       ],
-      "url": "https://snack.expo.dev/@verdefutureii/b3041e",
-      "origemUrl": "https://snack.expo.dev/@verdefutureii/b3041e",
-      "urlCriar": "https://snack.expo.dev/@verdefutureii/b3041e",
+      "url": "https://snack.expo.dev/@buu_2/projeto604atabpersonalizado",
+      "origemUrl": "https://snack.expo.dev/@buu_2/projeto604atabpersonalizado",
+      "urlCriar": "https://snack.expo.dev/@buu_2/projeto604atabpersonalizado",
       "pronto": false,
-      "code": "import * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\nimport { View, Text } from 'react-native';\nimport {Ionicons} from '@expo/vector-icons'\n\nconst Tab = createBottomTabNavigator();\n\nfunction HomeScreen(){\n  return (\n    <View>\n    <Text> HomeScreen </Text>\n    </View>\n  );\n}\nfunction SettingsScreen() {\n  return (\n    <View>\n    <Text>SettingsScreen</Text>\n    </View>\n  );\n}\n\nexport default function App () {\n  return (\n    <NavigationContainer>\n    <Tab.Navigator initialRouteName='Home'\n    screenOptions={({ route }) => ({tabBarIcon: ({ focused, color, size }) => {\n        let iconName;\n        if (route.name === 'Home') {\n          iconName = focused ? 'home' : 'home-outline';\n        } else if(route.name==='Settings'){\n          iconName=focused ? 'settings' : 'settings-outline'\n        }\n      \n        return <Ionicons name={iconName} size={size} color={color} />;\n      },\n      tabBarActiveTintColor: 'tomato',\n      tabBarInactiveTintColor: 'gray',\n      tabBarStyle: {\n        backgroundColor: '#f0f0f0',\n        paddingBottom: 5,\n      },\n      tabBarLabelStyle: {\n        fontSize: 12,\n      },\n    })}\n    >\n    <Tab.Screen name=\"Home\" component={HomeScreen} />\n    <Tab.Screen name=\"Settings\" component={SettingsScreen} />\n    </Tab.Navigator>\n    </NavigationContainer>\n  )\n}",
+      "code": "import * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\nimport { View, Text, StyleSheet } from 'react-native';\nimport { Ionicons } from '@expo/vector-icons';\n\nconst Tab = createBottomTabNavigator();\n\nfunction HomeScreen() {\n  return (\n    <View style={styles.screen}>\n      <Text style={styles.text}>Home Screen</Text>\n    </View>\n  );\n}\n\nfunction SettingsScreen() {\n  return (\n    <View style={styles.screen}>\n      <Text style={styles.text}>Settings Screen</Text>\n    </View>\n  );\n}\n\nexport default function App() {\n  return (\n    <NavigationContainer>\n      <Tab.Navigator\n        screenOptions={({ route }) => ({\n          tabBarIcon: ({ focused, color, size }) => {\n            let iconName;\n\n            if (route.name === 'Home') {\n              iconName = focused ? 'home' : 'home-outline';\n            } else if (route.name === 'Settings') {\n              iconName = focused ? 'settings' : 'settings-outline';\n            }\n\n            return <Ionicons name={iconName} size={size} color={color} />;\n          },\n          tabBarActiveTintColor: 'tomato',\n          tabBarInactiveTintColor: 'gray',\n        })}\n      >\n        <Tab.Screen name=\"Home\" component={HomeScreen} />\n        <Tab.Screen name=\"Settings\" component={SettingsScreen} />\n      </Tab.Navigator>\n    </NavigationContainer>\n  );\n}\n\nconst styles = StyleSheet.create({\n  screen: {\n    flex: 1,\n  },\n  text: {\n    fontSize: 16,\n  },\n});",
       "files": {
         "App.js": {
           "type": "CODE",
-          "contents": "import * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\nimport { View, Text } from 'react-native';\nimport {Ionicons} from '@expo/vector-icons'\n\nconst Tab = createBottomTabNavigator();\n\nfunction HomeScreen(){\n  return (\n    <View>\n    <Text> HomeScreen </Text>\n    </View>\n  );\n}\nfunction SettingsScreen() {\n  return (\n    <View>\n    <Text>SettingsScreen</Text>\n    </View>\n  );\n}\n\nexport default function App () {\n  return (\n    <NavigationContainer>\n    <Tab.Navigator initialRouteName='Home'\n    screenOptions={({ route }) => ({tabBarIcon: ({ focused, color, size }) => {\n        let iconName;\n        if (route.name === 'Home') {\n          iconName = focused ? 'home' : 'home-outline';\n        } else if(route.name==='Settings'){\n          iconName=focused ? 'settings' : 'settings-outline'\n        }\n      \n        return <Ionicons name={iconName} size={size} color={color} />;\n      },\n      tabBarActiveTintColor: 'tomato',\n      tabBarInactiveTintColor: 'gray',\n      tabBarStyle: {\n        backgroundColor: '#f0f0f0',\n        paddingBottom: 5,\n      },\n      tabBarLabelStyle: {\n        fontSize: 12,\n      },\n    })}\n    >\n    <Tab.Screen name=\"Home\" component={HomeScreen} />\n    <Tab.Screen name=\"Settings\" component={SettingsScreen} />\n    </Tab.Navigator>\n    </NavigationContainer>\n  )\n}"
+          "contents": "import * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\nimport { View, Text, StyleSheet } from 'react-native';\nimport { Ionicons } from '@expo/vector-icons';\n\nconst Tab = createBottomTabNavigator();\n\nfunction HomeScreen() {\n  return (\n    <View style={styles.screen}>\n      <Text style={styles.text}>Home Screen</Text>\n    </View>\n  );\n}\n\nfunction SettingsScreen() {\n  return (\n    <View style={styles.screen}>\n      <Text style={styles.text}>Settings Screen</Text>\n    </View>\n  );\n}\n\nexport default function App() {\n  return (\n    <NavigationContainer>\n      <Tab.Navigator\n        screenOptions={({ route }) => ({\n          tabBarIcon: ({ focused, color, size }) => {\n            let iconName;\n\n            if (route.name === 'Home') {\n              iconName = focused ? 'home' : 'home-outline';\n            } else if (route.name === 'Settings') {\n              iconName = focused ? 'settings' : 'settings-outline';\n            }\n\n            return <Ionicons name={iconName} size={size} color={color} />;\n          },\n          tabBarActiveTintColor: 'tomato',\n          tabBarInactiveTintColor: 'gray',\n        })}\n      >\n        <Tab.Screen name=\"Home\" component={HomeScreen} />\n        <Tab.Screen name=\"Settings\" component={SettingsScreen} />\n      </Tab.Navigator>\n    </NavigationContainer>\n  );\n}\n\nconst styles = StyleSheet.create({\n  screen: {\n    flex: 1,\n  },\n  text: {\n    fontSize: 16,\n  },\n});"
         },
         "assets/snack-icon.png": {
           "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
