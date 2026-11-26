@@ -1,7 +1,7 @@
 {
   "turma": "604A",
-  "total": 34,
-  "withCode": 34,
+  "total": 36,
+  "withCode": 36,
   "snacks": [
     {
       "id": "legacy-1",
@@ -995,6 +995,118 @@
       "sdkVersion": "54.0.0",
       "description": "No description",
       "fileCount": 6
+    },
+    {
+      "id": "legacy-p3",
+      "name": "projeto604A3",
+      "nome": "projeto604A3",
+      "apelidos": [
+        "projeto604a3",
+        "projeto6043",
+        "projeto3"
+      ],
+      "url": "https://snack.expo.dev/@verdefutureii/4b1d0d",
+      "origemUrl": "https://snack.expo.dev/@verdefutureii/4b1d0d",
+      "urlCriar": "https://snack.expo.dev/@verdefutureii/4b1d0d",
+      "pronto": false,
+      "code": "import * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\nimport { View, Text } from 'react-native';\n\nconst Tab = createBottomTabNavigator();\n\nfunction HomeScreen(){\n  return (\n    <View>\n    <Text> HomeScreen </Text>\n    </View>\n  );\n}\nfunction SettingsScreen() {\n  return (\n    <View>\n    <Text>SettingsScreen</Text>\n    </View>\n  );\n}\n\nexport default function App () {\n  return (\n    <NavigationContainer>\n    <Tab.Navigator>\n    <Tab.Screen name=\"Home\" component={HomeScreen} />\n    <Tab.Screen name=\"Settings\" component={SettingsScreen} />\n    </Tab.Navigator>\n    </NavigationContainer>\n  )\n}",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\nimport { View, Text } from 'react-native';\n\nconst Tab = createBottomTabNavigator();\n\nfunction HomeScreen(){\n  return (\n    <View>\n    <Text> HomeScreen </Text>\n    </View>\n  );\n}\nfunction SettingsScreen() {\n  return (\n    <View>\n    <Text>SettingsScreen</Text>\n    </View>\n  );\n}\n\nexport default function App () {\n  return (\n    <NavigationContainer>\n    <Tab.Navigator>\n    <Tab.Screen name=\"Home\" component={HomeScreen} />\n    <Tab.Screen name=\"Settings\" component={SettingsScreen} />\n    </Tab.Navigator>\n    </NavigationContainer>\n  )\n}"
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        }
+      },
+      "dependencies": {
+        "@expo/vector-icons": {
+          "version": "^15.0.3"
+        },
+        "react-native-paper": {
+          "version": "4.9.2"
+        },
+        "react-native-screens": {
+          "version": "~4.16.0"
+        },
+        "@react-navigation/native": {
+          "version": "*"
+        },
+        "@react-navigation/bottom-tabs": {
+          "version": "*"
+        },
+        "react-native-safe-area-context": {
+          "version": "~5.6.0"
+        }
+      },
+      "sdkVersion": "54.0.0",
+      "description": "No description",
+      "fileCount": 4
+    },
+    {
+      "id": "legacy-p4",
+      "name": "projeto604A4",
+      "nome": "projeto604A4",
+      "apelidos": [
+        "projeto604a4",
+        "projeto6044",
+        "projeto4"
+      ],
+      "url": "https://snack.expo.dev/@verdefutureii/b3041e",
+      "origemUrl": "https://snack.expo.dev/@verdefutureii/b3041e",
+      "urlCriar": "https://snack.expo.dev/@verdefutureii/b3041e",
+      "pronto": false,
+      "code": "import * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\nimport { View, Text } from 'react-native';\nimport {Ionicons} from '@expo/vector-icons'\n\nconst Tab = createBottomTabNavigator();\n\nfunction HomeScreen(){\n  return (\n    <View>\n    <Text> HomeScreen </Text>\n    </View>\n  );\n}\nfunction SettingsScreen() {\n  return (\n    <View>\n    <Text>SettingsScreen</Text>\n    </View>\n  );\n}\n\nexport default function App () {\n  return (\n    <NavigationContainer>\n    <Tab.Navigator initialRouteName='Home'\n    screenOptions={({ route }) => ({tabBarIcon: ({ focused, color, size }) => {\n        let iconName;\n        if (route.name === 'Home') {\n          iconName = focused ? 'home' : 'home-outline';\n        } else if(route.name==='Settings'){\n          iconName=focused ? 'settings' : 'settings-outline'\n        }\n      \n        return <Ionicons name={iconName} size={size} color={color} />;\n      },\n      tabBarActiveTintColor: 'tomato',\n      tabBarInactiveTintColor: 'gray',\n      tabBarStyle: {\n        backgroundColor: '#f0f0f0',\n        paddingBottom: 5,\n      },\n      tabBarLabelStyle: {\n        fontSize: 12,\n      },\n    })}\n    >\n    <Tab.Screen name=\"Home\" component={HomeScreen} />\n    <Tab.Screen name=\"Settings\" component={SettingsScreen} />\n    </Tab.Navigator>\n    </NavigationContainer>\n  )\n}",
+      "files": {
+        "App.js": {
+          "type": "CODE",
+          "contents": "import * as React from 'react';\nimport { NavigationContainer } from '@react-navigation/native';\nimport { createBottomTabNavigator } from '@react-navigation/bottom-tabs';\nimport { View, Text } from 'react-native';\nimport {Ionicons} from '@expo/vector-icons'\n\nconst Tab = createBottomTabNavigator();\n\nfunction HomeScreen(){\n  return (\n    <View>\n    <Text> HomeScreen </Text>\n    </View>\n  );\n}\nfunction SettingsScreen() {\n  return (\n    <View>\n    <Text>SettingsScreen</Text>\n    </View>\n  );\n}\n\nexport default function App () {\n  return (\n    <NavigationContainer>\n    <Tab.Navigator initialRouteName='Home'\n    screenOptions={({ route }) => ({tabBarIcon: ({ focused, color, size }) => {\n        let iconName;\n        if (route.name === 'Home') {\n          iconName = focused ? 'home' : 'home-outline';\n        } else if(route.name==='Settings'){\n          iconName=focused ? 'settings' : 'settings-outline'\n        }\n      \n        return <Ionicons name={iconName} size={size} color={color} />;\n      },\n      tabBarActiveTintColor: 'tomato',\n      tabBarInactiveTintColor: 'gray',\n      tabBarStyle: {\n        backgroundColor: '#f0f0f0',\n        paddingBottom: 5,\n      },\n      tabBarLabelStyle: {\n        fontSize: 12,\n      },\n    })}\n    >\n    <Tab.Screen name=\"Home\" component={HomeScreen} />\n    <Tab.Screen name=\"Settings\" component={SettingsScreen} />\n    </Tab.Navigator>\n    </NavigationContainer>\n  )\n}"
+        },
+        "assets/snack-icon.png": {
+          "contents": "https://snack-code-uploads.s3.us-west-1.amazonaws.com/~asset/2f7d32b1787708aba49b3586082d327b",
+          "type": "ASSET"
+        },
+        "components/AssetExample.js": {
+          "contents": "import { Text, View, StyleSheet, Image } from 'react-native';\n\nexport default function AssetExample() {\n  return (\n    <View style={styles.container}>\n      <Text style={styles.paragraph}>\n        Local files and assets can be imported by dragging and dropping them into the editor\n      </Text>\n      <Image style={styles.logo} source={require('../assets/snack-icon.png')} />\n    </View>\n  );\n}\n\nconst styles = StyleSheet.create({\n  container: {\n    alignItems: 'center',\n    justifyContent: 'center',\n    padding: 24,\n  },\n  paragraph: {\n    margin: 24,\n    marginTop: 0,\n    fontSize: 14,\n    fontWeight: 'bold',\n    textAlign: 'center',\n  },\n  logo: {\n    height: 128,\n    width: 128,\n  }\n});\n",
+          "type": "CODE"
+        },
+        "README.md": {
+          "contents": "# Sample Snack app\n\nOpen the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!\n\nWhen you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).\n\nAll projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.\n\nIf you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).\n\nSnack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).\n",
+          "type": "CODE"
+        }
+      },
+      "dependencies": {
+        "@expo/vector-icons": {
+          "version": "^15.0.3"
+        },
+        "react-native-paper": {
+          "version": "4.9.2"
+        },
+        "react-native-screens": {
+          "version": "~4.16.0"
+        },
+        "@react-navigation/native": {
+          "version": "*"
+        },
+        "@react-navigation/bottom-tabs": {
+          "version": "*"
+        },
+        "react-native-safe-area-context": {
+          "version": "~5.6.0"
+        }
+      },
+      "sdkVersion": "54.0.0",
+      "description": "No description",
+      "fileCount": 4
     }
   ]
 }
