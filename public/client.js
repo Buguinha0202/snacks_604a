@@ -1133,17 +1133,41 @@ function bindEvents() {
     $('btnToggleToken').textContent = masked ? 'Mostrar' : 'Ocultar';
   });
 
-  $('btnWizPaste').addEventListener('click', async () => {
+  async function pasteTokenInto(inputEl, { advanceWizard }) {
+    const guideManualPaste = () => {
+      inputEl.focus();
+      inputEl.scrollIntoView?.({ behavior: 'smooth', block: 'center' });
+      inputEl.classList.remove('input-pulse');
+      void inputEl.offsetWidth;
+      inputEl.classList.add('input-pulse');
+      setTimeout(() => inputEl.classList.remove('input-pulse'), 2000);
+      const isTouch = window.matchMedia?.('(pointer: coarse)').matches;
+      const msg = isTouch
+        ? 'Seu navegador bloqueou o botão Colar — toque e segure no campo acima e escolha "Colar" (conecta sozinho!).'
+        : 'Clique no campo acima e aperte Ctrl+V (conecta sozinho!).';
+      showBanner(msg, 'warn');
+      showToast(msg, 'warn');
+    };
+
+    if (!navigator.clipboard?.readText) {
+      guideManualPaste();
+      return;
+    }
     try {
       const clip = (await navigator.clipboard.readText()).trim();
-      if (!clip) { showBanner('Sua área de transferência está vazia.', 'warn'); return; }
+      if (!clip) {
+        showBanner('Sua área de transferência está vazia. Copie o token no Expo primeiro.', 'warn');
+        showToast('Área de transferência vazia.', 'warn');
+        return;
+      }
       setToken(clip);
-      connectAccount({ advanceWizard: true });
+      connectAccount({ advanceWizard });
     } catch {
-      $('wizToken').focus();
-      showBanner('Toque no campo e aperte Ctrl+V (ou segure para colar).', 'warn');
+      guideManualPaste();
     }
-  });
+  }
+
+  $('btnWizPaste').addEventListener('click', () => pasteTokenInto($('wizToken'), { advanceWizard: true }));
 
   $('wizToken').addEventListener('paste', () => {
     setTimeout(() => {
@@ -1270,17 +1294,7 @@ function bindEvents() {
     $('btnWizToggle').textContent = masked ? 'Mostrar' : 'Ocultar';
   });
 
-  $('btnPasteToken').addEventListener('click', async () => {
-    try {
-      const clip = (await navigator.clipboard.readText()).trim();
-      if (!clip) { showBanner('Sua área de transferência está vazia.', 'warn'); return; }
-      setToken(clip);
-      connectAccount({ advanceWizard: false });
-    } catch {
-      $('targetToken').focus();
-      showBanner('Toque no campo e aperte Ctrl+V.', 'warn');
-    }
-  });
+  $('btnPasteToken').addEventListener('click', () => pasteTokenInto($('targetToken'), { advanceWizard: false }));
 
   $('targetToken').addEventListener('paste', () => {
     setTimeout(() => {

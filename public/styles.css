@@ -1007,6 +1007,114 @@ details.helper-box summary {
   overflow: auto;
 }
 
+@keyframes inputPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.55); border-color: var(--accent); }
+  50% { box-shadow: 0 0 0 6px rgba(99, 102, 241, 0.18); border-color: #818cf8; }
+}
+
+.input-pulse {
+  animation: inputPulse 0.9s ease-in-out 2;
+}
+
+/* Ergonomia Mobile (celulares e navegador interno do WhatsApp) */
+@media (max-width: 640px) {
+  body {
+    font-size: 15px;
+  }
+
+  .app-shell {
+    padding: 14px 12px 48px;
+  }
+
+  .app-header {
+    gap: 10px;
+  }
+
+  .app-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .wizard-card,
+  .card {
+    padding: 16px 14px;
+  }
+
+  .wizard-card h2 {
+    font-size: 1.12rem;
+  }
+
+  /* Evita zoom automático do iOS Safari ao tocar em inputs */
+  input[type="text"],
+  input[type="password"],
+  input[type="url"],
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  .token-input-wrap {
+    flex-wrap: wrap;
+  }
+
+  .token-input-wrap input {
+    flex: 1 1 100%;
+    min-height: 44px;
+  }
+
+  .token-input-wrap .btn {
+    flex: 1 1 0;
+    min-height: 44px;
+  }
+
+  #btnWizConnect,
+  .choice-card .btn,
+  .btn-row .btn,
+  .wizard-actions .btn {
+    width: 100%;
+    min-height: 46px;
+    justify-content: center;
+  }
+
+  .form-grid-4 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .kpi-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .doc-preview-card {
+    padding: 14px 12px;
+  }
+
+  .table-wrapper {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .snack-item-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .snack-actions {
+    width: 100%;
+  }
+
+  .snack-actions .btn,
+  .snack-actions select {
+    flex: 1 1 auto;
+    max-width: none;
+    min-height: 40px;
+  }
+
+  .toast-stack {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: none;
+  }
+}
+
 @media print {
   body {
     background: #fff !important;
