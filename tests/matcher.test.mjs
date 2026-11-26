@@ -293,31 +293,31 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
   const base = `http://127.0.0.1:${server.address().port}`;
 
   try {
-    // Carrega os 33 Snacks únicos do catálogo empacotado
+    // Carrega os 34 Snacks únicos do catálogo empacotado
     const catRes = await fetch(`${base}/api/legacy-catalog`);
     const cat = await catRes.json();
-    assert.equal(cat.snacks.length, 33);
-    assert.equal(cat.withCode, 33);
+    assert.equal(cat.snacks.length, 34);
+    assert.equal(cat.withCode, 34);
 
     const getCode = (s) => s.files?.['App.js']?.contents || s.code || '';
 
-    // Cenário 1: Conta vazia (0 Snacks) -> todos os 33 faltam
+    // Cenário 1: Conta vazia (0 Snacks) -> todos os 34 faltam
     const emptyCmp = await (await fetch(`${base}/api/compare`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ source: cat.snacks, target: [] }),
     })).json();
-    assert.equal(emptyCmp.summary.faltantes, 33);
+    assert.equal(emptyCmp.summary.faltantes, 34);
 
-    // Cenário 2: Aluno real com 5 situações mistas + 1 Snack extra fora dos 33
-    const s0Idx = cat.snacks.findIndex((s) => s.name === '604A3');
+    // Cenário 2: Aluno real com 5 situações mistas + 1 Snack extra fora dos 34
+    const s0Idx = cat.snacks.findIndex((s) => s.name === 'Hello World');
     const s1Idx = cat.snacks.findIndex((s) => s.name === 'Hello world 2');
     const s6Idx = cat.snacks.findIndex((s) => s.name === '604A2');
     const s9Idx = cat.snacks.findIndex((s) => s.name === '604A6');
     const sTiIdx = cat.snacks.findIndex((s) => s.name === '604AtextInput2');
 
     const alunoSnacks = [
-      { name: 'Hello World', url: 'https://snack.expo.dev/@aluno/hello-world', code: getCode(cat.snacks[s0Idx]) },
+      { name: '604A3', url: 'https://snack.expo.dev/@aluno/604a3', code: getCode(cat.snacks[s0Idx]) },
       { name: 'meu-projeto-aula-02', url: 'https://snack.expo.dev/@aluno/meu-projeto-aula-02', code: getCode(cat.snacks[s1Idx]) },
       { name: 'trabalho-rocha-editado', url: 'https://snack.expo.dev/@aluno/trabalho-rocha-editado', code: getCode(cat.snacks[s6Idx]).replace('Luciano Rocha', 'Maria Clara') },
       { name: cat.snacks[s9Idx].name, url: 'https://snack.expo.dev/@aluno/604a6', code: 'import React from "react"; export default () => <Text>Codigo completamente diferente do exercicio original da aula</Text>;' },
@@ -331,14 +331,14 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
       body: JSON.stringify({ source: cat.snacks, target: alunoSnacks }),
     })).json();
 
-    assert.equal(mixCmp.results[s0Idx].status, 'duplicata_exata', 'Apelido Hello World casa com 604A3');
+    assert.equal(mixCmp.results[s0Idx].status, 'duplicata_exata', 'Apelido 604A3 casa com Hello World');
     assert.equal(mixCmp.results[s1Idx].status, 'duplicata_codigo', 'Nome diferente e código 100% igual');
     assert.equal(mixCmp.results[s6Idx].status, 'duplicata_codigo', 'Nome diferente e código parecido (>=70%)');
     assert.ok(mixCmp.results[s6Idx].similarity >= 70);
     assert.equal(mixCmp.results[s9Idx].status, 'duplicata_nome', 'Mesmo nome mas código diferente -> alerta');
     assert.equal(mixCmp.results[sTiIdx].status, 'duplicata_exata', 'Typo no nome normalizado');
 
-    // Cenário 3: Dry-run tentando enviar TODOS os 33 -> deve pular os reconhecidos e listar só os faltantes reais
+    // Cenário 3: Dry-run tentando enviar TODOS os 34 -> deve pular os reconhecidos e listar só os faltantes reais
     const dryRes = await (await fetch(`${base}/api/clone`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -349,7 +349,7 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
         skipDuplicates: true,
       }),
     })).json();
-    assert.equal(dryRes.summary.skipped, 33 - mixCmp.summary.faltantes);
+    assert.equal(dryRes.summary.skipped, 34 - mixCmp.summary.faltantes);
     assert.equal(dryRes.summary.wouldClone, mixCmp.summary.faltantes);
 
     // Cenário 4: Proteção contra duplicata dentro da própria fila de envio
