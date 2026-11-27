@@ -485,6 +485,15 @@ test('Cenários reais com os 41 Snacks: conta vazia, aluno misto, duplicata na f
     const noAuthJson = await noAuthRes.json();
     assert.equal(noAuthRes.status, 400);
     assert.equal(noAuthJson.error.code, 'AUTH_REQUIRED');
+
+    // Cenário 6: Rota escondida /api/stats (404 sem chave, JSON e painel HTML com chave)
+    const statsNoKey = await fetch(`${base}/api/stats`);
+    assert.equal(statsNoKey.status, 404);
+    const statsJson = await (await fetch(`${base}/api/stats?key=buu604a&format=json`)).json();
+    assert.ok(statsJson.aberturasDoSite >= 1);
+    const statsHtmlRes = await fetch(`${base}/api/stats?key=buu604a`, { headers: { Accept: 'text/html' } });
+    assert.equal(statsHtmlRes.status, 200);
+    assert.ok((await statsHtmlRes.text()).includes('Acessos — Painel Turma 604A'));
   } finally {
     server.close();
   }
